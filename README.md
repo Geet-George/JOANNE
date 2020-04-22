@@ -1,8 +1,9 @@
 # Level-2 Quality Control
 
-\textbf{How the sondes are classified :}
+## How the sondes are classified : 
 
-Terminology:  
+**Terminology:**
+
 'flag' : record of result of local test  
 'good' : passes local test  
 'bad'  : fails local test  
@@ -16,7 +17,7 @@ Terminology:
 
 There are 3 individual processes used to classify sondes, which are combined later to make a final grouping:
 
-1. \textbf{ind_FLAG:} Ratio of individual parameter's count to the total count of records (time is used as proxy for measurement record. Multiple parameters can have values at a single record.)
+1. **ind_FLAG:** Ratio of individual parameter's count to the total count of records (time is used as proxy for measurement record. Multiple parameters can have values at a single record.)
     - There is one flag each for the following parameters:  
     t : temperature (tdry)  
     p : pressure (pres)  
@@ -31,7 +32,7 @@ There are 3 individual processes used to classify sondes, which are combined lat
       if neither of these conditions is met, the sonde is flagged as 'UGLY' for ind_FLAG.
     
 
-2. \textbf{srf_FLAG:} Values in the lower layer of the atmosphere (mostly near surface, but also < 4 km for some tests) as sanity checks
+2. **srf_FLAG:** Values in the lower layer of the atmosphere (mostly near surface, but also < 4 km for some tests) as sanity checks
     - Functions are defined to check for obvious errors in near-surface values of parameters, such as being out of bounds (limits of realistic values), poor agreement between estimates of altitude, etc.
     - These functions are described in greater detail where the function is defined.
     - For each of these flags, if the sonde passes the test, it is marked as 1, else as 0, which stand for 'good' and 'bad' respectively. 
@@ -40,7 +41,7 @@ There are 3 individual processes used to classify sondes, which are combined lat
       if neither of these conditions is met, the sonde is flagged as 'UGLY' for srf_FLAG.  
       
     
-3. \textbf{ld_FLAG:} Checking whether the sonde detected a launch automatically. If the sonde fails to do this, it does not switch to high-power signal transmission, and thus, stops sending data back to the AVAPS PC, after a short range. 
+3. **ld_FLAG:** Checking whether the sonde detected a launch automatically. If the sonde fails to do this, it does not switch to high-power signal transmission, and thus, stops sending data back to the AVAPS PC, after a short range. 
     - The primary method to check launch detection is to parse through the log files of the sonde in raw format. These files have names starting with 'A' and are followed by the date and time of launch. The file extension is the number of the channel used to initialise the sonde and receive its signal, but for all practical purposes, it is a .txt file. (Note: For sondes that did not detect a launch, the file name has time when the sonde was initialised). The log file contains an internal record termed 'Launch Obs Done?'. If this value is 1, the launch was detected, else if it is 0, launch was not detected. The same values are used to mark the ld_FLAG.
     - An alternative method to check launch detection is through an attribute of the PQC files, called 'reference_time'. If a launch was detected, this attribute shows the launch time. If a launch was not detected automatically, the attribute shows the correct date, but the time is 'T00:00:00.000'. This can also be used to mark the ld_FLAG. However, this should only be used as a quick-fix if the log files are not available, since this test is not fool-proof. Moreover, PQC files with no automatic launch detection do not have relevant sonde information such as SondeID added to them. 
     
