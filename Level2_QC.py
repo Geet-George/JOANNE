@@ -526,7 +526,7 @@ for var in srf_flag_vars:
 
 
 # %%
-# Determining ind_FLAG (refer notes at the top of document)
+# Determining ind_FLAG 
 
 ind_FLAG = [None] * len(status_ds.time)
 
@@ -573,7 +573,7 @@ status_ds["ind_FLAG"] = (["time"], ind_FLAG)
 
 
 # %%
-# Determining srf_FLAG (refer notes at the top of document)
+# Determining srf_FLAG 
 
 srf_FLAG = [None] * len(status_ds.time)
 
@@ -630,7 +630,7 @@ status_ds["srf_FLAG"] = (["time"], srf_FLAG)
 
 
 # %%
-# Determining sonde FLAG (refer notes at the top of document)
+# Determining sonde FLAG 
 
 FLAG = [None] * len(status_ds.time)
 
