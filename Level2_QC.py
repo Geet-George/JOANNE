@@ -756,49 +756,6 @@ nc_meta = {
 #         'temperature' : ['time']
 #     }
 
-
-# %%
-# flight_attrs = [None] * len(a_filepaths)
-
-# list_of_flight_attrs = ['True Heading (deg)',
-#                         'True Air Speed (m/s)',
-#                         'Ground Track (deg)',
-#                         'Ground Speed (m/s)',
-#                         'Longitude (deg)',
-#                         'Latitude (deg)',
-#                         'MSL Altitude (m)',
-#                         'Geopotential Altitude (m)']
-
-# for id_,i in enumerate(tqdm(a_filepaths)) :
-
-#     if status_ds.FLAG[id_] == 'GOOD' :
-
-#         flight_attrs[id_] = {}
-
-#         file_path = i[0]
-#         f = open(file_path,'r')
-
-
-#         lines = f.readlines()
-
-#         # checking which line number in the file has the string we are looking for: "Launch Obs Done?"
-#         # this line number changes for different files
-#         for attr in list_of_flight_attrs :
-#             for j in range(len(lines)) :
-#                 if attr in lines[j] :
-#                     line_id = j
-#                     break
-
-#             if attr == 'True Air Speed (m/s)' :
-#                 attr = 'True Air Speed (m s-1)'
-#             elif attr == 'Ground Speed (m/s)' :
-#                 attr = 'Ground Speed (m s-1)'
-
-#             flight_attrs[id_][attr] = float(lines[line_id].split('= ')[1])
-
-#         f.close()
-
-
 # %%
 flight_attrs = [None] * len(a_filepaths)
 
