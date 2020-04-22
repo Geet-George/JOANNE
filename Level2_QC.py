@@ -250,13 +250,6 @@ def create_variable(ds, vname, data, **kwargs):
 
     return vname
 
-
-# %%
-
-x = [2, 3, 4, 5, 6, 9, 1, 23, 56, 2]
-plt.plot(x)
-
-
 # %%
 ###------ Platform Name ------###
 
