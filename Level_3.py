@@ -171,7 +171,7 @@ def calc_rh_from_q(dataset, T=None):
 
         T : Temperature values estimated from interpolated potential_temperature;
             if not specified, function will calculate this from given dataset using
-            calc_T_from_theta
+            calc_T_from_theta()
 
     Output :
 
@@ -248,6 +248,7 @@ def substitute_T_and_RH_for_interpolated_dataset(dataset):
     dataset["relative_humidity"] = (dataset.pressure.dims, rh)
 
     return dataset
+
 
 def pressure_interpolation(
     pressures, altitudes, output_altitudes, convergence_error=0.05
@@ -333,19 +334,45 @@ def pressure_interpolation(
 
     return pressure_interpolated
 
-def add_log_interp_pressure_to_dataset(dataset,interp_dataset=None) :
+def add_log_interp_pressure_to_dataset(dataset, interp_dataset=None):
     """
     Input : 
 
         dataset : dataset
 
-        interp_dataset : 
+        interp_dataset : dataset
+                         interpolated values of dataset;
+                         if not specified, function will calculate this 
+                         from given dataset using interp_along_height()
+
+    Output :
+
+        interp_dataset : dataset
+                         returns modified interp_dataset with original linearly 
+                         interpolated pressure variable replaced with logarithmically
+                         interpolated pressure variable                      
+    """
+
+    if interp_dataset is None:
+        interp_dataset = interp_along_height(dataset)
+
+    pressure = pressure_interpolation(
+        dataset.pressure.values, dataset.height.values, interp_dataset.height.values
+    )
+
+    interp_dataset["pressure"] = (dataset.pressure.dims, pressure)
+
+    return interp_dataset
+
 # %%
 
-len(pressure_interpolation(t1.pressure.values, t1.height.values, interp_ds.height.values))
+# len(
+#     pressure_interpolation(
+#         t1.pressure.values, t1.height.values, interp_ds.height.values
+#     )
+# )
 
 # %%
-
 
 def main():
     lv2_data_directory = "JOANNE/Data/Test_data/"
@@ -355,7 +382,7 @@ def main():
         t1 = xr.open_dataset(all_lv2_nc_files[i]).swap_dims({"obs": "height"})
         t1 = adding_q_and_theta_to_dataset(t1)
         interp_ds = interp_along_height(t1)
-
+        interp_ds = add_log_interp_pressure_to_dataset(t1,interp_ds)
         interp_ds = substitute_T_and_RH_for_interpolated_dataset(interp_ds)
 
     return interp_ds
@@ -363,6 +390,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print("Kya re?")
-
 # %%
