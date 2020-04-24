@@ -492,32 +492,19 @@ def interpolate_for_level_3(
     return interpolated_dataset
 
 
-def concatenate_soundings(list_of_soundings):
+def concatenate_soundings(list_of_interpolated_dataset):
     """
     Input : 
-        list_of_soundings : list
-                            list containing individual, interpolated sounding profiles
-                            as xarray datasets
+        list_of_interpolated_dataset : list
+                                       list containing individual, interpolated sounding profiles
+                                       as xarray datasets
     Output :
         concatenated_dataset : xarray dataset
                                dataset with all soundings in list_of_soundings concatenated to a new
-                               dimension called 'soundings'
+                               dimension called 'soundings', and swap 'height' dimension with 'obs', 
+                               making 'height' a variable
     """
-    concatenated_dataset = xr.concat(list_of_soundings, dim="sounding")
-
-    return concatenated_dataset
-
-
-def swap_height_and_obs(concatenated_dataset):
-    """
-    Input :
-        concatenated_dataset : xarray dataset
-                               dataset which is concatenated with height as dimension
-    Output :
-        concatenated_dataset : xarray dataset
-                               modified dataset with 'obs' as dimension and 'height' as
-                               variable
-    """
+    concatenated_dataset = xr.concat(list_of_interpolated_dataset, dim="sounding")
     concatenated_dataset = concatenated_dataset.drop("obs").swap_dims({"height": "obs"})
 
     return concatenated_dataset
@@ -563,4 +550,3 @@ interp_ds = xr.concat(interp_ds_list[:], dim="sounding")
 tds = interp_ds.drop("obs").swap_dims({"height": "obs"})
 
 # %%
-
