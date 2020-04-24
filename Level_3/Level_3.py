@@ -220,11 +220,13 @@ def adding_q_and_theta_to_dataset(dataset):
     """
     Input :
         
-        dataset : Dataset 
+        dataset : xarray dataset 
     
     Output :
 
-        dataset : Original dataset with added variables of 'specific_humidity' and 'potential_temperature'
+        dataset : xarray dataset
+                  Original dataset with added variables of 
+                  'specific_humidity' and 'potential_temperature'
                  
     Function to add variables of 'specific_humidity' and 'potential_temperature' in original
     dataset using functions 
@@ -241,6 +243,34 @@ def adding_q_and_theta_to_dataset(dataset):
 
         q = calc_q_from_rh(dataset)
         dataset["specific_humidity"] = (dataset.pressure.dims, q)
+
+    return dataset
+
+
+def adding_precipitable_water_to_dataset(dataset, altitude_limit=None):
+    """
+    Input :
+        dataset : xarray dataset
+
+    Output :
+        dataset : xarray dataset
+                  Original dataset with added variable of precipitable_water
+
+    Function to add variable 'precipitable_water' to given dataset, with no dimension,
+    using MetPy functions :
+
+    (i) mpcalc.precipitable_water()
+    (ii) mpcalc.dewpoint_from_relative_humidity()
+    """
+    dp = mpcalc.dewpoint_from_relative_humidity(
+        dataset.temperature.values * units.degC, dataset.relative_humidity.values / 100
+    ).magnitude
+
+    pw = mpcalc.precipitable_water(
+        dp * units.degC, dataset.pressure.values * units.hPa, top=altitude_limit
+    ).magnitude
+
+    dataset['precipitable_water'] = pw
 
     return dataset
 
@@ -451,10 +481,12 @@ def interpolate_for_level_3(
     Function to interpolate a dataset with Level-2 data, in the format 
     for Level-3 gridding, following these steps :
 
-        (i) All variables in dataset are linearly interpolated along the height dimension, at specified height 
+        (i) Variables 'specific_humidity','potential_temperature' and 'precipitable_water' are added to the dataset
+
+        (ii) All variables along 'height' dimension in dataset are linearly interpolated along the height dimension, at specified height 
         intervals (default 10 m) and up to specified altitude (default 10 km) 
 
-        (ii) Pressure values are interpolated using a logarithmic interpolation scheme
+        (iii) Pressure values are interpolated using a logarithmic interpolation scheme
         and these values replace the linearly interpolated pressure values. 
         
         Caveat : The difference between these different interpolations is in the order of 0.005 hPa, which is lower than 
@@ -464,7 +496,7 @@ def interpolate_for_level_3(
         to specify keyword pressure_interpolation = 'linear' and this will skip the logarithmic interpolation, making 
         the function perform faster.
 
-        (iii) The temperature and moisture variables are to be interpolated with values of theta and q, respectively. Thus,
+        (iv) The temperature and moisture variables are to be interpolated with values of theta and q, respectively. Thus,
         after interpolation, T and RH variables are recomputed from the interpolated values of theta and q. The new values for
         T and RH will replace the previously interpolated T and RH variables. Although, T and RH are the originally measured 
         properties by the dropsonde sensors, for interpolation q and theta are preferred, as these variables are conserved.
@@ -552,13 +584,24 @@ def lv3_structure_from_lv2(
 
 # %%
 
+
 def main():
-    lv2_data_directory = "JOANNE/Data/Level_2/Test_data/"
-    lv3_data_directory = "JOANNE/Data/Level_3/Test_data/"
+    lv2_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Level_2/Test_data/"
+    lv3_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Level_3/Test_data/"
+
     lv3_dataset = lv3_structure_from_lv2(lv2_data_directory)
-    lv3_dataset.to_netcdf(lv3_data_directory+'Level_3A.nc')
+    lv3_dataset.to_netcdf(lv3_data_directory + "Level_3A.nc")
 
-if __name__ == "__main__":
-    main()
 
+# if __name__ == "__main__":
+#     main()
+
+# %%
+
+lv2_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Level_2/Test_data/"
+list_of_files = retrieve_all_files(lv2_data_directory)
+
+dataset = xr.open_dataset(list_of_files[0])
+
+tds = adding_precipitable_water_to_dataset(dataset)
 # %%
