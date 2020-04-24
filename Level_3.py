@@ -15,6 +15,25 @@ from tqdm import tqdm
 ### Defining functions
 
 
+def retrieve_all_files(directory, file_ext="*.nc"):
+    """
+    Input : 
+
+        directory : string
+                    directory where the files are stored
+        file_ext : string
+                   extension of files needed; default is '*.nc'
+    Output :
+
+        list_of_files : list
+                        list containing the file paths to all NC files in specified directory
+    """
+
+    list_of_files = sorted(glob.glob(directory + file_ext))
+
+    return list_of_files
+
+
 def remove_non_mono_incr_alt(lv2dataset):
 
     """
@@ -456,20 +475,19 @@ def interpolate_for_level_3(
     return interpolated_dataset
 
 
+
 # %%
 
 
 def main():
 
     lv2_data_directory = "JOANNE/Data/Test_data/"
-    all_lv2_nc_files = sorted(glob.glob(lv2_data_directory + "*.nc"))
+    all_lv2_nc_files = retrieve_all_files(lv2_data_directory)
 
-    for i in range(len(all_lv2_nc_files)):
-        t1 = xr.open_dataset(all_lv2_nc_files[i]).swap_dims({"obs": "height"})
-        t1 = adding_q_and_theta_to_dataset(t1)
-        interp_ds = interp_along_height(t1)
-        interp_ds = add_log_interp_pressure_to_dataset(t1, interp_ds)
-        interp_ds = substitute_T_and_RH_for_interpolated_dataset(interp_ds)
+    interp_ds = [None] * len(all_lv2_nc_files)
+
+    for id_, i in enumerate(all_lv2_nc_files):
+        interp_ds[id_] = interpolate_for_level_3(i)
 
     return interp_ds
 
