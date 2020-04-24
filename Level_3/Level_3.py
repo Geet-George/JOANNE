@@ -8,6 +8,7 @@ import numpy as np
 import requests
 import xarray as xr
 from metpy.units import units
+from metpy import constants as mpconsts
 from tqdm import tqdm
 
 # %%
@@ -270,7 +271,43 @@ def adding_precipitable_water_to_dataset(dataset, altitude_limit=None):
         dp * units.degC, dataset.pressure.values * units.hPa, top=altitude_limit
     ).magnitude
 
-    dataset['precipitable_water'] = pw
+    dataset["precipitable_water"] = pw
+
+    return dataset
+
+
+def adding_static_stability_to_dataset(dataset, method="gradient"):
+    """
+    Input :
+        dataset : xarray dataset
+
+    Output :
+        dataset : xarray dataset
+                  Original dataset with added variable of static_stability
+
+    Function to add variable 'static_stability' to given dataset, along height dimension,
+    using gradient of theta with p or using the MetPy functions of mpcalc.static_stability(). 
+    The former is the default method, the latter can be selected by giving keyword argument as
+    method = 'B92', which stands for Bluestein(1992).
+    """
+    if method == "gradient":
+        pot = calc_theta_from_T(dataset)
+        pres = dataset.pressure.values
+        d_pot = pot[:-1] - pot[1:]
+        d_pres = pres[1:] - pres[:-1]
+        ss = d_pot / d_pres
+
+    if method == "B92":
+        ss = mpcalc.static_stability(
+            dataset.pressure.values * units.hPa, dataset.temperature.values * units.degC
+        ).magnitude
+
+    static_stability = np.full(len(dataset.temperature),np.nan)
+
+    static_stability[0] = 0
+    static_stability[1:] = ss
+
+    dataset['static_stability'] = (dataset.temperature.dims,static_stability)
 
     return dataset
 
@@ -508,6 +545,7 @@ def interpolate_for_level_3(
         dataset = file_path_OR_dataset
 
     dataset = add_launch_time_as_var(dataset)
+    dataset = adding_precipitable_water_to_dataset(dataset)
 
     interpolated_dataset = interp_along_height(
         dataset, height_limit=height_limit, vertical_spacing=vertical_spacing
@@ -521,6 +559,9 @@ def interpolate_for_level_3(
     interpolated_dataset = substitute_T_and_RH_for_interpolated_dataset(
         interpolated_dataset
     )
+
+    interpolated_dataset = adding_static_stability_to_dataset(interpolated_dataset)
+
     return interpolated_dataset
 
 
@@ -586,15 +627,15 @@ def lv3_structure_from_lv2(
 
 
 def main():
-    lv2_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Level_2/Test_data/"
-    lv3_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Level_3/Test_data/"
+    lv2_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/code_testing_data/"
+    lv3_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_3/Test_data/"
 
     lv3_dataset = lv3_structure_from_lv2(lv2_data_directory)
     lv3_dataset.to_netcdf(lv3_data_directory + "Level_3A.nc")
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
 
 # %%
 
@@ -604,4 +645,12 @@ list_of_files = retrieve_all_files(lv2_data_directory)
 dataset = xr.open_dataset(list_of_files[0])
 
 tds = adding_precipitable_water_to_dataset(dataset)
+# %%
+pot = calc_theta_from_T(dataset)
+pres = dataset.pressure.values
+# %%
+d_pot = pot[:-1] - pot[1:]
+d_pres = -pres[:-1] + pres[1:]
+plt.plot(d_pot / d_pres, dataset.height[:-1])
+
 # %%
