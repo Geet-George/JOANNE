@@ -334,7 +334,10 @@ def pressure_interpolation(
 
     return pressure_interpolated
 
-def add_log_interp_pressure_to_dataset(dataset, interp_dataset=None):
+
+def add_log_interp_pressure_to_dataset(
+    dataset, interp_dataset=None, height_limit=10000, vertical_spacing=10
+):
     """
     Input : 
 
@@ -354,7 +357,9 @@ def add_log_interp_pressure_to_dataset(dataset, interp_dataset=None):
     """
 
     if interp_dataset is None:
-        interp_dataset = interp_along_height(dataset)
+        interp_dataset = interp_along_height(
+            dataset, height_limit=height_limit, vertical_spacing=vertical_spacing
+        )
 
     pressure = pressure_interpolation(
         dataset.pressure.values, dataset.height.values, interp_dataset.height.values
@@ -364,17 +369,98 @@ def add_log_interp_pressure_to_dataset(dataset, interp_dataset=None):
 
     return interp_dataset
 
+
+def ready_to_interpolate(file_path):
+
+    """
+    Input :
+
+        file_path : string
+                    path to NC file containing Level-2 data
+    Output :
+
+        dataset_to_interpolate : xarray dataset
+                                 dataset ready for interpolation
+
+    Function that takes in the path to Level-2 NC file and makes it ready for interpolation,
+    by swapping dimension from 'obs' to 'height', and adding the 'specific_humidity' and
+    'potential_temperature' variables to the dataset.                                
+    """
+
+    dataset_to_interpolate = xr.open_dataset(file_path).swap_dims({"obs": "height"})
+    dataset_to_interpolate = adding_q_and_theta_to_dataset(dataset_to_interpolate)
+
+    return dataset_to_interpolate
+
+
+def interpolate_for_level_3(
+    file_path_OR_dataset,
+    height_limit=10000,
+    vertical_spacing=10,
+    pressure_log_interp=True,
+):
+
+    """
+    Input :
+
+        file_path_OR_dataset : string or  dataset
+                               if file path to Level-2 NC file is provided as string, 
+                               dataset will be created using the ready_to_interpolate() function,
+                               if dataset is provided, it will be used directly
+
+    Output :
+
+        interpolated_dataset : xarray dataset
+                               interpolated dataset
+
+    Function to interpolate a dataset with Level-2 data, in the format 
+    for Level-3 gridding, following these steps :
+
+        (i) All variables in dataset are linearly interpolated along the height dimension, at specified height 
+        intervals (default 10 m) and up to specified altitude (default 10 km) 
+
+        (ii) Pressure values are interpolated using a logarithmic interpolation scheme
+        and these values replace the linearly interpolated pressure values. 
+        
+        Caveat : The difference between these different interpolations is in the order of 0.005 hPa, which is lower than 
+        the measurement uncertainty of the pressure sensor itself of the RD-41 itself. There is a significant computational 
+        cost involved, however, with carrying out this added logarithmic interpolation of pressure, since it employs an 
+        iterative numerical method. If linearly interpolated values of pressure suffice for the user, they can choose
+        to specify keyword pressure_interpolation = 'linear' and this will skip the logarithmic interpolation, making 
+        the function perform faster.
+
+        (iii) The temperature and moisture variables are to be interpolated with values of theta and q, respectively. Thus,
+        after interpolation, T and RH variables are recomputed from the interpolated values of theta and q. The new values for
+        T and RH will replace the previously interpolated T and RH variables. Although, T and RH are the originally measured 
+        properties by the dropsonde sensors, for interpolation q and theta are preferred, as these variables are conserved.
+    """
+
+    if type(file_path_OR_dataset) == str:
+        dataset = ready_to_interpolate(file_path_OR_dataset)
+    else:
+        dataset = file_path_OR_dataset
+
+    interpolated_dataset = interp_along_height(
+        dataset, height_limit=height_limit, vertical_spacing=vertical_spacing
+    )
+
+    if pressure_log_interp is True:
+        interpolated_dataset = add_log_interp_pressure_to_dataset(
+            dataset, interpolated_dataset
+        )
+
+    interpolated_dataset = substitute_T_and_RH_for_interpolated_dataset(
+        interpolated_dataset
+    )
+
+    return interpolated_dataset
+
+
 # %%
 
-# len(
-#     pressure_interpolation(
-#         t1.pressure.values, t1.height.values, interp_ds.height.values
-#     )
-# )
-
-# %%
 
 def main():
+
     lv2_data_directory = "JOANNE/Data/Test_data/"
     all_lv2_nc_files = sorted(glob.glob(lv2_data_directory + "*.nc"))
 
@@ -382,12 +468,12 @@ def main():
         t1 = xr.open_dataset(all_lv2_nc_files[i]).swap_dims({"obs": "height"})
         t1 = adding_q_and_theta_to_dataset(t1)
         interp_ds = interp_along_height(t1)
-        interp_ds = add_log_interp_pressure_to_dataset(t1,interp_ds)
+        interp_ds = add_log_interp_pressure_to_dataset(t1, interp_ds)
         interp_ds = substitute_T_and_RH_for_interpolated_dataset(interp_ds)
 
     return interp_ds
 
 
 if __name__ == "__main__":
-    main()
+    interp_ds = main()
 # %%
