@@ -1,9 +1,86 @@
-# Level-2 Quality Control
+<h1 class="title">
+    Level 2
+</h1>
+<div id="TOC">
+    <ul>
+        <li>
+            <a href="#file_str">File Structure</a>
+        </li>
+        <li>
+            <a href="#quality_control">Quality Control</a>
+        </li>
+    </ul>
+</div>
+<div id="file_str">
+    <h2>
+        <a href="#TOC">File Structure</a>
+    </h2>
+    <p>
+        Every Level-2 NC file is data from an individual sounding, which has passed the Level-2 QC checks (detailed below) applied after processing the raw file with ASPEN v3.4.3.
 
-## How the sondes are classified : 
+For Level-2, only variables that are measurements from the dropsonde sensors are included. There are no redundant state variables. 
+    </p>
 
-**Terminology:**
+<table>
+<tbody>
+<tr>
+<td><b>Dimension</b></td>
+<td>obs</td>
+</tr>
 
+<tr>
+<td><b>Coordinates</b></td>
+<td>time (independent)</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td>height, lat, lon (measurement)</td>
+</tr>
+
+<tr>
+<td>Variables</td>
+<td>pressure (hPa)</td>
+</tr>
+<tr>
+<td></td>
+<td>temperature (&#x2103;)</td>
+</tr>
+<tr>
+<td></td>
+<td>relative humidity (%)</td>
+</tr>
+<tr>
+<td></td>
+<td>wind speed (m/s)</td>
+</tr>
+
+<tr>
+<td></td>
+<td>wind direction (&#176)</td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+<div id="quality_control">
+    <h2>
+        <a href="#TOC">Quality Control</a>
+    </h2>
+    <p style="text-align: justify;">
+        The primary aim of the quality control process is to classify sondes based on their level of success in making measurements. We discard the sondes with zero or negligible usable data, and keep the remaining sondes as part of the Level-2 product.     </p>
+    <p style="text-align: justify;">
+        Most sondes have complete sounding profiles, while some have partially faulty profiles, thus allowing us to include some parts of the sounding that are still useful. An example is if the PTU sensor of a sonde failed, we will still include the sounding in Level-2 for the data that the GPS sensor provides.
+    </p>
+</div>
+
+<div id="sonde_classification">
+    <h3>
+        Sonde classification and QC terminology
+        -----
+    </h3>
+<p>
 'flag' : record of result of local test  
 'good' : passes local test  
 'bad'  : fails local test  
@@ -13,7 +90,7 @@
 'GOOD' : sonde is good, passed all tests and can be used straightaway  
 'BAD'  : sonde is bad, should not be considered for any further data processing or analysis  
 'UGLY' : sonde has some data that may be salvaged later, but cannot be processed straightaway. Needs more QC.
-
+</p>
 
 There are 3 individual processes used to classify sondes, which are combined later to make a final grouping:
 
