@@ -510,6 +510,46 @@ def concatenate_soundings(list_of_interpolated_dataset):
     return concatenated_dataset
 
 
+def lv3_structure_from_lv2(
+    directory_OR_list_of_files,
+    height_limit=10000,
+    vertical_spacing=10,
+    pressure_log_interp=True,
+):
+    """
+    Input :
+        directory_OR_list_of_files : string or list
+                                     if directory where NC files are stored is provided as a string,
+                                     a list of file paths for all NC files in the directory is created,
+                                     otherwise a list of file paths needed to be gridded can also be 
+                                     provided directly
+    Output :
+        dataset : xarray dataset
+                  dataset with Level-3 structure
+                  
+    Function to create Level-3 gridded dataset from Level-2 files
+    """
+
+    if type(directory_OR_list_of_files) is str:
+        list_of_files = retrieve_all_files(directory_OR_list_of_files, file_ext="*.nc")
+    else:
+        list_of_files = directory_OR_list_of_files
+
+    interp_list = [None] * len(list_of_files)
+
+    for id_, file_of_path in enumerate(list_of_files):
+        interp_list[i] = interpolate_for_level_3(
+            file_path,
+            height_limit=height_limit,
+            vertical_spacing=vertical_spacing,
+            pressure_log_interp=pressure_log_interp,
+        )
+
+    dataset = concatenate_soundings(interp_list)
+
+    return dataset
+
+
 # %%
 
 
