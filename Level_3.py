@@ -389,6 +389,22 @@ def add_log_interp_pressure_to_dataset(
     return interp_dataset
 
 
+def add_launch_time_as_var(dataset):
+    """
+    Input :
+        dataset : xarray dataset
+                  dataset to which launch_time is to be included as a variable
+    Output :
+        dataset : xarray dataset
+                  modified dataset, now with launch_time as one of the variables, 
+                  with no dimension attached to it
+    """
+
+    dataset["launch_time"] = np.datetime64(dataset.attrs["Launch time (UTC)"])
+
+    return dataset
+
+
 def ready_to_interpolate(file_path):
 
     """
@@ -459,6 +475,8 @@ def interpolate_for_level_3(
     else:
         dataset = file_path_OR_dataset
 
+    dataset = add_launch_time_as_var(dataset)
+
     interpolated_dataset = interp_along_height(
         dataset, height_limit=height_limit, vertical_spacing=vertical_spacing
     )
@@ -471,9 +489,38 @@ def interpolate_for_level_3(
     interpolated_dataset = substitute_T_and_RH_for_interpolated_dataset(
         interpolated_dataset
     )
-
     return interpolated_dataset
 
+
+def concatenate_soundings(list_of_soundings):
+    """
+    Input : 
+        list_of_soundings : list
+                            list containing individual, interpolated sounding profiles
+                            as xarray datasets
+    Output :
+        concatenated_dataset : xarray dataset
+                               dataset with all soundings in list_of_soundings concatenated to a new
+                               dimension called 'soundings'
+    """
+    concatenated_dataset = xr.concat(list_of_soundings, dim="sounding")
+
+    return concatenated_dataset
+
+
+def swap_height_and_obs(concatenated_dataset):
+    """
+    Input :
+        concatenated_dataset : xarray dataset
+                               dataset which is concatenated with height as dimension
+    Output :
+        concatenated_dataset : xarray dataset
+                               modified dataset with 'obs' as dimension and 'height' as
+                               variable
+    """
+    concatenated_dataset = concatenated_dataset.drop("obs").swap_dims({"height": "obs"})
+
+    return concatenated_dataset
 
 
 # %%
@@ -484,10 +531,12 @@ def main():
     lv2_data_directory = "JOANNE/Data/Test_data/"
     all_lv2_nc_files = retrieve_all_files(lv2_data_directory)
 
-    interp_ds = [None] * len(all_lv2_nc_files)
+    interp_ds_list = [None] * len(all_lv2_nc_files)
 
     for id_, i in enumerate(all_lv2_nc_files):
-        interp_ds[id_] = interpolate_for_level_3(i)
+        interp_ds_list[id_] = interpolate_for_level_3(i)
+
+    interp_ds = xr.concat(interp_ds_list[:], dim="sounding")
 
     return interp_ds
 
@@ -495,3 +544,23 @@ def main():
 if __name__ == "__main__":
     interp_ds = main()
 # %%
+
+lv2_data_directory = "JOANNE/Data/Test_data/"
+all_lv2_nc_files = retrieve_all_files(lv2_data_directory)
+
+interp_ds_list = [None] * len(all_lv2_nc_files)
+
+for id_, i in enumerate(tqdm(all_lv2_nc_files)):
+    interp_ds_list[id_] = interpolate_for_level_3(i)
+
+interp_ds = xr.concat(interp_ds_list[:], dim="sounding")
+
+# %%
+
+# %%
+interp_ds = xr.concat(interp_ds_list[:], dim="sounding")
+# %%
+tds = interp_ds.drop("obs").swap_dims({"height": "obs"})
+
+# %%
+
