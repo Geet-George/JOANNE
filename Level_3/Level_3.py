@@ -302,12 +302,12 @@ def adding_static_stability_to_dataset(dataset, method="gradient"):
             dataset.pressure.values * units.hPa, dataset.temperature.values * units.degC
         ).magnitude
 
-    static_stability = np.full(len(dataset.temperature),np.nan)
+    static_stability = np.full(len(dataset.temperature), np.nan)
 
     static_stability[0] = 0
     static_stability[1:] = ss
 
-    dataset['static_stability'] = (dataset.temperature.dims,static_stability)
+    dataset["static_stability"] = (dataset.temperature.dims, static_stability)
 
     return dataset
 
@@ -456,18 +456,22 @@ def add_log_interp_pressure_to_dataset(
     return interp_dataset
 
 
-def add_launch_time_as_var(dataset):
+def add_platform_details_as_var(dataset):
     """
     Input :
         dataset : xarray dataset
                   dataset to which launch_time is to be included as a variable
     Output :
         dataset : xarray dataset
-                  modified dataset, now with launch_time as one of the variables, 
+                  modified dataset, now with some platform details as variables, 
                   with no dimension attached to it
     """
 
     dataset["launch_time"] = np.datetime64(dataset.attrs["Launch time (UTC)"])
+    dataset["Platform"] = dataset.attrs["Platform"]
+    dataset["flight_height"] = dataset.attrs["Geopotential Altitude (m)"]
+    dataset["flight_lat"] = dataset.attrs["Latitude (deg)"]
+    dataset["flight_lon"] = dataset.attrs["Longitude (deg)"]
 
     return dataset
 
@@ -544,7 +548,7 @@ def interpolate_for_level_3(
     else:
         dataset = file_path_OR_dataset
 
-    dataset = add_launch_time_as_var(dataset)
+    dataset = add_platform_details_as_var(dataset)
     dataset = adding_precipitable_water_to_dataset(dataset)
 
     interpolated_dataset = interp_along_height(
@@ -644,13 +648,5 @@ list_of_files = retrieve_all_files(lv2_data_directory)
 
 dataset = xr.open_dataset(list_of_files[0])
 
-tds = adding_precipitable_water_to_dataset(dataset)
-# %%
-pot = calc_theta_from_T(dataset)
-pres = dataset.pressure.values
-# %%
-d_pot = pot[:-1] - pot[1:]
-d_pres = -pres[:-1] + pres[1:]
-plt.plot(d_pot / d_pres, dataset.height[:-1])
 
 # %%
