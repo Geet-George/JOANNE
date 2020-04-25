@@ -17,8 +17,6 @@ warnings.filterwarnings("ignore", message="All-NaN slice encounter")
 warnings.filterwarnings(
     "ignore", message="Attempted to set non-positive bottom ylim on a log-scaled axis"
 )
-
-
 # %%
 def get_total_non_nan_indices(sonde):
 
@@ -249,6 +247,7 @@ def create_variable(ds, vname, data, **kwargs):
     ds[vname] = v
 
     return vname
+
 
 # %%
 ###------ Platform Name ------###
@@ -526,7 +525,7 @@ for var in srf_flag_vars:
 
 
 # %%
-# Determining ind_FLAG 
+# Determining ind_FLAG
 
 ind_FLAG = [None] * len(status_ds.time)
 
@@ -573,7 +572,7 @@ status_ds["ind_FLAG"] = (["time"], ind_FLAG)
 
 
 # %%
-# Determining srf_FLAG 
+# Determining srf_FLAG
 
 srf_FLAG = [None] * len(status_ds.time)
 
@@ -630,7 +629,7 @@ status_ds["srf_FLAG"] = (["time"], srf_FLAG)
 
 
 # %%
-# Determining sonde FLAG 
+# Determining sonde FLAG
 
 FLAG = [None] * len(status_ds.time)
 
@@ -916,4 +915,3 @@ for i in tqdm(range(len(sonde_ds))):
                 + str(status_ds.FLAG[i].values)
             )
             date = pd.to_datetime(file_time[i]).date()
-
