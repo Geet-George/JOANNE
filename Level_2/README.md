@@ -2,6 +2,7 @@
     Level 2
 </h1>
 <div id="TOC">
+Contents :
     <ul>
         <li>
             <a href="#file_str">File Structure</a>
@@ -9,6 +10,14 @@
         <li>
             <a href="#quality_control">Quality Control</a>
         </li>
+            <ul>
+                <li>
+                    <a href="#sonde_classification">Sonde Classification and QC Terminology</a>
+                </li>
+                <li>
+                    <a href="#quality_checks">Quality Checks</a>
+                </li>
+            </ul>
     </ul>
 </div>
 <div id="file_str">
@@ -16,7 +25,7 @@
         <a href="#TOC">File Structure</a>
     </h2>
     <p>
-        Every Level-2 NC file is data from an individual sounding, which has passed the Level-2 QC checks (detailed below) applied after processing the raw file with ASPEN v3.4.3.
+        The Level-2 NC files are data from individual soundings, which passed the Level-2 QC checks applied after processing the raw file with ASPEN v3.4.3.
 
 For Level-2, only variables that are measurements from the dropsonde sensors are included. There are no redundant state variables. 
     </p>
@@ -39,7 +48,7 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 </tr>
 
 <tr>
-<td>Variables</td>
+<td><b>Variables</b></td>
 <td>pressure (hPa)</td>
 </tr>
 <tr>
@@ -77,8 +86,7 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 
 <div id="sonde_classification">
     <h3>
-        Sonde classification and QC terminology
-        -----
+        <a href="#TOC">Sonde classification and QC terminology</a>
     </h3>
 <p>
 'flag' : record of result of local test  
@@ -91,6 +99,12 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 'BAD'  : sonde is bad, should not be considered for any further data processing or analysis  
 'UGLY' : sonde has some data that may be salvaged later, but cannot be processed straightaway. Needs more QC.
 </p>
+
+<div id="quality_checks">
+    <h3>
+       <a href="#TOC"> Quality Checks</a>
+    </h3>
+</div>
 
 There are 3 individual processes used to classify sondes, which are combined later to make a final grouping:
 
