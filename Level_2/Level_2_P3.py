@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import sys
-from tqdm import tqdm_notebook as tqdm
+from tqdm import tqdm
 
 import seaborn as sb
 from seaborn import distplot
@@ -251,15 +251,17 @@ def create_variable(ds, vname, data, **kwargs):
 
 # %%
 ###------ Platform Name ------###
-
-Platform_Name = "HALO"
-
+Platform_Name = "P3"
 
 # %%
-directory = "Dropsondes/" + Platform_Name + "/All_dropsondes/"
+directory = (
+    "/Users/geet/Documents/EUREC4A/Dropsondes/" + Platform_Name + "/All_dropsondes/"
+)
 # directory where all sonde files are present
 
-a_dir = "Dropsondes_raw/" + Platform_Name + "/All_A_files/"
+a_dir = (
+    "/Users/geet/Documents/EUREC4A/Dropsondes_raw/" + Platform_Name + "/All_A_files/"
+)
 # directory where all the A files are present
 
 sonde_paths = sorted(glob.glob(directory + "*_PQC.nc"))
@@ -319,7 +321,7 @@ ld_FLAG = np.full(len(a_files), np.nan)
 # array to store ld_FLAG values
 
 # create and start writing a log file which will store sonde info about sondes with failed launch detection
-file = open("no_launch_detect_logs.txt", "w")
+file = open(f"no_launch_detect_logs_{Platform_Name}.txt", "w")
 
 g = 0
 # counter of failed sondes
@@ -442,13 +444,13 @@ for var in list_of_variables[1:-1]:
         for n in ["left", "right", "top"]
     ]
     plt.suptitle(
-        f"Distribution for all {int(len(status_ds.time))} sondes",
+        f"Distribution for all {int(len(status_ds.time))} sondes launched from {Platform_Name}",
         fontsize=20,
         verticalalignment="bottom",
     )
 
 sb.despine(offset=10)
-
+plt.savefig(f"Count_of_measurements_{Platform_Name}.png", dpi=300)
 # %% [markdown]
 # Time values are recorded every 0.25 seconds. Although, the PTU and GPS sensors have a measurement frequency of 2 Hz and 4 Hz, respectively, the distribution of measurements have a slightly different story. Based on the distribution, we know that the ideal case is for all parameters (except u,v) to have measurements at every other time record, and for u,v to have measurements at every time record. Since, the time records also include values during initialisation as well as during a little before and after the launch, when no signal can be sent back to the AVAPS PC, the actual ratio will always be lower than the ideal estimate of 1 (for u,v) and 0.5 (for the remaining parameters).
 #
@@ -683,7 +685,7 @@ print(
     f"{bad_sondes} are bad sondes\nand {ugly_sondes} are ugly sondes that can be salvaged with some effort."
 )
 
-
+status_ds.to_netcdf(f'Status_of_sondes_{Platform_Name}.nc')
 # %%
 
 nc_meta = {
@@ -768,7 +770,6 @@ list_of_flight_attrs = [
     "MSL Altitude (m)",
     "Geopotential Altitude (m)",
     "Software Notes" "Format Notes",
-    "",
 ]
 
 # mission_pi = []
@@ -880,7 +881,7 @@ for i in tqdm(range(len(sonde_ds))):
             + file_time_str[i]
             + ".nc"
         )
-        save_directory = "JOANNE/Data/Level_2/"
+        save_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_2/"
 
         comp = dict(
             zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max
@@ -924,3 +925,6 @@ for i in tqdm(range(len(sonde_ds))):
                 + str(status_ds.FLAG[i].values)
             )
             date = pd.to_datetime(file_time[i]).date()
+
+
+# %%
