@@ -1,3 +1,11 @@
+---
+name: Request a feature
+about: Describe the feature you'd like to have
+title: "[DATE]: [FEATURE NAME]"
+labels: 
+assignees: 
+---
+
 **What is the feature you'd like to request? Please describe.**
 ---
 Please give a clear and concise description of the potential feature. 
