@@ -1,2 +1,8 @@
+# Mac files
 .DS_Store
+
+# All dropsonde data (too storage-heavy for Git)
 Data/
+
+# Test folders
+joanne/
