@@ -9,6 +9,7 @@ import requests
 import xarray as xr
 from metpy.units import units
 from metpy import constants as mpconsts
+from metpy.future import precipitable_water
 from tqdm import tqdm
 
 # %%
@@ -267,8 +268,8 @@ def adding_precipitable_water_to_dataset(dataset, altitude_limit=None):
         dataset.temperature.values * units.degC, dataset.relative_humidity.values / 100
     ).magnitude
 
-    pw = mpcalc.precipitable_water(
-        dp * units.degC, dataset.pressure.values * units.hPa, top=altitude_limit
+    pw = precipitable_water(
+        dataset.pressure.values * units.hPa, dp * units.degC, top=altitude_limit
     ).magnitude
 
     dataset["precipitable_water"] = pw
@@ -467,7 +468,9 @@ def add_platform_details_as_var(dataset):
                   with no dimension attached to it
     """
 
-    dataset["launch_time"] = np.datetime64(dataset.attrs["Launch time (UTC)"])
+    dataset["launch_time"] = (
+        np.datetime64(dataset.attrs["Launch time (UTC)"]).astype("float") / 1e9
+    )
     dataset["Platform"] = dataset.attrs["Platform"]
     dataset["flight_height"] = dataset.attrs["Geopotential Altitude (m)"]
     dataset["flight_lat"] = dataset.attrs["Latitude (deg)"]
@@ -541,6 +544,11 @@ def interpolate_for_level_3(
         after interpolation, T and RH variables are recomputed from the interpolated values of theta and q. The new values for
         T and RH will replace the previously interpolated T and RH variables. Although, T and RH are the originally measured 
         properties by the dropsonde sensors, for interpolation q and theta are preferred, as these variables are conserved.
+
+        (v) At this step of interpolation, the 'time' variable is dropped from the dataset, since in the original files,
+        time is an independent variable, and interpolating time here will not work in the same way as for all other variables.
+        For the gridded product, time will be an artificial residue, if interpolated, and for almost all practical purposes, the 
+        sounding can be seen as a snapshot in time, with only the launch time being a relevant timestamp for every sonde.
     """
 
     if type(file_path_OR_dataset) is str:
@@ -630,23 +638,179 @@ def lv3_structure_from_lv2(
 # %%
 
 
-def main():
-    lv2_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/code_testing_data/"
-    lv3_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_3/Test_data/"
+# def main():
+lv2_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/code_testing_data/"
+lv3_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_3/Test_data/"
 
-    lv3_dataset = lv3_structure_from_lv2(lv2_data_directory)
-    lv3_dataset.to_netcdf(lv3_data_directory + "Level_3A.nc")
+lv3_dataset = lv3_structure_from_lv2(lv2_data_directory)
+# lv3_dataset.to_netcdf(lv3_data_directory + "Level_3A.nc")
 
-
-if __name__ == "__main__":
-    main()
-
+# if __name__ == "__main__":
+#     lv3_dataset = main()
 # %%
 
-lv2_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Level_2/Test_data/"
-list_of_files = retrieve_all_files(lv2_data_directory)
+nc_attrs = {
+    "launch_time": {
+        "standard_name": "time",
+        "long_name": "Time of dropsonde launch",
+        "units": "seconds since 1970-01-01 00:00:00 UTC",
+        "calendar": "gregorian",
+        "axis": "T",
+    },
+    "height": {
+        "standard_name": "geopotential_height",
+        "long_name": "Geopotential Height",
+        "description": "Height obtained by integrating upwards the atmospheric thickness estimated from the hypsometric equation",
+        "units": "gpm",
+        "axis": "Z",
+        "positive": "up",
+    },
+    "latitude": {
+        "standard_name": "latitude",
+        "long_name": "North Latitude",
+        "units": "degree",
+        #                       'valid_range' : [-90.  90.],
+        "axis": "X",
+    },
+    "longitude": {
+        "standard_name": "longitude",
+        "long_name": "East Longitude",
+        "units": "degree",
+        #                       'valid_range' : [-180.  180.],
+        "axis": "Y",
+    },
+    "pressure": {
+        "standard_name": "air_pressure",
+        "long_name": "Atmospheric Pressure",
+        "units": "hPa",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "temperature": {
+        "standard_name": "air_temperature",
+        "long_name": "Dry Bulb Temperature",
+        "units": "degree_Celsius",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "relative_humidity": {
+        "standard_name": "relative_humidity",
+        "long_name": "Relative Humidity",
+        "units": "%",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "wind_speed": {
+        "standard_name": "wind_speed",
+        "long_name": "Wind Speed",
+        "units": "m/s",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "wind_direction": {
+        "standard_name": "wind_from_direction",
+        "long_name": "Wind Direction",
+        "units": "m/s",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "potential_temperature": {
+        "standard_name": "potential_temperature",
+        "long_name": "potential temperature",
+        "units": "K",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "specific_humidity": {
+        "standard_name": "specific_humidity",
+        "long_name": "Specific humidity",
+        "units": "kg/kg",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "precipitable_water": {
+        "standard_name": "precipitable_water",
+        "long_name": "integrated water vapour in the measured column",
+        "units": "kg m-2",
+        "coordinates": "launch_time",
+    },
+    "static_stability": {
+        "standard_name": "static_stability",
+        "long_name": "static stability",
+        "description": "gradient of potential temperature along the pressure grid",
+        "units": " K",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "Platform": {
+        "standard_name": "platform",
+        "long_name": "platform from which the sounding was made",
+        # "units": "kg m-2",
+        "coordinates": "launch_time",
+    },
+    "flight_height": {
+        "standard_name": "height",
+        "long_name": "height of the aircraft when the dropsonde was launched",
+        "units": "m",
+        "coordinates": "launch_time",
+    },
+    "flight_lat": {
+        "standard_name": "latitude",
+        "long_name": "north latitude of the aircraft when the dropsonde was launched",
+        "units": "degree",
+        "coordinates": "launch_time",
+    },
+    "flight_lon": {
+        "standard_name": "longitude",
+        "long_name": "east longitude of the aircraft when the dropsonde was launched",
+        "units": "degree",
+        "coordinates": "launch_time",
+    },
+}
 
-dataset = xr.open_dataset(list_of_files[0])
+nc_dims = {
+    "launch_time": ["sounding"],
+    "height": ["obs"],
+    "latitude": ["sounding","obs"],
+    "longitude": ["sounding","obs"],
+    "pressure": ["sounding","obs"],
+    "temperature": ["sounding","obs"],
+    "relative_humidity": ["sounding","obs"],
+    "wind_speed": ["sounding","obs"],
+    "wind_direction": ["sounding","obs"],
+    "potential_temperature": ["sounding","obs"],
+    "specific_humidity": ["sounding","obs"],
+    "precipitable_water": ["sounding"],
+    "static_stability": ["sounding","obs"],
+    "Platform": ["sounding"],
+    "flight_height": ["sounding"],
+    "flight_lat": ["sounding"],
+    "flight_lon": ["sounding"],
+}
 
+nc_data = {}
+
+for var in nc_attrs.keys() :
+    nc_data[var] = lv3_dataset[var].values
+
+nc_global_attrs = {
+            "Title": "Gridded, sounding data from JOANNE Level-2",
+            "Campaign": "EUREC4A-ATOMIC",
+            "Instrument": "Vaisala RD41",
+            "Conventions": "CF-1.7",
+            "featureType": "trajectory",
+        }
+
+def create_variable(ds, var, **kwargs):
+    """Insert the data into a variable in an :class:`xr.Dataset`"""
+    data = nc_data[var] # must be of type array
+    attrs = nc_attrs[var].copy()
+    dims = nc_dims[var]
+
+    v = xr.Variable(dims, data, attrs=attrs)
+    ds[var] = v
+
+    return var
+# %%
+
+obs = lv3_dataset.obs.values
+sounding = lv3_dataset.sounding.values
+
+to_save_ds = xr.Dataset(coords={"obs": obs,"sounding": sounding})
+
+for var in nc_attrs.keys():
+    create_variable(to_save_ds, var)
 
 # %%
