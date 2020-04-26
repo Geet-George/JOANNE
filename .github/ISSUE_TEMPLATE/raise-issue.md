@@ -1,3 +1,11 @@
+---
+name: Have an issue?
+about: Describe your issue or the bug you encountered
+title: "[ISSUE]: [FEATURE NAME]"
+labels:
+assignees:
+---
+
 **What is the issue you are facing? Please describe.**
 
 Please give a clear and concise description of what the problem is. For example,
