@@ -1,5 +1,5 @@
 ---
-name: Request a feature
+name: Request a feature?
 about: Describe the feature you'd like to have
 title: "[DATE]: [FEATURE NAME]"
 labels: 
