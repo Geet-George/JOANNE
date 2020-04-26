@@ -767,7 +767,11 @@ list_of_flight_attrs = [
     "Latitude (deg)",
     "MSL Altitude (m)",
     "Geopotential Altitude (m)",
+    "Software Notes" "Format Notes",
+    "",
 ]
+
+# mission_pi = []
 
 for i in tqdm(range(len(sonde_ds))):
 
@@ -818,13 +822,14 @@ for i in tqdm(range(len(sonde_ds))):
         nc_global_attrs = {
             "Title": "Sounding data containing temperature, pressure, humidity,"
             " latitude, longitude, wind direction, wind speed, and time",
-            "Campaign": "EUREC4A-ATOMIC",
+            "Campaign": "EUREC4A-ATOMIC (Jan-Feb, 2020)",
             "Platform": Platform_Name,
             "Instrument": "Vaisala RD41",
             "Launch_date": str(pd.to_datetime(file_time[i]).date()),
             "Launch time (UTC)": str(sonde_ds[i].launch_time.values),
             "Sonde Serial ID": sonde_ds[i].SondeId,
             "ASPEN Version": sonde_ds[i].AspenVersion,
+            "Processing Time": sonde_ds[i].ProcessingTime,
             "Mission PI": "Mission PI",
             "Conventions": "CF-1.7",
             "featureType": "trajectory",
@@ -851,6 +856,10 @@ for i in tqdm(range(len(sonde_ds))):
                 attr = "True Air Speed (m s-1)"
             elif attr == "Ground Speed (m/s)":
                 attr = "Ground Speed (m s-1)"
+            elif attr == "Software Notes":
+                attr = "AVAPS Software Notes"
+            elif attr == "Format Notes":
+                attr = "AVAPS Format Notes"
 
             flight_attrs[i][attr] = float(lines[line_id].split("= ")[1])
 
@@ -861,7 +870,7 @@ for i in tqdm(range(len(sonde_ds))):
         to_save_ds = xr.Dataset(coords={"obs": obs})
 
         for var in nc_meta.keys():
-            v = var
+            # v = var
             create_variable(to_save_ds, var, eval(var))
 
         file_name = (
