@@ -1,13 +1,13 @@
 ---
-name: Raise issue / Request feature
-about: Suggest an idea for this project
+name: Raise issue 
+about: What bug did you encounter?
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
+**What is the issue you are facing? Please describe.**
 Please give a clear and concise description of what the problem is. For example,
 _When I try to [...] Level-2 data files, the program shows an error that [...]_
 
@@ -18,4 +18,4 @@ If you have a suggestion regarding how to fix this, I would love to get ideas! A
 Do you think there might be something else that can work better than the current alternative?
 
 **Additional context**
-Please feel free to give me some other context or screenshots about your issue or feature request here.
+Please feel free to give me some other context or screenshots about your issue here.
