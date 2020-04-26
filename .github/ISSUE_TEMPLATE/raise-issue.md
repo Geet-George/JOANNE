@@ -1,7 +1,7 @@
 ---
 name: Have an issue?
 about: Describe your issue or the bug you encountered
-title: "[ISSUE]: [FEATURE NAME]"
+title: "[ISSUE]: "
 labels:
 assignees:
 ---
