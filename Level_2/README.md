@@ -20,11 +20,31 @@ Contents :
                 </li>
                     <ul>
                         <li>
-                            <a href="#ind_flag">ind_FLAG</a>
+                            <a href="#ind_flags">ind_FLAG</a>
                         </li>
                         <li>
-                            <a href="#srf_flag">srf_FLAG</a>
+                            <a href="#srf_flags">srf_FLAG</a>
                         </li>
+                            <ul>
+                                <li>
+                                    <a href="#srf_p_flag">srf_p_flag</a>
+                                </li>
+                                <li>
+                                    <a href="#srf_t_flag">srf_t_flag</a>
+                                </li>
+                                <li>
+                                    <a href="#srf_rh_flag">srf_rh_flag</a>
+                                </li>
+                                <li>
+                                    <a href="#srf_z_flag">srf_z_flag</a>
+                                </li>
+                                <li>
+                                    <a href="#palt_gpsalt_rms_flag">palt_gpsalt_rms_flag</a>
+                                </li>
+                                <li>
+                                    <a href="#srf_flag">srf_FLAG</a>
+                                </li>
+                            </ul>
                         <li>
                             <a href="#ld_flag">ld_FLAG</a>
                         </li>
@@ -167,22 +187,26 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 
 There are 3 individual processes used to classify sondes, which are combined later to make a final grouping:
 
-1. <div id="ind_flag">
+1. <div id="ind_flags">
     <h3>
-       <a href="#TOC">ind_FLAG:</a>
+       <a href="#TOC">ind_FLAGs:</a>
     </h3>
 </div> 
 
 - Ratio of individual parameter's count to the total count of records (time is used as proxy for measurement record. Multiple parameters can have values at a single record.)
     - There is one flag each for the following parameters:  
-    t   : *temperature (tdry)*  
-    p   : *pressure (pres)*  
-    rh  : *relative humidity (rh)*  
-    z   : *GPS altitude (gpsalt)*  
-    u   : *u wind (u_wind)*  
-    v   : *v wind (v_wind)*  
+    t_flag   : *temperature (tdry)*  
+    p_flag   : *pressure (pres)*  
+    rh_flag  : *relative humidity (rh)*  
+    z_flag   : *GPS altitude (gpsalt)*  
+    u_flag   : *u wind (u_wind)*  
+    v_flag   : *v wind (v_wind)*  
 
-- For each parameter, if this proportional ratio is higher than the set threshold (based on overall distribution, explained later), then the sonde is flagged as 'good'. If the ratio is lower than set threshold, but non-zero, then the sonde is flagged 'ugly' and if the ratio is zero, i.e. this particular parameter was not measured at all for the sonde, then, it is flagged as 'bad'. (This value might later be changed from zero to 10% of the time counts).
+- Time values are recorded every 0.25 seconds. Although, the PTU and GPS sensors have a measurement frequency of 2 Hz and 4 Hz, respectively, the distribution of measurements vary slightly from the ideal case - which is for all parameters (except u,v) to have measurements at every other time record, and for u,v to have measurements at every time record. Since, the time records also include values during initialisation as well as during a little before and after the launch, when no signal can be sent back to the AVAPS PC, the actual ratio will always be lower than the ideal estimate of 1 (for u,v) and 0.5 (for the remaining parameters).
+
+- The true distribution shows that peaks start to flatten around 0.8 and 0.4 for u,v and other parameters, respectively. Thus, sondes with ratios lower than these values are taken as not having a complete profile, and termed as 'ugly' sondes. These ugly sondes still have data, but because they are expected to have more NaN fields than most sondes, they are kept for more QC and NaN-filling later, depending upon the extent of the dearth of measurements in that sonde.
+
+- For each parameter, if this proportional ratio is higher than the set threshold, then the sonde is flagged as 'good'. If the ratio is lower than set threshold, but non-zero, then the sonde is flagged 'ugly' and if the ratio is zero, i.e. this particular parameter was not measured at all for the sonde, then, it is flagged as 'bad'. (This value might later be changed from zero to 10% of the time counts).
   
   - If all individual ind_flags are 'good', the sonde is flagged as 'GOOD' for ind_FLAG,  
   - if all individual ind_flags are 'bad', the sonde is flagged as 'BAD' for ind_FLAG,  
@@ -190,21 +214,93 @@ There are 3 individual processes used to classify sondes, which are combined lat
     
 <div style="text-align: justify">
 
-2. <div id="srf_flag">
+----
+2. <div id="srf_flags">
     <h3>
        <a href="#TOC">srf_FLAG:</a>
     </h3>
 </div> 
 
-- Values in the lower layer of the atmosphere (mostly near surface, but also < 4 km for some tests) as sanity checks.
+- These flags act mostly to identify the sondes' behaviour in the lower layer of the atmosphere (mostly near surface, but also < 4 km for some tests) as sanity checks. Functions are defined to check for obvious errors in near-surface values of parameters, such as being out of bounds (limits of realistic values), poor agreement between estimates of altitude, etc.
   
-- Functions are defined to check for obvious errors in near-surface values of parameters, such as being out of bounds (limits of realistic values), poor agreement between estimates of altitude, etc. These functions are described in greater detail where the function is defined.
+- <div id="srf_p_flag">
+    <h4>
+       <a href="#TOC">srf_p_flag:</a>
+    </h4>
+  </div>
+    
+    - This flag checks if maximum pressure measured by sonde is within bounds: 1000 hPa - 1020 hPa.
+  
+    - If the value is higher than bound, it is unrealistic, and value lower than bound means sonde did not measure the bottommost levels of the atmosphere.
+    
+    - This flag does not check any GPS values. Even if there were no pressure values above 1000 hPa, there may still be GPS measurements in the lowest levels. Such sondes can still be useful for wind and wind-derived products.
 
-- For each of these srf_flags, if the sonde passes the test, it is marked as 1, else as 0, which stand for 'good' and 'bad' respectively. 
-  - If all individual srf_flags are 'good', the sonde is flagged as 'GOOD' for srf_FLAG,  
-  - if all individual srf_flags are 'bad', the sonde is flagged as 'BAD' for srf_FLAG,  
-  - if neither of these conditions is met, the sonde is flagged as 'UGLY' for srf_FLAG.  
-      
+- <div id="srf_t_flag">
+    <h4>
+       <a href="#TOC">srf_t_flag:</a>
+    </h4>
+  </div>
+
+    - This flag checks if tdry (air temperature) is within bounds:
+    
+      1. Maximum air temperature recorded should not be greater than the upper limit (u_limit), set to a default value of 30 deg C.
+      2. Mean air temperature in the bottom 100 m (by gpsalt) should not be lesser than srf_limit, set to a default of 20 deg C.
+    
+    - If any of the above limits is violated, the tdry for the sonde is considered out of bounds, and marked as 'False'. The sonde is also marked 'False', if there are no measurements in the bottom 100 m (by gpsalt).
+
+- <div id="srf_rh_flag">
+    <h4>
+       <a href="#TOC">srf_rh_flag:</a>
+    </h4>
+  </div>
+
+    - Checking if rh (relative humidity) is within bounds:
+    
+      1. Mean RH in the bottom 100 m (by gpsalt) should not be lesser than srf_limit, set to a default of 50 %.
+    
+    - If the above limit is violated, the rh for the sonde is considered out of bounds, and marked as 'False'. The sonde is also marked 'False', if there are no measurements in the bottom 100 m (by gpsalt). 
+    
+- <div id="srf_z_flag">
+    <h4>
+       <a href="#TOC">srf_z_flag:</a>
+    </h4>
+  </div>
+
+  - This flag checks if maximum GPS altitude of sonde is within bounds: <= limit (default assigned as 30 m). Value higher than bound means there are no near-surface measurements
+    
+  - This flag does not include any pressure values. Even if there were no GPS values below 30 m,
+    there may still be PTU measurements in the lowest levels. 
+
+- <div id="palt_gpsalt_rms_flag">
+    <h4>
+       <a href="#TOC">palt_gpsalt_rms_flag:</a>
+    </h4>
+  </div>
+
+    - This function estimates the root mean square (RMS) difference between geopotential altitude (palt) and the GPS altitude (gpsalt),for values below 4 km, and based on a limit (rms_limit; 
+    set to a default value of 100 m), is flagged accordingly.
+    
+    - If the estimated RMS difference is below the limit, then the sonde is flagged as 'True' for this test.
+    
+    - If the estimated RMS difference is greater than the limit, or if there are no values of either palt or gpsalt
+    overlapping in the lower 4 km, then the sonde is flagged as 'False' for this test. The lack of overlap could be 
+    because either there are no palt values or no gpsalt values or both.
+    
+    - If the above limit is violated, the rh for the sonde is considered out of bounds,
+    and marked as 'False'. The sonde is also marked 'False', if there are no measurements in the 
+    bottom 100 m (by gpsalt). 
+---
+- <div id="srf_flag">
+    <h4>
+       <a href="#TOC"><b>srf_FLAG:</b></a>
+    </h4>
+  </div>
+
+  - For each of these srf_flags, if the sonde passes the test, it is marked as 1, else as 0, which stand for 'good' and 'bad' respectively. 
+    - If all individual srf_flags are 'good', the sonde is flagged as 'GOOD' for srf_FLAG,  
+    - if all individual srf_flags are 'bad', the sonde is flagged as 'BAD' for srf_FLAG,  
+    - if neither of these conditions is met, the sonde is flagged as 'UGLY' for srf_FLAG.  
+ ---     
 <div style="text-align: justify">
 
 3. <div id="ld_flag">
@@ -221,7 +317,8 @@ There are 3 individual processes used to classify sondes, which are combined lat
 
 <div style="text-align: justify">
 
-4. <div id="flag">
+---
+<div id="flag">
     <h3>
        <a href="#TOC">FLAG:</a>
     </h3>
@@ -236,7 +333,7 @@ There are 3 individual processes used to classify sondes, which are combined lat
 - Although the process of classifying the sondes can be simplified by other combinations of the ind_flags and srf_flags, the current method ensures no good sondes are omitted, and no bad sondes are admitted. The rest of the sondes, the ugly sondes, still have data that can be salvaged, and after some QC and/or flagging, can be combined with the other good sondes.  
   
 - The NC file generated as a product stores results for each individual test mentioned above, group of tests and the final classification. Thus, the user can still mould the classification based on their objectives or add/remove tests to the process and customise it for themselves.
-
+---
 <div id="output">
     <h1>
        <a href="#TOC">Output</a>
