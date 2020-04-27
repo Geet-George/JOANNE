@@ -25,26 +25,6 @@ Contents :
                         <li>
                             <a href="#srf_flags">srf_FLAG</a>
                         </li>
-                            <ul>
-                                <li>
-                                    <a href="#srf_p_flag">srf_p_flag</a>
-                                </li>
-                                <li>
-                                    <a href="#srf_t_flag">srf_t_flag</a>
-                                </li>
-                                <li>
-                                    <a href="#srf_rh_flag">srf_rh_flag</a>
-                                </li>
-                                <li>
-                                    <a href="#srf_z_flag">srf_z_flag</a>
-                                </li>
-                                <li>
-                                    <a href="#palt_gpsalt_rms_flag">palt_gpsalt_rms_flag</a>
-                                </li>
-                                <li>
-                                    <a href="#srf_flag">srf_FLAG</a>
-                                </li>
-                            </ul>
                         <li>
                             <a href="#ld_flag">ld_FLAG</a>
                         </li>
