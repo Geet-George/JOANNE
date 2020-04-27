@@ -257,7 +257,7 @@ Taking 7-8 m to be the typical vertical resolution of PTU measurements, at a gri
 <div id="interpolation"><h2><a href="#TOC">Interpolation</a></h2></div>
 The interpolation to the common grid is carried out through the following steps: 
 
-(i) Variables `specific_humidity, potential_temperature, u_wind, v_wind precipitable_water` and `static stability` are added to the dataset.
+(i) Variables `specific_humidity`, `potential_temperature`, `u_wind`, `v_wind`, `precipitable_water` and `static stability` are added to the dataset.
 
 (ii) All variables along `height` coordinates in dataset are linearly interpolated along the `height` dimension, at specified height intervals (default 10 m) and up to specified altitude (default 10 km) 
 
