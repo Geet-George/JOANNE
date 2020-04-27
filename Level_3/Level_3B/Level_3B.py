@@ -28,8 +28,8 @@ from tqdm import trange
 from pandas import DataFrame
 from sklearn import linear_model
 
-
 # %%
+yaml_directory = '/Users/geet/Documents/EUREC4A/JOANNE/flight_segments/'
 allyamlfiles = sorted(glob.glob("*.yaml"))
 all_sondes = xr.open_dataset("all_sondes.nc")
 all_sondes = all_sondes.where(all_sondes.Platform == "HALO", drop=True)

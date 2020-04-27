@@ -12,6 +12,13 @@ from metpy import constants as mpconsts
 from metpy.future import precipitable_water
 from metpy.units import units
 from tqdm import tqdm
+import subprocess
+# %%
+
+try:
+    git_module_version = subprocess.check_output(["git", "describe"]).strip().decode("utf-8")
+except:
+    git_module_version = "--"
 
 # %%
 
