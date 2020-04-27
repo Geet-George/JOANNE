@@ -1,3 +1,5 @@
+<div style="text-align: justify">
+
 # Level 2
 
 <div id="TOC">
@@ -16,13 +18,41 @@ Contents :
                 <li>
                     <a href="#quality_checks">Quality Checks</a>
                 </li>
+                    <ul>
+                        <li>
+                            <a href="#ind_flag">ind_FLAG</a>
+                        </li>
+                        <li>
+                            <a href="#srf_flag">srf_FLAG</a>
+                        </li>
+                        <li>
+                            <a href="#ld_flag">ld_FLAG</a>
+                        </li>
+                        <li>
+                            <a href="#flag">FLAG</a>
+                        </li>
+                    </ul>
             </ul>
+            <li>
+            <a href="#output">Output</a>
+            </li>
+                <ul>
+                    <li>
+                        <a href="#lv2_data_files">Level-2 Data Files</a>
+                    </li>
+                    <li>
+                        <a href="#status_file">Status File</a>
+                    </li>
+                    <li>
+                        <a href="#log_file">Log File</a>
+                    </li>
+                </ul>
     </ul>
 </div>
 <div id="file_str">
-    <h2>
+    <h1>
         <a href="#TOC">File Structure</a>
-    </h2>
+    </h1>
     <p>
         The Level-2 NC files are data from individual soundings, which passed the Level-2 QC checks applied after processing the raw file with ASPEN v3.4.3.
 
@@ -32,8 +62,14 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 <table>
 <tbody>
 <tr>
+<td><b>OBJECT</b></td>
+<td><b>NAME</b></td>
+<td><b>UNITS</b></td>
+</tr>
+<tr>
 <td><b>Dimension</b></td>
 <td>obs</td>
+<td>&nbsp;</td>
 </tr>
 <tr>
 <td><b>Coordinates</b></td>
@@ -97,9 +133,9 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 
 </div>
 <div id="quality_control">
-    <h2>
+    <h1>
         <a href="#TOC">Quality Control</a>
-    </h2>
+    </h1>
     <p style="text-align: justify;">
         The primary aim of the quality control process is to classify sondes based on their level of success in making measurements. We discard the sondes with zero or negligible usable data, and keep the remaining sondes as part of the Level-2 product.     </p>
     <p style="text-align: justify;">
@@ -108,33 +144,33 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 </div>
 
 <div id="sonde_classification">
-    <h3>
+    <h2>
         <a href="#TOC">Sonde classification and QC terminology</a>
-    </h3>
-<p>
-'flag' : record of result of local test  
-'good' : passes local test  
-'bad'  : fails local test  
-'ugly' : fails preliminary local test, but some data may be salvaged  
+    </h2>
 
-'FLAG' : record of result of group of tests or final flag for sonde  
-'GOOD' : sonde is good, passed all tests and can be used straightaway  
-'BAD'  : sonde is bad, should not be considered for any further data processing or analysis  
-'UGLY' : sonde has some data that may be salvaged later, but cannot be processed straightaway. Needs more QC.
-</p>
+<b>'flag'</b> : record of result of local test  
+<b>'good'</b> : passes local test  
+<b>'bad'</b>  : fails local test  
+<b>'ugly'</b> : fails preliminary local test, but some data may be salvaged  
+
+<b>'FLAG'</b> : record of result of group of tests or final flag for sonde  
+<b>'GOOD'</b> : sonde is good, passed all tests and can be used straightaway  
+<b>'BAD'</b>  : sonde is bad, should not be considered for any further data processing or analysis  
+<b>'UGLY'</b> : sonde has some data that may be salvaged later, but cannot be processed straightaway. Needs more QC.
+
 
 <div id="quality_checks">
-    <h3>
+    <h2>
        <a href="#TOC"> Quality Checks</a>
-    </h3>
+    </h2>
 </div>
 
 There are 3 individual processes used to classify sondes, which are combined later to make a final grouping:
 
 1. <div id="ind_flag">
-    <h4>
+    <h3>
        <a href="#TOC">ind_FLAG:</a>
-    </h4>
+    </h3>
 </div> 
 
 - Ratio of individual parameter's count to the total count of records (time is used as proxy for measurement record. Multiple parameters can have values at a single record.)
@@ -152,11 +188,12 @@ There are 3 individual processes used to classify sondes, which are combined lat
   - if all individual ind_flags are 'bad', the sonde is flagged as 'BAD' for ind_FLAG,  
   - if neither of these conditions is met, the sonde is flagged as 'UGLY' for ind_FLAG.
     
+<div style="text-align: justify">
 
 2. <div id="srf_flag">
-    <h4>
+    <h3>
        <a href="#TOC">srf_FLAG:</a>
-    </h4>
+    </h3>
 </div> 
 
 - Values in the lower layer of the atmosphere (mostly near surface, but also < 4 km for some tests) as sanity checks.
@@ -168,31 +205,82 @@ There are 3 individual processes used to classify sondes, which are combined lat
   - if all individual srf_flags are 'bad', the sonde is flagged as 'BAD' for srf_FLAG,  
   - if neither of these conditions is met, the sonde is flagged as 'UGLY' for srf_FLAG.  
       
-    
+<div style="text-align: justify">
+
 3. <div id="ld_flag">
-    <h4>
+    <h3>
        <a href="#TOC">ld_FLAG:</a>
-    </h4>
+    </h3>
 </div> 
 
 - Checking whether the sonde detected a launch automatically. If the sonde fails to do this, it does not switch to high-power signal transmission, and thus, stops sending data back to the AVAPS PC, after a short range. 
     
 - The primary method to check launch detection is to parse through the log files of the sonde in raw format. These files have names starting with 'A' and are followed by the date and time of launch. The file extension is the number of the channel used to initialise the sonde and receive its signal, but for all practical purposes, it is a .txt file. (Note: For sondes that did not detect a launch, the file name has time when the sonde was initialised). The log file contains an internal record termed 'Launch Obs Done?'. If this value is 1, the launch was detected, else if it is 0, launch was not detected. The same values are used to mark the ld_FLAG.
-    
+
 - An alternative method to check launch detection is through an attribute of the PQC files, called 'reference_time'. If a launch was detected, this attribute shows the launch time. If a launch was not detected automatically, the attribute shows the correct date, but the time is 'T00:00:00.000'. This can also be used to mark the ld_FLAG. However, this should only be used as a quick-fix if the log files are not available, since this test is not fool-proof. Moreover, PQC files with no automatic launch detection do not have relevant sonde information such as SondeID added to them. 
 
+<div style="text-align: justify">
+
 4. <div id="flag">
-    <h4>
+    <h3>
        <a href="#TOC">FLAG:</a>
-    </h4>
+    </h3>
 </div> 
 
-- After the sondes pass through these three processes, the FLAGs are used to determine the final FLAG value for the sonde.  
-    - If ld_FLAG is 0, then the sonde FLAG is termed 'BAD'  
+- After the sondes pass through these three processes, the aforementioned FLAGs are used to determine the final FLAG value for the sonde.  
+    - If ld_FLAG is 0 ==> the sonde FLAG is termed 'BAD'  
     - If ld_FLAG is 1, and if both srf_FLAG and ind_FLAG are 'GOOD', then the sonde FLAG is termed 'GOOD'.  
     - If ld_FLAG is 1, and if both srf_FLAG and ind_FLAG are 'BAD', then the sonde FLAG is termed 'BAD'.  
     - If ld_FLAG is 1, and if srf_FLAG and ind_FLAG have different values, then the sonde FLAG is termed 'UGLY'.   
       
-- Although the process of classifying the sondes can be simplified by other combinations of the ind_flags and srf_flags, the current method ensures that no good sondes are omitted, and no bad sondes are admitted. The rest of the sondes, the ugly sondes, still have data that can be salvaged, and after some QC and/or flagging, can be combined with the other good sondes.  
+- Although the process of classifying the sondes can be simplified by other combinations of the ind_flags and srf_flags, the current method ensures no good sondes are omitted, and no bad sondes are admitted. The rest of the sondes, the ugly sondes, still have data that can be salvaged, and after some QC and/or flagging, can be combined with the other good sondes.  
   
 - The NC file generated as a product stores results for each individual test mentioned above, group of tests and the final classification. Thus, the user can still mould the classification based on their objectives or add/remove tests to the process and customise it for themselves.
+
+<div id="output">
+    <h1>
+       <a href="#TOC">Output</a>
+    </h1>
+</div>
+
+1. <div id="lv2_data_files">
+    <h2>
+       <a href="#TOC">Level-2 Data files</a>
+    </h2>
+</div>
+
+- These files are the individual sounding data files, created in the format mentioned in <a href="file_str">file structure</a>. All files include flight variables such as position, height, speed, etc. in their metadata, among other information.
+- The file names are in the format:
+   
+  ```
+  [campaign]_[platform]_[instrument]_[launch date in the format YYYYMMDD]_[launch time in the format HHMMSS].nc
+
+  e.g. EUREC4A_HALO_Dropsonde-RD41_20200128_195748.nc
+    ```
+
+2. <div id="status_file">
+    <h2>
+       <a href="#TOC">Status File</a>
+    </h2>
+</div>
+
+- The status file is an NC file generated after the Level-2 QC process, and for every sonde launched during EUREC4A, it includes the following data:
+  -  total measurement counts for all parameters (which goes into the estimate of ind_flags)
+  -  all individual ind_flag values and the combined ind_FLAG value
+  -  all individual srf_flag values and the combined srf_FLAG value
+  -  ld_FLAG value
+  -  FLAG value  
+
+- One status file each is generated  for HALO and P3.
+  
+3. <div id="log_file">
+    <h2>
+       <a href="#TOC">Log File</a>
+    </h2>
+</div>
+
+- The log file is a .txt file which records the details of sondes that failed to detect an automatic launch. For the failed sondes, since these details are not available from the Level-1 .PQC files directly, this file is kept as a log. The file also mentions the total sondes that failed to detect a launch.
+  
+- The file also mentions how many sondes were classified as "good","bad" and "ugly" as per each test of ind_FLAG, srf_FLAG and FLAG.
+  
+- One log file each is generated for HALO and P3.
