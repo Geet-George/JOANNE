@@ -1,4 +1,5 @@
 # %%
+import datetime
 import glob
 
 import matplotlib.pyplot as plt
@@ -7,9 +8,9 @@ import metpy.interpolate as mpinterp
 import numpy as np
 import requests
 import xarray as xr
-from metpy.units import units
 from metpy import constants as mpconsts
 from metpy.future import precipitable_water
+from metpy.units import units
 from tqdm import tqdm
 
 # %%
@@ -217,6 +218,32 @@ def calc_rh_from_q(dataset, T=None):
     return rh
 
 
+def add_wind_components_to_dataset(dataset):
+    """
+    Input :
+
+        dataset : xarray dataset
+    
+    Output :
+
+        dataset : xarray dataset
+                  Original dataset, with added variables 'u_wind' and 'v_wind' calculated
+                  from wind_speed and wind_direction of the given dataset
+    
+    Function to compute u and v components of wind, from wind speed and direction in the given dataset,
+    and add them as variables to the dataset.                   
+    """
+    u_wind, v_wind = mpcalc.wind_components(
+        dataset.wind_speed.values * units["m/s"],
+        dataset.wind_direction.values * units.deg,
+    )
+
+    dataset["u_wind"] = (dataset.pressure.dims, u_wind.magnitude)
+    dataset["v_wind"] = (dataset.pressure.dims, v_wind.magnitude)
+
+    return dataset
+
+
 def adding_q_and_theta_to_dataset(dataset):
 
     """
@@ -333,6 +360,17 @@ def substitute_T_and_RH_for_interpolated_dataset(dataset):
 
     dataset["temperature"] = (dataset.pressure.dims, T)
     dataset["relative_humidity"] = (dataset.pressure.dims, rh)
+
+    return dataset
+
+
+def add_cloud_flag(dataset):
+    """
+    Function under construction
+    """
+    cloud_flag = np.full(len(dataset.obs), 0)
+
+    dataset["cloud_flag"] = (dataset.pressure.dims, cloud_flag)
 
     return dataset
 
@@ -476,6 +514,13 @@ def add_platform_details_as_var(dataset):
     dataset["flight_lat"] = dataset.attrs["Latitude (deg)"]
     dataset["flight_lon"] = dataset.attrs["Longitude (deg)"]
 
+    if dataset.attrs["Geopotential Altitude (m)"] < 4000:
+        low_height_flag = 1
+    else:
+        low_height_flag = 0
+
+    dataset["low_height_flag"] = low_height_flag
+
     return dataset
 
 
@@ -498,6 +543,12 @@ def ready_to_interpolate(file_path):
 
     dataset_to_interpolate = xr.open_dataset(file_path).swap_dims({"obs": "height"})
     dataset_to_interpolate = adding_q_and_theta_to_dataset(dataset_to_interpolate)
+    dataset_to_interpolate = add_wind_components_to_dataset(dataset_to_interpolate)
+    dataset_to_interpolate = add_platform_details_as_var(dataset_to_interpolate)
+    dataset_to_interpolate = adding_precipitable_water_to_dataset(
+        dataset_to_interpolate
+    )
+    dataset_to_interpolate = adding_static_stability_to_dataset(dataset_to_interpolate)
 
     return dataset_to_interpolate
 
@@ -525,7 +576,8 @@ def interpolate_for_level_3(
     Function to interpolate a dataset with Level-2 data, in the format 
     for Level-3 gridding, following these steps :
 
-        (i) Variables 'specific_humidity','potential_temperature' and 'precipitable_water' are added to the dataset
+        (i) Variables 'specific_humidity','potential_temperature', wind components, 'precipitable_water' and 'static stability' 
+        are added to the dataset
 
         (ii) All variables along 'height' dimension in dataset are linearly interpolated along the height dimension, at specified height 
         intervals (default 10 m) and up to specified altitude (default 10 km) 
@@ -556,9 +608,6 @@ def interpolate_for_level_3(
     else:
         dataset = file_path_OR_dataset
 
-    dataset = add_platform_details_as_var(dataset)
-    dataset = adding_precipitable_water_to_dataset(dataset)
-
     interpolated_dataset = interp_along_height(
         dataset, height_limit=height_limit, vertical_spacing=vertical_spacing
     )
@@ -572,7 +621,7 @@ def interpolate_for_level_3(
         interpolated_dataset
     )
 
-    interpolated_dataset = adding_static_stability_to_dataset(interpolated_dataset)
+    interpolated_dataset = add_cloud_flag(interpolated_dataset)
 
     return interpolated_dataset
 
@@ -649,6 +698,30 @@ lv3_dataset = lv3_structure_from_lv2(lv2_data_directory)
 #     lv3_dataset = main()
 # %%
 
+list_of_vars = [
+    "launch_time",
+    "height",
+    "latitude",
+    "longitude",
+    "pressure",
+    "temperature",
+    "relative_humidity",
+    "wind_speed",
+    "wind_direction",
+    "u_wind",
+    "v_wind",
+    "potential_temperature",
+    "specific_humidity",
+    "precipitable_water",
+    "static_stability",
+    "low_height_flag",
+    "cloud_flag",
+    "Platform",
+    "flight_height",
+    "flight_lat",
+    "flight_lon",
+]
+
 nc_attrs = {
     "launch_time": {
         "standard_name": "time",
@@ -691,34 +764,46 @@ nc_attrs = {
         "units": "degree_Celsius",
         "coordinates": "launch_time longitude latitude height",
     },
-    "relative_humidity": {
-        "standard_name": "relative_humidity",
-        "long_name": "Relative Humidity",
-        "units": "%",
-        "coordinates": "launch_time longitude latitude height",
-    },
-    "wind_speed": {
-        "standard_name": "wind_speed",
-        "long_name": "Wind Speed",
-        "units": "m/s",
-        "coordinates": "launch_time longitude latitude height",
-    },
-    "wind_direction": {
-        "standard_name": "wind_from_direction",
-        "long_name": "Wind Direction",
-        "units": "m/s",
-        "coordinates": "launch_time longitude latitude height",
-    },
     "potential_temperature": {
         "standard_name": "potential_temperature",
         "long_name": "potential temperature",
         "units": "K",
         "coordinates": "launch_time longitude latitude height",
     },
+    "relative_humidity": {
+        "standard_name": "relative_humidity",
+        "long_name": "Relative Humidity",
+        "units": "%",
+        "coordinates": "launch_time longitude latitude height",
+    },
     "specific_humidity": {
         "standard_name": "specific_humidity",
         "long_name": "Specific humidity",
-        "units": "kg/kg",
+        "units": "kg kg-1",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "wind_speed": {
+        "standard_name": "wind_speed",
+        "long_name": "Wind Speed",
+        "units": "m s-1",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "u_wind": {
+        "standard_name": "eastward_wind",
+        "long_name": "u-component of the wind",
+        "units": "m s-1",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "v_wind": {
+        "standard_name": "northward_wind",
+        "long_name": "v-component of the wind",
+        "units": "m s-1",
+        "coordinates": "launch_time longitude latitude height",
+    },
+    "wind_direction": {
+        "standard_name": "wind_from_direction",
+        "long_name": "Wind Direction",
+        "units": "m/s",
         "coordinates": "launch_time longitude latitude height",
     },
     "precipitable_water": {
@@ -731,13 +816,24 @@ nc_attrs = {
         "standard_name": "static_stability",
         "long_name": "static stability",
         "description": "gradient of potential temperature along the pressure grid",
-        "units": " K",
+        "units": " K hPa-1",
         "coordinates": "launch_time longitude latitude height",
+    },
+    "low_height_flag": {
+        "long_name": "flag to indicate if flight height at launch was low",
+        "flag_values": "1, 0",
+        "flag_meanings": "flight height below 4 km flight height at or above 4 km",
+        "valid_range": "0, 1",
+    },
+    "cloud_flag": {
+        "long_name": "flag to indicate presence of cloud",
+        "flag_values": "1, 0",
+        "flag_meanings": "cloud no_cloud",
+        "valid_range": "0, 1",
     },
     "Platform": {
         "standard_name": "platform",
         "long_name": "platform from which the sounding was made",
-        # "units": "kg m-2",
         "coordinates": "launch_time",
     },
     "flight_height": {
@@ -749,13 +845,13 @@ nc_attrs = {
     "flight_lat": {
         "standard_name": "latitude",
         "long_name": "north latitude of the aircraft when the dropsonde was launched",
-        "units": "degree",
+        "units": "degree north",
         "coordinates": "launch_time",
     },
     "flight_lon": {
         "standard_name": "longitude",
         "long_name": "east longitude of the aircraft when the dropsonde was launched",
-        "units": "degree",
+        "units": "degree east",
         "coordinates": "launch_time",
     },
 }
@@ -763,17 +859,21 @@ nc_attrs = {
 nc_dims = {
     "launch_time": ["sounding"],
     "height": ["obs"],
-    "latitude": ["sounding","obs"],
-    "longitude": ["sounding","obs"],
-    "pressure": ["sounding","obs"],
-    "temperature": ["sounding","obs"],
-    "relative_humidity": ["sounding","obs"],
-    "wind_speed": ["sounding","obs"],
-    "wind_direction": ["sounding","obs"],
-    "potential_temperature": ["sounding","obs"],
-    "specific_humidity": ["sounding","obs"],
+    "latitude": ["sounding", "obs"],
+    "longitude": ["sounding", "obs"],
+    "pressure": ["sounding", "obs"],
+    "temperature": ["sounding", "obs"],
+    "relative_humidity": ["sounding", "obs"],
+    "wind_speed": ["sounding", "obs"],
+    "wind_direction": ["sounding", "obs"],
+    "u_wind": ["sounding", "obs"],
+    "v_wind": ["sounding", "obs"],
+    "potential_temperature": ["sounding", "obs"],
+    "specific_humidity": ["sounding", "obs"],
     "precipitable_water": ["sounding"],
-    "static_stability": ["sounding","obs"],
+    "static_stability": ["sounding", "obs"],
+    "low_height_flag": ["sounding"],
+    "cloud_flag": ["sounding", "obs"],
     "Platform": ["sounding"],
     "flight_height": ["sounding"],
     "flight_lat": ["sounding"],
@@ -782,20 +882,25 @@ nc_dims = {
 
 nc_data = {}
 
-for var in nc_attrs.keys() :
+for var in nc_attrs.keys():
     nc_data[var] = lv3_dataset[var].values
 
 nc_global_attrs = {
-            "Title": "Gridded, sounding data from JOANNE Level-2",
-            "Campaign": "EUREC4A-ATOMIC",
-            "Instrument": "Vaisala RD41",
-            "Conventions": "CF-1.7",
-            "featureType": "trajectory",
-        }
+    "Title": "Gridded, sounding data from JOANNE Level-2",
+    "Campaign": "EUREC4A-ATOMIC (Jan-Feb, 2020)",
+    "Instrument": "Vaisala RD41 (AVAPS receiver aboard aircraft)",
+    "Data Processing for Level-2": 'AvapsEditorVersion "BatchAspen V3.4.3"',
+    "Author": "Geet George (MPI-M, Hamburg); geet.george@mpimet.mpg.de",
+    "version": "0.1.0-alpha",
+    "Conventions": "CF-1.7",
+    "featureType": "trajectory",
+    "Creation Time": str(datetime.datetime.utcnow()) + " UTC",
+}
+
 
 def create_variable(ds, var, **kwargs):
     """Insert the data into a variable in an :class:`xr.Dataset`"""
-    data = nc_data[var] # must be of type array
+    data = nc_data[var]  # must be of type array
     attrs = nc_attrs[var].copy()
     dims = nc_dims[var]
 
@@ -803,14 +908,29 @@ def create_variable(ds, var, **kwargs):
     ds[var] = v
 
     return var
+
 # %%
 
 obs = lv3_dataset.obs.values
 sounding = lv3_dataset.sounding.values
 
-to_save_ds = xr.Dataset(coords={"obs": obs,"sounding": sounding})
+to_save_ds = xr.Dataset(coords={"obs": obs, "sounding": sounding})
 
-for var in nc_attrs.keys():
+for var in list_of_vars:
     create_variable(to_save_ds, var)
 
+file_name = "EUREC4A_" + "_Dropsonde-RD41_" + "Level_3A" + ".nc"
+
+save_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_3/"
+
+comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max)
+
+encoding = {var: comp for var in to_save_ds.data_vars if var != 'Platform'}
+
+for key in nc_global_attrs.keys():
+    to_save_ds.attrs[key] = nc_global_attrs[key]
+
+to_save_ds.to_netcdf(
+            save_directory + file_name, mode="w", format="NETCDF4", encoding=encoding
+        )
 # %%
