@@ -148,15 +148,15 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
         <a href="#TOC">Sonde classification and QC terminology</a>
     </h2>
 
-<b>'flag'</b> : record of result of local test  
-<b>'good'</b> : passes local test  
-<b>'bad'</b>  : fails local test  
-<b>'ugly'</b> : fails preliminary local test, but some data may be salvaged  
+<b>`flag`</b> : record of result of local test  
+<b>`good`</b> : passes local test  
+<b>`bad`</b>  : fails local test  
+<b>`ugly`</b> : fails preliminary local test, but some data may be salvaged  
 
-<b>'FLAG'</b> : record of result of group of tests or final flag for sonde  
-<b>'GOOD'</b> : sonde is good, passed all tests and can be used straightaway  
-<b>'BAD'</b>  : sonde is bad, should not be considered for any further data processing or analysis  
-<b>'UGLY'</b> : sonde has some data that may be salvaged later, but cannot be processed straightaway. Needs more QC.
+<b>`FLAG`</b> : record of result of group of tests or final flag for sonde  
+<b>`GOOD`</b> : sonde is good, passed all tests and can be used straightaway  
+<b>`BAD`</b>  : sonde is bad, should not be considered for any further data processing or analysis  
+<b>`UGLY`</b> : sonde has some data that may be salvaged later, but cannot be processed straightaway. Needs more QC.
 
 
 <div id="quality_checks">
@@ -175,22 +175,22 @@ There are 3 individual processes used to classify sondes, which are combined lat
 
 - Ratio of individual parameter's count to the total count of records (time is used as proxy for measurement record. Multiple parameters can have values at a single record.)
     - There is one flag each for the following parameters:  
-    t_flag   : *temperature (tdry)*  
-    p_flag   : *pressure (pres)*  
-    rh_flag  : *relative humidity (rh)*  
-    z_flag   : *GPS altitude (gpsalt)*  
-    u_flag   : *u wind (u_wind)*  
-    v_flag   : *v wind (v_wind)*  
+    `t_flag`   : *temperature (tdry)*  
+    `p_flag`   : *pressure (pres)*  
+    `rh_flag`  : *relative humidity (rh)*  
+    `z_flag`   : *GPS altitude (gpsalt)*  
+    `u_flag`   : *u wind (u_wind)*  
+    `v_flag`   : *v wind (v_wind)*  
 
 - Time values are recorded every 0.25 seconds. Although, the PTU and GPS sensors have a measurement frequency of 2 Hz and 4 Hz, respectively, the distribution of measurements vary slightly from the ideal case - which is for all parameters (except u,v) to have measurements at every other time record, and for u,v to have measurements at every time record. Since, the time records also include values during initialisation as well as during a little before and after the launch, when no signal can be sent back to the AVAPS PC, the actual ratio will always be lower than the ideal estimate of 1 (for u,v) and 0.5 (for the remaining parameters).
 
-- The true distribution shows that peaks start to flatten around 0.8 and 0.4 for u,v and other parameters, respectively. Thus, sondes with ratios lower than these values are taken as not having a complete profile, and termed as 'ugly' sondes. These ugly sondes still have data, but because they are expected to have more NaN fields than most sondes, they are kept for more QC and NaN-filling later, depending upon the extent of the dearth of measurements in that sonde.
+- The true distribution shows that peaks start to flatten around 0.8 and 0.4 for u,v and other parameters, respectively. Thus, sondes with ratios lower than these values are taken as not having a complete profile, and termed as `ugly` sondes. These ugly sondes still have data, but because they are expected to have more NaN fields than most sondes, they are kept for more QC and NaN-filling later, depending upon the extent of the dearth of measurements in that sonde.
 
-- For each parameter, if this proportional ratio is higher than the set threshold, then the sonde is flagged as 'good'. If the ratio is lower than set threshold, but non-zero, then the sonde is flagged 'ugly' and if the ratio is zero, i.e. this particular parameter was not measured at all for the sonde, then, it is flagged as 'bad'. (This value might later be changed from zero to 10% of the time counts).
+- For each parameter, if this proportional ratio is higher than the set threshold, then the sonde is flagged as `good`. If the ratio is lower than set threshold, but non-zero, then the sonde is flagged `ugly` and if the ratio is zero, i.e. this particular parameter was not measured at all for the sonde, then, it is flagged as `bad`. (This value might later be changed from zero to 10% of the time counts).
   
-  - If all individual ind_flags are 'good', the sonde is flagged as 'GOOD' for ind_FLAG,  
-  - if all individual ind_flags are 'bad', the sonde is flagged as 'BAD' for ind_FLAG,  
-  - if neither of these conditions is met, the sonde is flagged as 'UGLY' for ind_FLAG.
+  - If all individual ind_flags are `good`, the sonde is flagged as `GOOD` for `ind_FLAG`,  
+  - if all individual ind_flags are `bad`, the sonde is flagged as `BAD` for `ind_FLAG`,  
+  - if neither of these conditions is met, the sonde is flagged as `UGLY` for `ind_FLAG`.
     
 <div style="text-align: justify">
 
@@ -223,10 +223,10 @@ There are 3 individual processes used to classify sondes, which are combined lat
 
     - This flag checks if tdry (air temperature) is within bounds:
     
-      1. Maximum air temperature recorded should not be greater than the upper limit (u_limit), set to a default value of 30 deg C.
-      2. Mean air temperature in the bottom 100 m (by gpsalt) should not be lesser than srf_limit, set to a default of 20 deg C.
+      1. Maximum air temperature recorded should not be greater than the upper limit, set to a default value of 30 deg C.
+      2. Mean air temperature in the bottom 100 m (by gpsalt) should not be lesser than surface limit, set to a default of 20 deg C.
     
-    - If any of the above limits is violated, the tdry for the sonde is considered out of bounds, and marked as 'False'. The sonde is also marked 'False', if there are no measurements in the bottom 100 m (by gpsalt).
+    - If any of the above limits is violated, the tdry for the sonde is considered out of bounds, and marked as `False`. The sonde is also marked `False`, if there are no measurements in the bottom 100 m (by gpsalt).
 
 - <div id="srf_rh_flag">
     <h4>
@@ -238,7 +238,7 @@ There are 3 individual processes used to classify sondes, which are combined lat
     
       1. Mean RH in the bottom 100 m (by gpsalt) should not be lesser than srf_limit, set to a default of 50 %.
     
-    - If the above limit is violated, the rh for the sonde is considered out of bounds, and marked as 'False'. The sonde is also marked 'False', if there are no measurements in the bottom 100 m (by gpsalt). 
+    - If the above limit is violated, the rh for the sonde is considered out of bounds, and marked as `False`. The sonde is also marked `False`, if there are no measurements in the bottom 100 m (by gpsalt). 
     
 - <div id="srf_z_flag">
     <h4>
@@ -260,26 +260,26 @@ There are 3 individual processes used to classify sondes, which are combined lat
     - This function estimates the root mean square (RMS) difference between geopotential altitude (palt) and the GPS altitude (gpsalt),for values below 4 km, and based on a limit (rms_limit; 
     set to a default value of 100 m), is flagged accordingly.
     
-    - If the estimated RMS difference is below the limit, then the sonde is flagged as 'True' for this test.
+    - If the estimated RMS difference is below the limit, then the sonde is flagged as `True` for this test.
     
     - If the estimated RMS difference is greater than the limit, or if there are no values of either palt or gpsalt
-    overlapping in the lower 4 km, then the sonde is flagged as 'False' for this test. The lack of overlap could be 
+    overlapping in the lower 4 km, then the sonde is flagged as `False` for this test. The lack of overlap could be 
     because either there are no palt values or no gpsalt values or both.
     
     - If the above limit is violated, the rh for the sonde is considered out of bounds,
-    and marked as 'False'. The sonde is also marked 'False', if there are no measurements in the 
+    and marked as `False`. The sonde is also marked `False`, if there are no measurements in the 
     bottom 100 m (by gpsalt). 
 ---
 - <div id="srf_flag">
     <h4>
-       <a href="#TOC"><b>srf_FLAG:</b></a>
+       <a href="#TOC"><b>`srf_FLAG`:</b></a>
     </h4>
   </div>
 
-  - For each of these srf_flags, if the sonde passes the test, it is marked as 1, else as 0, which stand for 'good' and 'bad' respectively. 
-    - If all individual srf_flags are 'good', the sonde is flagged as 'GOOD' for srf_FLAG,  
-    - if all individual srf_flags are 'bad', the sonde is flagged as 'BAD' for srf_FLAG,  
-    - if neither of these conditions is met, the sonde is flagged as 'UGLY' for srf_FLAG.  
+  - For each of these srf_flags, if the sonde passes the test, it is marked as 1, else as 0, which stand for `good` and `bad` respectively. 
+    - If all individual srf_flags are `good`, the sonde is flagged as `GOOD` for `srf_FLAG`,  
+    - if all individual srf_flags are `bad`, the sonde is flagged as `BAD` for `srf_FLAG`,  
+    - if neither of these conditions is met, the sonde is flagged as `UGLY` for `srf_FLAG`.  
  ---     
 <div style="text-align: justify">
 
@@ -291,9 +291,9 @@ There are 3 individual processes used to classify sondes, which are combined lat
 
 - Checking whether the sonde detected a launch automatically. If the sonde fails to do this, it does not switch to high-power signal transmission, and thus, stops sending data back to the AVAPS PC, after a short range. 
     
-- The primary method to check launch detection is to parse through the log files of the sonde in raw format. These files have names starting with 'A' and are followed by the date and time of launch. The file extension is the number of the channel used to initialise the sonde and receive its signal, but for all practical purposes, it is a .txt file. (Note: For sondes that did not detect a launch, the file name has time when the sonde was initialised). The log file contains an internal record termed 'Launch Obs Done?'. If this value is 1, the launch was detected, else if it is 0, launch was not detected. The same values are used to mark the ld_FLAG.
+- The primary method to check launch detection is to parse through the log files of the sonde in raw format. These files have names starting with 'A' and are followed by the date and time of launch. The file extension is the number of the channel used to initialise the sonde and receive its signal, but for all practical purposes, it is a .txt file. (Note: For sondes that did not detect a launch, the file name has time when the sonde was initialised). The log file contains an internal record termed 'Launch Obs Done?'. If this value is 1, the launch was detected, else if it is 0, launch was not detected. The same values are used to mark the `ld_FLAG`.
 
-- An alternative method to check launch detection is through an attribute of the PQC files, called 'reference_time'. If a launch was detected, this attribute shows the launch time. If a launch was not detected automatically, the attribute shows the correct date, but the time is 'T00:00:00.000'. This can also be used to mark the ld_FLAG. However, this should only be used as a quick-fix if the log files are not available, since this test is not fool-proof. Moreover, PQC files with no automatic launch detection do not have relevant sonde information such as SondeID added to them. 
+- An alternative method to check launch detection is through an attribute of the PQC files, called 'reference_time'. If a launch was detected, this attribute shows the launch time. If a launch was not detected automatically, the attribute shows the correct date, but the time is 'T00:00:00.000'. This can also be used to mark the `ld_FLAG`. However, this should only be used as a quick-fix if the log files are not available, since this test is not fool-proof. Moreover, PQC files with no automatic launch detection do not have relevant sonde information such as SondeID added to them. 
 
 <div style="text-align: justify">
 
@@ -304,13 +304,13 @@ There are 3 individual processes used to classify sondes, which are combined lat
     </h3>
 </div> 
 
-- After the sondes pass through these three processes, the aforementioned FLAGs are used to determine the final FLAG value for the sonde.  
-    - If ld_FLAG is 0 ==> the sonde FLAG is termed 'BAD'  
-    - If ld_FLAG is 1, and if both srf_FLAG and ind_FLAG are 'GOOD', then the sonde FLAG is termed 'GOOD'.  
-    - If ld_FLAG is 1, and if both srf_FLAG and ind_FLAG are 'BAD', then the sonde FLAG is termed 'BAD'.  
-    - If ld_FLAG is 1, and if srf_FLAG and ind_FLAG have different values, then the sonde FLAG is termed 'UGLY'.   
+- After the sondes pass through these three processes, the aforementioned `FLAG`s are used to determine the final `FLAG` value for the sonde.  
+    - If `ld_FLAG` is 0 ==> the sonde FLAG is termed `BAD`  
+    - If `ld_FLAG` is 1, and if both `srf_FLAG` and `ind_FLAG` are `GOOD`, then the sonde FLAG is termed `GOOD`.  
+    - If `ld_FLAG` is 1, and if both `srf_FLAG` and `ind_FLAG` are `BAD`, then the sonde FLAG is termed `BAD`.  
+    - If `ld_FLAG` is 1, and if `srf_FLAG` and `ind_FLAG` have different values, then the sonde FLAG is termed `UGLY`.   
       
-- Although the process of classifying the sondes can be simplified by other combinations of the ind_flags and srf_flags, the current method ensures no good sondes are omitted, and no bad sondes are admitted. The rest of the sondes, the ugly sondes, still have data that can be salvaged, and after some QC and/or flagging, can be combined with the other good sondes.  
+- Although the process of classifying the sondes can be simplified by other combinations of the `ind_flag`s and `srf_flag`s, the current method ensures no good sondes are omitted, and no bad sondes are admitted. The rest of the sondes, the ugly sondes, still have data that can be salvaged, and after some QC and/or flagging, can be combined with the other good sondes.  
   
 - The NC file generated as a product stores results for each individual test mentioned above, group of tests and the final classification. Thus, the user can still mould the classification based on their objectives or add/remove tests to the process and customise it for themselves.
 ---
@@ -342,11 +342,11 @@ There are 3 individual processes used to classify sondes, which are combined lat
 </div>
 
 - The status file is an NC file generated after the Level-2 QC process, and for every sonde launched during EUREC4A, it includes the following data:
-  -  total measurement counts for all parameters (which goes into the estimate of ind_flags)
-  -  all individual ind_flag values and the combined ind_FLAG value
-  -  all individual srf_flag values and the combined srf_FLAG value
-  -  ld_FLAG value
-  -  FLAG value  
+  -  total measurement counts for all parameters (which goes into the estimate of `ind_flag`s)
+  -  all individual ind_flag values and the combined `ind_FLAG` value
+  -  all individual srf_flag values and the combined `srf_FLAG` value
+  -  `ld_FLAG` value
+  -  `FLAG` value  
 
 - One status file each is generated  for HALO and P3.
   
@@ -358,6 +358,6 @@ There are 3 individual processes used to classify sondes, which are combined lat
 
 - The log file is a .txt file which records the details of sondes that failed to detect an automatic launch. For the failed sondes, since these details are not available from the Level-1 .PQC files directly, this file is kept as a log. The file also mentions the total sondes that failed to detect a launch.
   
-- The file also mentions how many sondes were classified as "good","bad" and "ugly" as per each test of ind_FLAG, srf_FLAG and FLAG.
+- The file also mentions how many sondes were classified as "good","bad" and "ugly" as per each test of `ind_FLAG`, `srf_FLAG` and `FLAG`.
   
 - One log file each is generated for HALO and P3.
