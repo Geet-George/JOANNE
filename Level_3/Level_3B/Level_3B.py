@@ -331,7 +331,7 @@ ds = xr.Dataset(
     coords={"height": circles[0].alt.values, "circle": circle},
     attrs={
         "Author": "Geet George (MPI-M, Hamburg); geet.george@mpimet.mpg.de",
-        "Instrument": "Vaisala RD94 (AVAPS receiver aboard HALO)",
+        "Instrument": "Vaisala RD41 (AVAPS receiver aboard HALO)",
         "Data Processing": 'AvapsEditorVersion "BatchAspen V3.4.3"',
         "Campaign": "EUREC4A (Jan-Feb,2020)",
         "Reference Study": "Bony, S. & Stevens, B., 2019, “Measuring Area-Averaged Vertical Motions with Dropsondes.” Journal of the Atmospheric Sciences 76 (3): 767–83",
