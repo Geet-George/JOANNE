@@ -11,3 +11,18 @@ Sonde ID/Type/Rev/Built/Sensors:   192620601, 3, A2, 20190716T181848Z, RSS421,NE
 START Time:          2020-02-11 07:19:39.262 (3664250379.262)
 ------------------------------------------
 In total, there were 4 sondes that didn't detect a launch.
+----------------------------------------------
+As per the ind_FLAG tests,
+288 are good sondes,
+0 are bad sondes
+and 34 are ugly sondes.
+----------------------------------------------
+As per the srf_FLAG tests,
+284 are good sondes,
+8 are bad sondes
+and 30 are ugly sondes.
+----------------------------------------------
+There are a total of 322 sondes
+out of which 262 are good sondes,
+10 are bad sondes
+and 50 are ugly sondes that can be salvaged with some effort.
