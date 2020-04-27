@@ -255,6 +255,7 @@ In the case of a regular drop, i.e. if there are no issues like a fast fall, or 
 Taking 7-8 m to be the typical vertical resolution of PTU measurements, at a grid of 10 m spacing, this would be a slight downscaling of the raw measurements. For the wind values, however, this would mean neglecting almost half the measured values. An option is to keep the wind values at 5 m grid, and the others at a 10 m grid, although this would mean that it becomes slightly inconvenient to work with the dataset as a whole. This is left to the users' feedback for now. 
 
 <div id="interpolation"><h2><a href="#TOC">Interpolation</a></h2></div>
+The interpolation to the common grid is carried out through the following steps: 
 
 (i) Variables `specific_humidity, potential_temperature, u_wind, v_wind precipitable_water` and `static stability` are added to the dataset.
 

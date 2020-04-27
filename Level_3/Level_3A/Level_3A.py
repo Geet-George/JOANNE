@@ -359,7 +359,7 @@ def substitute_T_and_RH_for_interpolated_dataset(dataset):
     rh = calc_rh_from_q(dataset, T=T)
 
     dataset["temperature"] = (dataset.pressure.dims, T)
-    dataset["relative_humidity"] = (dataset.pressure.dims, rh)
+    dataset["relative_humidity"] = (dataset.pressure.dims, rh * 100)
 
     return dataset
 
@@ -537,8 +537,9 @@ def ready_to_interpolate(file_path):
                                  dataset ready for interpolation
 
     Function that takes in the path to Level-2 NC file and makes it ready for interpolation,
-    by swapping dimension from 'obs' to 'height', and adding the 'specific_humidity' and
-    'potential_temperature' variables to the dataset.                                
+    by swapping dimension from 'obs' to 'height', and adding 'specific_humidity',
+    'potential_temperature','wind_components','precipitable_water',
+    and platform details variables to the dataset.                                
     """
 
     dataset_to_interpolate = xr.open_dataset(file_path).swap_dims({"obs": "height"})
@@ -548,7 +549,6 @@ def ready_to_interpolate(file_path):
     dataset_to_interpolate = adding_precipitable_water_to_dataset(
         dataset_to_interpolate
     )
-    dataset_to_interpolate = adding_static_stability_to_dataset(dataset_to_interpolate)
 
     return dataset_to_interpolate
 
@@ -574,33 +574,7 @@ def interpolate_for_level_3(
                                interpolated dataset
 
     Function to interpolate a dataset with Level-2 data, in the format 
-    for Level-3 gridding, following these steps :
-
-        (i) Variables 'specific_humidity','potential_temperature', wind components, 'precipitable_water' and 'static stability' 
-        are added to the dataset
-
-        (ii) All variables along 'height' dimension in dataset are linearly interpolated along the height dimension, at specified height 
-        intervals (default 10 m) and up to specified altitude (default 10 km) 
-
-        (iii) Pressure values are interpolated using a logarithmic interpolation scheme
-        and these values replace the linearly interpolated pressure values. 
-        
-        Caveat : The difference between these different interpolations is in the order of 0.005 hPa, which is lower than 
-        the measurement uncertainty of the pressure sensor itself of the RD-41 itself. There is a significant computational 
-        cost involved, however, with carrying out this added logarithmic interpolation of pressure, since it employs an 
-        iterative numerical method. If linearly interpolated values of pressure suffice for the user, they can choose
-        to specify keyword pressure_interpolation = 'linear' and this will skip the logarithmic interpolation, making 
-        the function perform faster.
-
-        (iv) The temperature and moisture variables are to be interpolated with values of theta and q, respectively. Thus,
-        after interpolation, T and RH variables are recomputed from the interpolated values of theta and q. The new values for
-        T and RH will replace the previously interpolated T and RH variables. Although, T and RH are the originally measured 
-        properties by the dropsonde sensors, for interpolation q and theta are preferred, as these variables are conserved.
-
-        (v) At this step of interpolation, the 'time' variable is dropped from the dataset, since in the original files,
-        time is an independent variable, and interpolating time here will not work in the same way as for all other variables.
-        For the gridded product, time will be an artificial residue, if interpolated, and for almost all practical purposes, the 
-        sounding can be seen as a snapshot in time, with only the launch time being a relevant timestamp for every sonde.
+    for Level-3 gridding
     """
 
     if type(file_path_OR_dataset) is str:
@@ -622,6 +596,7 @@ def interpolate_for_level_3(
     )
 
     interpolated_dataset = add_cloud_flag(interpolated_dataset)
+    interpolated_dataset = adding_static_stability_to_dataset(interpolated_dataset)
 
     return interpolated_dataset
 
@@ -671,7 +646,7 @@ def lv3_structure_from_lv2(
 
     interp_list = [None] * len(list_of_files)
 
-    for id_, file_path in enumerate(list_of_files):
+    for id_, file_path in enumerate(tqdm(list_of_files)):
         interp_list[id_] = interpolate_for_level_3(
             file_path,
             height_limit=height_limit,
@@ -688,7 +663,9 @@ def lv3_structure_from_lv2(
 
 
 # def main():
-lv2_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/code_testing_data/"
+lv2_data_directory = (
+    "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_2/"  # code_testing_data/"
+)
 lv3_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_3/Test_data/"
 
 lv3_dataset = lv3_structure_from_lv2(lv2_data_directory)
@@ -909,6 +886,7 @@ def create_variable(ds, var, **kwargs):
 
     return var
 
+
 # %%
 
 obs = lv3_dataset.obs.values
@@ -919,18 +897,22 @@ to_save_ds = xr.Dataset(coords={"obs": obs, "sounding": sounding})
 for var in list_of_vars:
     create_variable(to_save_ds, var)
 
-file_name = "EUREC4A_" + "_Dropsonde-RD41_" + "Level_3A" + ".nc"
+file_name = "EUREC4A" + "_Dropsonde-RD41_" + "Level_3A" + ".nc"
 
 save_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_3/"
 
 comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max)
 
-encoding = {var: comp for var in to_save_ds.data_vars if var != 'Platform'}
+encoding = {var: comp for var in to_save_ds.data_vars if var != "Platform"}
 
 for key in nc_global_attrs.keys():
     to_save_ds.attrs[key] = nc_global_attrs[key]
 
 to_save_ds.to_netcdf(
-            save_directory + file_name, mode="w", format="NETCDF4", encoding=encoding
-        )
+    save_directory + file_name, mode="w", format="NETCDF4", encoding=encoding
+)
+# %%
+
+# df = pd.DataFrame(nc_attrs.values(), index=nc_attrs.keys())
+
 # %%
