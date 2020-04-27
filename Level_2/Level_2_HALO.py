@@ -1,16 +1,16 @@
 # %%
-import xarray as xr
+import datetime
 import glob
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
 import sys
-from tqdm import tqdm
-
-import seaborn as sb
-from seaborn import distplot
-
 import warnings
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sb
+import xarray as xr
+from seaborn import distplot
+from tqdm import tqdm
 
 warnings.filterwarnings("ignore", message="Mean of empty slice")
 warnings.filterwarnings("ignore", message="All-NaN slice encounter")
@@ -251,7 +251,6 @@ def create_variable(ds, vname, data, **kwargs):
 
 # %%
 ###------ Platform Name ------###
-
 Platform_Name = "HALO"
 
 # %%
@@ -264,6 +263,9 @@ a_dir = (
     "/Users/geet/Documents/EUREC4A/Dropsondes_raw/" + Platform_Name + "/All_A_files/"
 )
 # directory where all the A files are present
+
+logs_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Level_2/logs_and_stats/"
+# directory to store logs and stats
 
 sonde_paths = sorted(glob.glob(directory + "*_PQC.nc"))
 # paths to the individual sonde files
@@ -322,7 +324,7 @@ ld_FLAG = np.full(len(a_files), np.nan)
 # array to store ld_FLAG values
 
 # create and start writing a log file which will store sonde info about sondes with failed launch detection
-file = open(f"no_launch_detect_logs_{Platform_Name}.txt", "w")
+file = open(f"{logs_directory}no_launch_detect_logs_{Platform_Name}.txt", "w")
 
 g = 0
 # counter of failed sondes
@@ -382,12 +384,8 @@ for id_, i in enumerate(a_filepaths):
             else:
                 ld_FLAG[id_] = True
 
-file.write(f"In total, there were {g} sondes that didn't detect a launch.")
+file.write(f"In total, there were {g} sondes that didn't detect a launch.\n")
 # writing summary of failed sondes to the log file
-
-file.close()
-# closing the log file
-
 
 # %%
 # adding ld_FLAG to the list of variables, for easy addition to the dataset
@@ -404,11 +402,10 @@ for var in list_of_variables:
 # Creating the dataset
 status_ds = xr.Dataset(data_vars, coords={"time": file_time})
 
-
 # %%
 # Plotting the distribution of ratio of parameter's non-NaN measurement counts to counts of time
 
-f, ax = plt.subplots(2, 1, figsize=(12, 12))
+f, ax = plt.subplots(2, 1, figsize=(10, 14))
 
 # looping over all parameters
 for var in list_of_variables[1:-1]:
@@ -451,7 +448,7 @@ for var in list_of_variables[1:-1]:
     )
 
 sb.despine(offset=10)
-plt.savefig(f"Count_of_measurements_{Platform_Name}.png", dpi=300)
+plt.savefig(f"{logs_directory}Count_of_measurements_{Platform_Name}.png", dpi=300)
 # %% [markdown]
 # Time values are recorded every 0.25 seconds. Although, the PTU and GPS sensors have a measurement frequency of 2 Hz and 4 Hz, respectively, the distribution of measurements have a slightly different story. Based on the distribution, we know that the ideal case is for all parameters (except u,v) to have measurements at every other time record, and for u,v to have measurements at every time record. Since, the time records also include values during initialisation as well as during a little before and after the launch, when no signal can be sent back to the AVAPS PC, the actual ratio will always be lower than the ideal estimate of 1 (for u,v) and 0.5 (for the remaining parameters).
 #
@@ -660,9 +657,10 @@ good_ind = len(status_ds.where(status_ds.ind_FLAG == "GOOD", drop=True).time)
 ugly_ind = len(status_ds.where(status_ds.ind_FLAG == "UGLY", drop=True).time)
 bad_ind = len(status_ds.where(status_ds.ind_FLAG == "BAD", drop=True).time)
 
-print(f"As per the ind_FLAG tests,")
-print(f"out of which {good_ind} are good sondes,")
-print(f"{bad_ind} are bad sondes\nand {ugly_ind} are ugly sondes.")
+file.write("----------------------------------------------\n")
+file.write(f"As per the ind_FLAG tests,\n")
+file.write(f"{good_ind} are good sondes,\n")
+file.write(f"{bad_ind} are bad sondes\nand {ugly_ind} are ugly sondes.\n")
 
 
 # %%
@@ -670,9 +668,10 @@ good_srf = len(status_ds.where(status_ds.srf_FLAG == "GOOD", drop=True).time)
 ugly_srf = len(status_ds.where(status_ds.srf_FLAG == "UGLY", drop=True).time)
 bad_srf = len(status_ds.where(status_ds.srf_FLAG == "BAD", drop=True).time)
 
-print(f"As per the srf_FLAG tests,")
-print(f"out of which {good_srf} are good sondes,")
-print(f"{bad_srf} are bad sondes\nand {ugly_srf} are ugly sondes.")
+file.write("----------------------------------------------\n")
+file.write(f"As per the srf_FLAG tests,\n")
+file.write(f"{good_srf} are good sondes,\n")
+file.write(f"{bad_srf} are bad sondes\nand {ugly_srf} are ugly sondes.\n")
 
 
 # %%
@@ -680,13 +679,16 @@ good_sondes = len(status_ds.where(status_ds.FLAG == "GOOD", drop=True).time)
 ugly_sondes = len(status_ds.where(status_ds.FLAG == "UGLY", drop=True).time)
 bad_sondes = len(status_ds.where(status_ds.FLAG == "BAD", drop=True).time)
 
-print(f"There are a total of {len(status_ds.time)} sondes")
-print(f"out of which {good_sondes} are good sondes,")
-print(
-    f"{bad_sondes} are bad sondes\nand {ugly_sondes} are ugly sondes that can be salvaged with some effort."
+file.write("----------------------------------------------\n")
+file.write(f"There are a total of {len(status_ds.time)} sondes\n")
+file.write(f"out of which {good_sondes} are good sondes,\n")
+file.write(
+    f"{bad_sondes} are bad sondes\nand {ugly_sondes} are ugly sondes that can be salvaged with some effort.\n"
 )
 
-status_ds.to_netcdf(f'Status_of_sondes_{Platform_Name}.nc')
+file.close()
+
+status_ds.to_netcdf(f"{logs_directory}Status_of_sondes_{Platform_Name}.nc")
 # %%
 
 nc_meta = {
@@ -770,7 +772,8 @@ list_of_flight_attrs = [
     "Latitude (deg)",
     "MSL Altitude (m)",
     "Geopotential Altitude (m)",
-    "Software Notes" "Format Notes",
+    "Software Notes",
+    "Format Notes",
 ]
 
 # mission_pi = []
@@ -833,8 +836,11 @@ for i in tqdm(range(len(sonde_ds))):
             "ASPEN Version": sonde_ds[i].AspenVersion,
             "Processing Time": sonde_ds[i].ProcessingTime,
             "Mission PI": "Mission PI",
+            "Author": "Geet George (MPI-M, Hamburg); geet.george@mpimet.mpg.de",
+            "version": "0.1.0-alpha",
             "Conventions": "CF-1.7",
             "featureType": "trajectory",
+            "Creation Time": str(datetime.datetime.utcnow()) + " UTC",
         }
 
         ###--------- Retrieving flight parameters during launch --------###
@@ -863,7 +869,10 @@ for i in tqdm(range(len(sonde_ds))):
             elif attr == "Format Notes":
                 attr = "AVAPS Format Notes"
 
-            flight_attrs[i][attr] = float(lines[line_id].split("= ")[1])
+            if "AVAPS" in attr:
+                flight_attrs[i][attr] = lines[line_id].split("= ")[1]
+            else:
+                flight_attrs[i][attr] = float(lines[line_id].split("= ")[1])
 
         f.close()
 
@@ -902,30 +911,30 @@ for i in tqdm(range(len(sonde_ds))):
             save_directory + file_name, mode="w", format="NETCDF4", encoding=encoding
         )
 
-    else:
+    # else:
 
-        if i == 0:
-            print(
-                file_time_str[i]
-                + " : No file output because sonde is flagged as "
-                + str(status_ds.FLAG[i].values)
-            )
-            date = pd.to_datetime(file_time[i]).date()
-        elif pd.to_datetime(file_time[i]).date() > date:
-            print("------------------------------------------------")
-            print(
-                file_time_str[i]
-                + " : No file output because sonde is flagged as "
-                + str(status_ds.FLAG[i].values)
-            )
-            date = pd.to_datetime(file_time[i]).date()
-        else:
-            print(
-                file_time_str[i]
-                + " : No file output because sonde is flagged as "
-                + str(status_ds.FLAG[i].values)
-            )
-            date = pd.to_datetime(file_time[i]).date()
+    #     if i == 0:
+    #         print(
+    #             file_time_str[i]
+    #             + " : No file output because sonde is flagged as "
+    #             + str(status_ds.FLAG[i].values)
+    #         )
+    #         date = pd.to_datetime(file_time[i]).date()
+    #     elif pd.to_datetime(file_time[i]).date() > date:
+    #         print("------------------------------------------------")
+    #         print(
+    #             file_time_str[i]
+    #             + " : No file output because sonde is flagged as "
+    #             + str(status_ds.FLAG[i].values)
+    #         )
+    #         date = pd.to_datetime(file_time[i]).date()
+    #     else:
+    #         print(
+    #             file_time_str[i]
+    #             + " : No file output because sonde is flagged as "
+    #             + str(status_ds.FLAG[i].values)
+    #         )
+    #         date = pd.to_datetime(file_time[i]).date()
 
 
 # %%
