@@ -31,6 +31,168 @@ Contents :
 
 <div id="file_str"><h2><a href="#TOC"> File Structure</a></h2></div>
 
+<table>
+<tbody>
+<tr>
+<td><b>OBJECT</b></td>
+<td><b>NAME</b></td>
+<td><b>UNITS</b></td>
+<td><b>DIMENSIONS</b></td>
+</tr>
+<tr>
+<td><b>Dimensions</b></td>
+<td>obs</td>
+<td>&nbsp;</td>
+<td>obs</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>sounding</td>
+<td></td>
+<td>sounding</td>
+</tr>
+<tr>
+<td><b>Coordinates</b></td>
+<td>launch time</td>
+<td>seconds since<br>1970-01-01 00:00:00 UTC</td>
+<td>sounding</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>height </td>
+<td>m</td>
+<td>obs</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>latitude </td>
+<td>&#176N</td>
+<td>obs, sounding</td> 
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>longitude </td>
+<td>&#176E</td>
+<td>obs, sounding</td> 
+</tr>
+<tr>
+<td><b>Variables</b></td>
+<td>pressure </td>
+<td>hPa</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>temperature </td>
+<td>&#x2103;</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>relative humidity </td>
+<td>%</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>wind speed </td>
+<td>m / s</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>wind direction </td>
+<td>&#176</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>GPS altitude<sup>*</sup></td>
+<td>m</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>vertical velocity<sup>*</sup></td>
+<td>m / s</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>horizontal wind (u)</td>
+<td>m / s</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>horizontal wind (v)</td>
+<td>m / s</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>potential temperature</td>
+<td>K</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>specific humidity</td>
+<td>kg / kg</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>precipitable water</td>
+<td>kg / m<sup>2</sup></td>
+<td>sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>static stability</td>
+<td>K / hPa</td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>low height flag</td>
+<td></td>
+<td>sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>cloud flag</td>
+<td></td>
+<td>obs, sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>platform</td>
+<td></td>
+<td>sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>flight height</td>
+<td>m</td>
+<td>sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>flight latitude</td>
+<td>&#176N</td>
+<td>sounding</td>
+</tr>
+<tr>
+<td></td>
+<td>flight longitude</td>
+<td>&#176E</td>
+<td>sounding</td>
+</tr>
+</tbody>
+</table>
+
+
 <div id="variables"><h2><a href="#TOC">Added Variables</a></h2></div>
 
 <h4>Launch Time</h4>
