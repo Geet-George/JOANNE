@@ -13,7 +13,7 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
         <li>
             <a href="#variables">Added Variables</a>
         </li>
-            <ul>
+<!--             <ul>
                 <li>
                     <a href="#launch_time">Launch Time</a>
                 </li>
@@ -32,7 +32,7 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
                 <li>
                     <a href="#platform">Platform</a>
                 </li>
-            </ul>
+            </ul> -->
         <li>
             <a href="#gridding">Gridding</a>
         </li>
@@ -42,16 +42,18 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
         <li>
             <a href="#flags">Flags</a>
         </li>
-            <ul>
+<!--             <ul>
                 <li>
                     <a href="#low_height_flag">Low Flight Height Flag</a>
                 </li>
                 <li>
                     <a href="#cloud_flag">Cloud Flag</a>
                 </li>
-            </ul>
+            </ul> -->
     </ul>
 </div>
+
+----
 
 <div id="file_str"><h2><a href="#TOC"> File Structure</a></h2></div>
 
@@ -220,29 +222,36 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
 
 <div id="variables"><h2><a href="#TOC">Added Variables</a></h2></div>
 
-<div id="launch_time"><a href="#TOC"><h4>Launch Time</a></h4></div>
+<!-- <div id="launch_time"><a href="#TOC"> -->
+<h4>Launch Time</h4>
+<!-- </a></h4></div> -->
 
 Level-3A data are of the trajectory type with a single timestamp associated with each sounding, i.e. the launch time. The soundings in Level-3 do not have time at all levels, because for the original sounding, time is the independent variable, and interpolating that does not make sense. If it is essential for the user to obtain time for the relevant levels here, the data are still available in the Level-1 files, and thus, can still be retrieved. It would not be recommended though, to use "time of recording" in conjunction with interpolated variables.
 
-<div id="potential_temperature"><a href="#TOC"><h4>Potential Temperature</a></h4></div>
+<!-- <div id="potential_temperature"><a href="#TOC"> -->
+<h4>Potential Temperature</h4>
 
 The values of potential temperature are estimated from the sounding profile on their respective, raw vertical grid, before interpolating them on to a common grid.
 
-<div id="specific_humidity"><a href="#TOC"><h4>Specific Humidity</a></h4></div>
+<!-- <div id="specific_humidity"><a href="#TOC"> -->
+<h4>Specific Humidity</h4>
 
 For the estimation of saturated vapour pressure, method by <a href="#hardy1998">Hardy (1998)</a> is used. Specific humidity is estimated from the sounding profile on its raw vertical grid, before interpolation.
 
-<div id="precipitable_water"><a href="#TOC"><h4>Precipitable Water</a></h4></div>
-
+<!-- <div id="precipitable_water"><a href="#TOC"> -->
+<h4>Precipitable Water</h4>
+    
 Precipitable water (PW) is computed before the interpolation of the soundings is carried out. So, values of PW is from measurements on the raw grid. Since, there will only be a single value per sounding, it makes sense to stay true to the raw sounding, in this case.
 
 The value of PW is obtained by integrating from surface up to the top of the measured column and thus, will naturally depend on the height of the atmospheric column in consideration. This means that PW cannot be compared across soundings without considering flight altitude. Generally since the moisture in the upper layers of the atmosphere is very low, this does not cause a major difference in PW, even if the flight altitude varies by a couple of km, above ~6-7 km. However, the difference between flight altitudes during EUREC<sup>4</sup>A sonde launches was significant. See more in the discussion of the <a href="#low_height_flag">`low_height_flag`</a> variable.
 
-<div id="static_stability"><a href="#TOC"><h4>Static Stability</a></h4></div>
+<!-- <div id="static_stability"><a href="#TOC"> -->
+<h4>Static Stability</h4>
 
 Static stability is considered here as the gradient of potential temperature with respect to pressure. This value is estimated after the interpolation of variables to the common grid.
 
-<div id="platform"><a href="#TOC"><h4>Platform</a></h4></div>
+<!-- <div id="platform"><a href="#TOC"> -->
+<h4>Platform</h4>
 
 Although all soundings are in a single file in Level-3, they can still be separated into HALO and P3 sondes, using this variable, which specifies the platform from which the dropsonde was launched. The values of the variable are strings, and have two possible values - `"HALO"` and `"P3"`.
 
@@ -257,7 +266,7 @@ Taking 7-8 m to be the typical vertical resolution of PTU measurements, at a gri
 <div id="interpolation"><h2><a href="#TOC">Interpolation</a></h2></div>
 The interpolation to the common grid is carried out through the following steps: 
 
-(i) Variables `specific_humidity, potential_temperature, u_wind, v_wind precipitable_water` and `static stability` are added to the dataset.
+(i) Variables `specific_humidity`, `potential_temperature`, `u_wind`, `v_wind`, `precipitable_water` and `static stability` are added to the dataset.
 
 (ii) All variables along `height` coordinates in dataset are linearly interpolated along the `height` dimension, at specified height intervals (default 10 m) and up to specified altitude (default 10 km) 
 
@@ -269,13 +278,13 @@ The interpolation to the common grid is carried out through the following steps:
 
 <div id="flags"><h2><a href="#TOC">Flags</a></h2></div>
 
-<div id="low_height_flag"><h3><a href="#TOC">Low Flight Height Flag</a></h3></div>
+<h3>Low Flight Height Flag</h3>
 
 - Since HALO and P3 had significantly different objectives and strategies for their respective flights in EUREC4A, they launched dropsondes from different altitudes. HALO typically had a flight altitude of ~10 km, when launching sondes, but for P3 this varied between 7.5 km and 2.5 km. The P3 dropped some sondes with its AXBT launches, which were at an altitude of ~2.5-3 km. This essentially means that these soundings sampled only the very low levels of the atmosphere, and had just half of P3's other sondes, and a third of HALO's typical sondes.
 
 - The `low_height_flag` marks these sondes that have a launch altitude of less than 4 km, with a value of 1. Sondes with this flag's value as 0 have a launch altitude of at least 4 km. This flag is essential to put in to context estimates of integrated quantities such as total column moisture, as well as to act as an easy separator for users who want to look at profiles also above the typical inversion height. 
 
-<div id="cloud_flag"><h3><a href="#TOC">Cloud Flag</a></h3></div>
+<h3>Cloud Flag</h3>
 
 - There is considerable interest in classifying the soundings that passed through cloud/s and those that did not. For this purpose, a `cloud_flag` is part of the dataset. 
 
