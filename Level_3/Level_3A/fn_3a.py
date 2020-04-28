@@ -673,6 +673,3 @@ def create_variable(ds, var, data, dims=dicts.nc_dims, attrs=dicts.nc_attrs, **k
     ds[var] = v
 
     return var
-
-
-# %%

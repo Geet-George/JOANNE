@@ -17,4 +17,4 @@ The different products of JOANNE are listed in the table below. Click on a produ
 | [Level - 3B](Level_3/Level_3B/) | Circle products from all circles flown during EUREC<sup>4</sup>A                               |
 
 ---
-N.B. : At this point, this git repository is not equipped to serve as a lone-standing package. Think of it as scripts storage for the eventual package. Your feedback (raising issues, requesting features, etc.) will help me speed up this process. :)
+N.B. : Currently, this git repository is not equipped to serve as a lone-standing package. Think of it as scripts storage for the eventual package. Your feedback (raising issues, requesting features, etc.) will help me speed up this process. :)
