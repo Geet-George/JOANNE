@@ -14,3 +14,7 @@ joanne/
 **/__pycache__/
 **/*.py[cod]
 **/*$py.class
+
+# VScode files
+.vscode/
+JOANNE.code-workspace
