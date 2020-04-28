@@ -1,11 +1,9 @@
 # %%
 import datetime
-# import glob
 import subprocess
 import warnings
 
 import numpy as np
-# import requests
 import xarray as xr
 
 import fn_3a as f3a
