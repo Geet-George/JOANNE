@@ -1,16 +1,17 @@
 import datetime
 import subprocess
+from joanne import pkg_ver
 
-git_dir = "/Users/geet/Documents/EUREC4A/JOANNE/"
+# git_dir = "/Users/geet/Documents/EUREC4A/JOANNE/"
 
-try:
-    git_module_version = (
-        subprocess.check_output(["git", "describe"], cwd=git_dir)
-        .strip()
-        .decode("utf-8")
-    )
-except:
-    git_module_version = "--"
+# try:
+#     git_module_version = (
+#         subprocess.check_output(["git", "describe"], cwd=git_dir)
+#         .strip()
+#         .decode("utf-8")
+#     )
+# except:
+#     git_module_version = "--"
 
 list_of_vars = [
     "launch_time",
@@ -198,7 +199,7 @@ nc_global_attrs = {
     "Instrument": "Vaisala RD41 (AVAPS receiver aboard aircraft)",
     "Data Processing for Level-2": 'AvapsEditorVersion "BatchAspen V3.4.3"',
     "Author": "Geet George (MPI-M, Hamburg); geet.george@mpimet.mpg.de",
-    "version": git_module_version,
+    "version": pkg_ver.pkg_version,
     "Conventions": "CF-1.7",
     "featureType": "trajectory",
     "Creation Time": str(datetime.datetime.utcnow()) + " UTC",

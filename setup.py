@@ -1,19 +1,20 @@
 import setuptools
-import version
+import versioneer
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="joanne",  # Replace with your own username
-    version=version.pkg_version,
+    name="joanne",
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     author="Geet George",
     author_email="geet.george@mpimet.mpg.de",
     description="EUREC4A Dropsonde Dataset",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Geet-George/JOANNE",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(include=["pkg_ver"]),
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
