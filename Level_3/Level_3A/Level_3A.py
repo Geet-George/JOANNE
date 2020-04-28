@@ -670,6 +670,8 @@ def lv3_structure_from_lv2(
     dataset = concatenate_soundings(interp_list)
 
     return dataset
+
+
 # %%
 
 # def main():
@@ -905,7 +907,7 @@ to_save_ds = xr.Dataset(coords={"obs": obs, "sounding": sounding})
 for var in list_of_vars:
     create_variable(to_save_ds, var)
 
-file_name = "EUREC4A" + "_Dropsonde-RD41_" + "Level_3A" + ".nc"
+file_name = "EUREC4A" + "_Dropsonde-RD41_" + "Level_3A_" + str(git_module_version) + ".nc" 
 
 save_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_3/"
 
