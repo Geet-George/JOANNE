@@ -2,6 +2,7 @@
 import datetime
 import subprocess
 import warnings
+import os
 
 import numpy as np
 import xarray as xr
@@ -12,10 +13,14 @@ import dicts
 warnings.filterwarnings(
     "ignore", module="metpy.calc.thermo", message="invalid value encountered"
 )
+
+git_dir = "/Users/geet/Documents/EUREC4A/JOANNE/"
 # %%
 try:
     git_module_version = (
-        subprocess.check_output(["git", "describe"]).strip().decode("utf-8")
+        subprocess.check_output(["git", "describe"], cwd=git_dir)
+        .strip()
+        .decode("utf-8")
     )
 except:
     git_module_version = "--"

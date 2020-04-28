@@ -1,9 +1,13 @@
 import datetime
 import subprocess
 
+git_dir = "/Users/geet/Documents/EUREC4A/JOANNE/"
+
 try:
     git_module_version = (
-        subprocess.check_output(["git", "describe"]).strip().decode("utf-8")
+        subprocess.check_output(["git", "describe"], cwd=git_dir)
+        .strip()
+        .decode("utf-8")
     )
 except:
     git_module_version = "--"
