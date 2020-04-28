@@ -1,11 +1,12 @@
 import setuptools
+import version
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="joanne",  # Replace with your own username
-    version="0.0.1",
+    version=version.pkg_version,
     author="Geet George",
     author_email="geet.george@mpimet.mpg.de",
     description="EUREC4A Dropsonde Dataset",
