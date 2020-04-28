@@ -8,7 +8,7 @@ Data/
 joanne_env/
 
 # Test folders
-joanne/
+test_setup/
 
 # Byte-compiled / optimized / DLL files
 **/__pycache__/
