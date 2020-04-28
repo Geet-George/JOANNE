@@ -145,13 +145,13 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
 </tr>
 <tr>
 <td></td>
-<td>horizontal wind (u)</td>
+<td>u_wind</td>
 <td>m / s</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>horizontal wind (v)</td>
+<td>v_wind</td>
 <td>m / s</td>
 <td>obs, sounding</td>
 </tr>
