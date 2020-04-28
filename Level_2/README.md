@@ -131,6 +131,8 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 
 <sup>*</sup> - variables haven't been included in the data in the current version, as they need to go through further quality checks.
 
+Note that file names of the soundings are not always indicative of launch times, although this will be the case for most soundings. The attribute `Launch_time_(UTC)` in every sounding file should be considered as the final authority on launch time.
+
 </div>
 <div id="quality_control">
     <h1>
