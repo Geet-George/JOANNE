@@ -1,0 +1,76 @@
+name: RF03
+mission: EUREC4A
+flight_id: HALO-0124
+contacts:
+- name: Marc Prange
+  email: marc.prange@uni-hamburg.de
+  tags:
+  - dataset creator
+- name: Bjorn Stevens
+  email: bjorn.stevens@mpimet.mpg.de
+  tags:
+  - flight PI
+date: 2020-01-24
+takeoff: 2020-01-24 09:29:30
+landing: 2020-01-24 18:41:13
+events: []
+remarks:
+- Circle pattern, in the end excursion towards NTAS.
+- Deeper convection in the SE circle, spreading cold pools and stratiform clouds.
+segments:
+- kind: circle
+  name: c1
+  start: 2020-01-24 09:50:17
+  end: 2020-01-24 10:48:51
+- kind: circle_break
+  name: cb1to2
+  start: 2020-01-24 10:48:51
+  end: 2020-01-24 11:00:08
+- kind: circle
+  name: c2
+  start: 2020-01-24 11:00:08
+  end: 2020-01-24 12:00:00
+- kind: circle_break
+  name: cb2to3
+  start: 2020-01-24 12:00:00
+  end: 2020-01-24 12:15:10
+- kind: circle
+  name: c3
+  start: 2020-01-24 12:15:10
+  end: 2020-01-24 13:10:03
+- kind: circle_break
+  name: cb3to4
+  start: 2020-01-24 13:10:03
+  end: 2020-01-24 13:30:05
+- kind: circle
+  name: c4
+  start: 2020-01-24 13:30:05
+  end: 2020-01-24 14:25:07
+- kind: circle_break
+  name: cb4to5
+  start: 2020-01-24 14:25:07
+  end: 2020-01-24 14:40:08
+- kind: circle
+  name: c5
+  start: 2020-01-24 14:40:08
+  end: 2020-01-24 15:35:05
+- kind: circle_break
+  name: cb5to6
+  start: 2020-01-24 15:35:05
+  end: 2020-01-24 15:50:06
+- kind: circle
+  name: c6
+  start: 2020-01-24 15:50:06
+  end: 2020-01-24 16:45:10
+- kind: straight_leg
+  name: leg1_towards_NTAS
+  start: 2020-01-24 16:59:34
+  end: 2020-01-24 17:27:19
+- kind: straight_leg
+  name: leg2_return_NTAS
+  start: 2020-01-24 17:33:45
+  end: 2020-01-24 18:02:50
+- kind: lidar_calibration
+  name: lidar_cal
+  start: 2020-01-24 18:12:19
+  end: 2020-01-24 18:21:55
