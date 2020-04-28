@@ -4,6 +4,9 @@
 # All dropsonde data (too storage-heavy for Git)
 Data/
 
+# Virtual environment directory
+joanne_env/
+
 # Test folders
 joanne/
 
