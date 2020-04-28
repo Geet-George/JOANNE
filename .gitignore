@@ -6,3 +6,8 @@ Data/
 
 # Test folders
 joanne/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
