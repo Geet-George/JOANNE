@@ -1,6 +1,8 @@
 # %%
 import datetime
 import glob
+import subprocess
+import warnings
 
 import matplotlib.pyplot as plt
 import metpy.calc as mpcalc
@@ -12,11 +14,15 @@ from metpy import constants as mpconsts
 from metpy.future import precipitable_water
 from metpy.units import units
 from tqdm import tqdm
-import subprocess
-# %%
 
+warnings.filterwarnings(
+    "ignore", module="metpy.calc.thermo", message="invalid value encountered"
+)
+# %%
 try:
-    git_module_version = subprocess.check_output(["git", "describe"]).strip().decode("utf-8")
+    git_module_version = (
+        subprocess.check_output(["git", "describe"]).strip().decode("utf-8")
+    )
 except:
     git_module_version = "--"
 
@@ -664,15 +670,10 @@ def lv3_structure_from_lv2(
     dataset = concatenate_soundings(interp_list)
 
     return dataset
-
-
 # %%
 
-
 # def main():
-lv2_data_directory = (
-    "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_2/"  # code_testing_data/"
-)
+lv2_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_2/"  # Level_2/"  # code_testing_data/"
 lv3_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_3/Test_data/"
 
 lv3_dataset = lv3_structure_from_lv2(lv2_data_directory)
@@ -875,7 +876,7 @@ nc_global_attrs = {
     "Instrument": "Vaisala RD41 (AVAPS receiver aboard aircraft)",
     "Data Processing for Level-2": 'AvapsEditorVersion "BatchAspen V3.4.3"',
     "Author": "Geet George (MPI-M, Hamburg); geet.george@mpimet.mpg.de",
-    "version": "0.1.0-alpha",
+    "version": git_module_version,
     "Conventions": "CF-1.7",
     "featureType": "trajectory",
     "Creation Time": str(datetime.datetime.utcnow()) + " UTC",
