@@ -1,6 +1,6 @@
 import datetime
 import subprocess
-from joanne import pkg_ver
+import joanne
 
 # git_dir = "/Users/geet/Documents/EUREC4A/JOANNE/"
 
@@ -194,12 +194,13 @@ nc_dims = {
 }
 
 nc_global_attrs = {
-    "Title": "Gridded, sounding data from JOANNE Level-2",
+    "Title": "Gridded sounding dataset",
     "Campaign": "EUREC4A-ATOMIC (Jan-Feb, 2020)",
-    "Instrument": "Vaisala RD41 (AVAPS receiver aboard aircraft)",
-    "Data Processing for Level-2": 'AvapsEditorVersion "BatchAspen V3.4.3"',
-    "Author": "Geet George (MPI-M, Hamburg); geet.george@mpimet.mpg.de",
-    "version": pkg_ver.pkg_version,
+    "Instrument": "Vaisala RD-41",
+    "Data Processing for Level-2": "BatchAspen v3.4.3",
+    "Author": "Geet George",
+    "Author Email": "geet.george@mpimet.mpg.de",
+    "version": joanne.__version__,
     "Conventions": "CF-1.7",
     "featureType": "trajectory",
     "Creation Time": str(datetime.datetime.utcnow()) + " UTC",
