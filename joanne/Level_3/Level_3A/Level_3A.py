@@ -1,32 +1,21 @@
 # %%
 import datetime
+import os
 import subprocess
 import warnings
-import os
 
 import numpy as np
 import xarray as xr
 
-import fn_3a as f3a
 import dicts
+import fn_3a as f3a
+import joanne
 
 warnings.filterwarnings(
     "ignore", module="metpy.calc.thermo", message="invalid value encountered"
 )
-
-git_dir = "/Users/geet/Documents/EUREC4A/JOANNE/"
 # %%
-try:
-    git_module_version = (
-        subprocess.check_output(["git", "describe"], cwd=git_dir)
-        .strip()
-        .decode("utf-8")
-    )
-except:
-    git_module_version = "--"
-
-# %%
-lv2_data_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/code_testing_data/"  # Level_2/"  # code_testing_data/"
+lv2_data_directory = "/Users/geet/Documents/JOANNE/Data/code_testing_data/"  # Level_2/"  # code_testing_data/"
 
 lv3_dataset = f3a.lv3_structure_from_lv2(lv2_data_directory)
 
@@ -50,10 +39,10 @@ for var in dicts.list_of_vars:
     )
 
 file_name = (
-    "EUREC4A" + "_Dropsonde-RD41_" + "Level_3A_" + str(git_module_version) + ".nc"
+    "EUREC4A" + "_Dropsonde-RD41_" + "Level_3A_v" + str(joanne.__version__) + ".nc"
 )
 
-save_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_3/Test_data/"
+save_directory = "/Users/geet/Documents/JOANNE/Data/Level_3/Test_data/"
 
 comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max)
 
