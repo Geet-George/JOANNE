@@ -56,13 +56,13 @@ nc_attrs = {
     "latitude": {
         "standard_name": "latitude",
         "long_name": "North Latitude",
-        "units": "degree",
+        "units": "degrees_north",
         "axis": "X",
     },
     "longitude": {
         "standard_name": "longitude",
         "long_name": "East Longitude",
-        "units": "degree",
+        "units": "degrees_east",
         "axis": "Y",
     },
     "pressure": {
@@ -116,7 +116,7 @@ nc_attrs = {
     "wind_direction": {
         "standard_name": "wind_from_direction",
         "long_name": "Wind Direction",
-        "units": "m/s",
+        "units": "degrees",
         "coordinates": "launch_time longitude latitude height",
     },
     "precipitable_water": {
@@ -158,13 +158,13 @@ nc_attrs = {
     "flight_lat": {
         "standard_name": "latitude",
         "long_name": "north latitude of the aircraft when the dropsonde was launched",
-        "units": "degree north",
+        "units": "degrees_north",
         "coordinates": "launch_time",
     },
     "flight_lon": {
         "standard_name": "longitude",
         "long_name": "east longitude of the aircraft when the dropsonde was launched",
-        "units": "degree east",
+        "units": "degrees_east",
         "coordinates": "launch_time",
     },
 }
