@@ -99,7 +99,7 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 <tr>
 <td></td>
 <td>temperature </td>
-<td>&#x2103;</td>
+<td>degree_Celsius</td>
 </tr>
 <tr>
 <td></td>
