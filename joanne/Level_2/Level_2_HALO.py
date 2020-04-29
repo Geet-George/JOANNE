@@ -12,6 +12,8 @@ import xarray as xr
 from seaborn import distplot
 from tqdm import tqdm
 
+import joanne
+
 warnings.filterwarnings("ignore", message="Mean of empty slice")
 warnings.filterwarnings("ignore", message="All-NaN slice encounter")
 warnings.filterwarnings(
@@ -264,7 +266,7 @@ a_dir = (
 )
 # directory where all the A files are present
 
-logs_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Level_2/logs_and_stats/"
+logs_directory = "/Users/geet/Documents/JOANNE/joanne/Level_2/logs_and_stats/"
 # directory to store logs and stats
 
 sonde_paths = sorted(glob.glob(directory + "*_PQC.nc"))
@@ -688,7 +690,7 @@ file.write(
 
 file.close()
 
-status_ds.to_netcdf(f"{logs_directory}Status_of_sondes_{Platform_Name}.nc")
+status_ds.to_netcdf(f"{logs_directory}Status_of_sondes_{Platform_Name}_v{joanne.__version__}.nc")
 # %%
 
 nc_meta = {
@@ -710,15 +712,13 @@ nc_meta = {
     "latitude": {
         "standard_name": "latitude",
         "long_name": "North Latitude",
-        "units": "degree",
-        #                       'valid_range' : [-90.  90.],
+        "units": "degrees_north",
         "axis": "X",
     },
     "longitude": {
         "standard_name": "longitude",
         "long_name": "East Longitude",
-        "units": "degree",
-        #                       'valid_range' : [-180.  180.],
+        "units": "degrees_east",
         "axis": "Y",
     },
     "pressure": {
@@ -742,24 +742,16 @@ nc_meta = {
     "wind_speed": {
         "standard_name": "wind_speed",
         "long_name": "Wind Speed",
-        "units": "m/s",
+        "units": "m s-1",
         "coordinates": "time longitude latitude height",
     },
     "wind_direction": {
         "standard_name": "wind_from_direction",
         "long_name": "Wind Direction",
-        "units": "m/s",
+        "units": "degrees",
         "coordinates": "time longitude latitude height",
     },
 }
-
-# nc_dims = {
-#         'time' : ['time'],
-#         'height' : ['time'],
-#         'pressure' : ['time'],
-#         'temperature' : ['time']
-#     }
-
 # %%
 flight_attrs = [None] * len(a_filepaths)
 
@@ -836,8 +828,9 @@ for i in tqdm(range(len(sonde_ds))):
             "ASPEN Version": sonde_ds[i].AspenVersion,
             "Processing Time": sonde_ds[i].ProcessingTime,
             "Mission PI": "Mission PI",
-            "Author": "Geet George (MPI-M, Hamburg); geet.george@mpimet.mpg.de",
-            "version": "0.1.0-alpha",
+            "Author": "Geet George",
+            "Author Email": "geet.george@mpimet.mpg.de",
+            "version": joanne.__version__,
             "Conventions": "CF-1.7",
             "featureType": "trajectory",
             "Creation Time": str(datetime.datetime.utcnow()) + " UTC",
@@ -889,9 +882,11 @@ for i in tqdm(range(len(sonde_ds))):
             + str(Platform_Name)
             + "_Dropsonde-RD41_"
             + file_time_str[i]
+            + "_v"
+            + str(joanne.__version__)
             + ".nc"
         )
-        save_directory = "/Users/geet/Documents/EUREC4A/JOANNE/Data/Level_2/"
+        save_directory = "/Users/geet/Documents/JOANNE/Data/Level_2/"
 
         comp = dict(
             zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max
@@ -910,31 +905,4 @@ for i in tqdm(range(len(sonde_ds))):
         to_save_ds.to_netcdf(
             save_directory + file_name, mode="w", format="NETCDF4", encoding=encoding
         )
-
-    # else:
-
-    #     if i == 0:
-    #         print(
-    #             file_time_str[i]
-    #             + " : No file output because sonde is flagged as "
-    #             + str(status_ds.FLAG[i].values)
-    #         )
-    #         date = pd.to_datetime(file_time[i]).date()
-    #     elif pd.to_datetime(file_time[i]).date() > date:
-    #         print("------------------------------------------------")
-    #         print(
-    #             file_time_str[i]
-    #             + " : No file output because sonde is flagged as "
-    #             + str(status_ds.FLAG[i].values)
-    #         )
-    #         date = pd.to_datetime(file_time[i]).date()
-    #     else:
-    #         print(
-    #             file_time_str[i]
-    #             + " : No file output because sonde is flagged as "
-    #             + str(status_ds.FLAG[i].values)
-    #         )
-    #         date = pd.to_datetime(file_time[i]).date()
-
-
 # %%
