@@ -79,7 +79,7 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
 </tr>
 <tr>
 <td><b>Coordinates</b></td>
-<td>launch time</td>
+<td>launch_time</td>
 <td>seconds since<br>1970-01-01 00:00:00 UTC</td>
 <td>sounding</td>
 </tr>
@@ -92,13 +92,13 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
 <tr>
 <td>&nbsp;</td>
 <td>latitude </td>
-<td>&#176N</td>
+<td>degree_north</td>
 <td>obs, sounding</td> 
 </tr>
 <tr>
 <td>&nbsp;</td>
 <td>longitude </td>
-<td>&#176E</td>
+<td>degree_east</td>
 <td>obs, sounding</td> 
 </tr>
 <tr>
@@ -110,84 +110,84 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
 <tr>
 <td></td>
 <td>temperature </td>
-<td>&#x2103;</td>
+<td>degree_Celsius</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>relative humidity </td>
+<td>relative_humidity </td>
 <td>%</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>wind speed </td>
-<td>m / s</td>
+<td>wind_speed </td>
+<td>m s-1</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>wind direction </td>
-<td>&#176</td>
+<td>wind_direction </td>
+<td>degree</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>GPS altitude<sup>*</sup></td>
+<td>GPS_altitude<sup>*</sup></td>
 <td>m</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>vertical velocity<sup>*</sup></td>
-<td>m / s</td>
+<td>vertical_velocity<sup>*</sup></td>
+<td>m s-1</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>horizontal wind (u)</td>
-<td>m / s</td>
+<td>u_wind</td>
+<td>m s-1</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>horizontal wind (v)</td>
-<td>m / s</td>
+<td>v_wind</td>
+<td>m s-1</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>potential temperature</td>
+<td>potential_temperature</td>
 <td>K</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>specific humidity</td>
-<td>kg / kg</td>
+<td>specific_humidity</td>
+<td>kg kg-1</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>precipitable water</td>
-<td>kg / m<sup>2</sup></td>
+<td>precipitable_water</td>
+<td>kg m-2</sup></td>
 <td>sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>static stability</td>
-<td>K / hPa</td>
+<td>static_stability</td>
+<td>K hPa-1</td>
 <td>obs, sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>low height flag</td>
+<td>low_height_flag</td>
 <td></td>
 <td>sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>cloud flag</td>
+<td>cloud_flag</td>
 <td></td>
 <td>obs, sounding</td>
 </tr>
@@ -199,20 +199,20 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
 </tr>
 <tr>
 <td></td>
-<td>flight height</td>
+<td>flight_height</td>
 <td>m</td>
 <td>sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>flight latitude</td>
-<td>&#176N</td>
+<td>flight_latitude</td>
+<td>degree_north</td>
 <td>sounding</td>
 </tr>
 <tr>
 <td></td>
-<td>flight longitude</td>
-<td>&#176E</td>
+<td>flight_longitude</td>
+<td>degree_east</td>
 <td>sounding</td>
 </tr>
 </tbody>

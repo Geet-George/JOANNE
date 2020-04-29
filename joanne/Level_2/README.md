@@ -84,12 +84,12 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 <tr>
 <td>&nbsp;</td>
 <td>latitude </td>
-<td>&#176N</td> 
+<td>degree_north</td> 
 </tr>
 <tr>
 <td>&nbsp;</td>
 <td>longitude </td>
-<td>&#176E</td> 
+<td>degree_east</td> 
 </tr>
 <tr>
 <td><b>Variables</b></td>
@@ -99,32 +99,32 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 <tr>
 <td></td>
 <td>temperature </td>
-<td>&#x2103;</td>
+<td>degree_Celsius</td>
 </tr>
 <tr>
 <td></td>
-<td>relative humidity </td>
+<td>relative_humidity </td>
 <td>%</td>
 </tr>
 <tr>
 <td></td>
-<td>wind speed </td>
-<td>m/s</td>
+<td>wind_speed </td>
+<td>m s-1</td>
 </tr>
 <tr>
 <td></td>
-<td>wind direction </td>
-<td>&#176</td>
+<td>wind_direction </td>
+<td>degree</td>
 </tr>
 <tr>
 <td></td>
-<td>GPS altitude<sup>*</sup></td>
+<td>GPS_altitude<sup>*</sup></td>
 <td>m</td>
 </tr>
 <tr>
 <td></td>
-<td>vertical velocity<sup>*</sup></td>
-<td>m/s</td>
+<td>vertical_velocity<sup>*</sup></td>
+<td>m s-1</td>
 </tr>
 </tbody>
 </table>
