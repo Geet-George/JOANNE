@@ -364,7 +364,7 @@ nc_dims = {
     "v_wind": ["circle", "sounding", "height"],
     "potential_temperature": ["circle", "sounding", "height"],
     "specific_humidity": ["circle", "sounding", "height"],
-    "precipitable_water": ["circle", "sounding", "height"],
+    "precipitable_water": ["circle", "sounding"],
     "static_stability": ["circle", "sounding", "height"],
     "low_height_flag": ["circle", "sounding", "height"],
     "cloud_flag": ["circle", "sounding", "height"],
