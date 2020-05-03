@@ -1,0 +1,95 @@
+name: RF08
+mission: EUREC4A
+flight_id: HALO-0202
+contacts:
+- name: Marc Prange
+  email: marc.prange@uni-hamburg.de
+  tags:
+  - dataset creator
+- name: Felix Ament
+  email: felix.ament@uni-hamburg.de
+  tags:
+  - flight PI
+date: 2020-02-02
+flight_report: https://observations.ipsl.fr/aeris/eurec4a-data/REPORTS/HALO/2020/20200202/HALO_0202.pdf
+takeoff: 2020-02-02 11:28:02
+landing: 2020-02-02 20:13:24
+events: []
+remarks:
+- Flying seven standard circle patterns (six circles with dropsondes).
+- Flying the novel clover pattern as excursion. Convection and clouds were organized
+  as flowers moving mostly eastwards with a slight component to the North.
+- Essentially, we tracked three to four flowers.
+segments:
+- kind: circle
+  name: c1
+  start: 2020-02-02 11:47:56
+  end: 2020-02-02 12:38:13
+- kind: circle_break
+  name: cb1to2
+  start: 2020-02-02 12:38:13
+  end: 2020-02-02 12:52:26
+- kind: circle
+  name: c2
+  start: 2020-02-02 12:52:26
+  end: 2020-02-02 13:43:45
+- kind: circle_break
+  name: cb2to3
+  start: 2020-02-02 13:43:45
+  end: 2020-02-02 13:57:44
+- kind: circle
+  name: c3
+  start: 2020-02-02 13:57:44
+  end: 2020-02-02 14:50:58
+- kind: clover_leg
+  name: clover1
+  start: 2020-02-02 15:03:14
+  end: 2020-02-02 15:25:24
+- kind: clover_turn
+  name: clvturn1to2
+  start: 2020-02-02 15:25:24
+  end: 2020-02-02 15:33:30
+- kind: clover_leg
+  name: clover2
+  start: 2020-02-02 15:33:30
+  end: 2020-02-02 15:53:01
+- kind: clover_turn
+  name: clvturn2to3
+  start: 2020-02-02 15:53:01
+  end: 2020-02-02 16:01:55
+- kind: clover_leg
+  name: clover3
+  start: 2020-02-02 16:01:55
+  end: 2020-02-02 16:20:45
+- kind: circle
+  name: c4
+  start: 2020-02-02 16:32:49
+  end: 2020-02-02 17:22:57
+- kind: circle_break
+  name: cb4to5
+  start: 2020-02-02 17:22:57
+  end: 2020-02-02 17:39:00
+- kind: circle
+  name: c5
+  start: 2020-02-02 17:39:00
+  end: 2020-02-02 18:28:32
+- kind: circle_break
+  name: cb5to6
+  start: 2020-02-02 18:28:32
+  end: 2020-02-02 18:42:06
+- kind: circle
+  name: c6
+  start: 2020-02-02 18:42:06
+  end: 2020-02-02 19:34:41
+- kind: radar_calibration_tilted
+  name: radar_cal_tilted
+  start: 2020-02-02 19:44:21
+  end: 2020-02-02 19:48:46
+- kind: radar_calibration_wiggle
+  name: radar_cal_wiggle
+  start: 2020-02-02 19:48:46
+  end: 2020-02-02 19:51:51
+- kind: lidar_calibration
+  name: lidar_cal
+  start: 2020-02-02 19:51:51
+  end: 2020-02-02 19:56:08

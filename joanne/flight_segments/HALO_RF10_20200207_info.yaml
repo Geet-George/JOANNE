@@ -1,0 +1,79 @@
+name: RF10
+mission: EUREC4A
+flight_id: HALO-0207
+contacts:
+- name: Marc Prange
+  email: marc.prange@uni-hamburg.de
+  tags:
+  - dataset creator
+- name: Raphaela Vogel
+  email: raphaela.vogel@mpimet.mpg.de
+  tags:
+  - flight PI
+date: 2020-02-07
+flight_report: https://observations.ipsl.fr/aeris/eurec4a-data/REPORTS/HALO/2020/20200207/HALO-0207.pdf
+takeoff: 2020-02-07 12:02:24
+landing: 2020-02-07 21:11:40
+events: []
+remarks:
+- Two standard circle patterns with an excursion to NTAS plus radar calibration manoveur.
+- 1st set of circles dominated by flower pattern with stratiform layers at ~2km.
+- Many large cold pools with remnants of stratiform clouds in the middle.
+- 2nd set of circles dominated by sugar/gravel pattern.
+segments:
+- kind: circle
+  name: c1
+  start: 2020-02-07 12:22:05
+  end: 2020-02-07 13:13:01
+- kind: circle_break
+  name: cb1to2
+  start: 2020-02-07 13:13:01
+  end: 2020-02-07 13:32:57
+- kind: circle
+  name: c2
+  start: 2020-02-07 13:32:57
+  end: 2020-02-07 14:23:24
+- kind: circle_break
+  name: cb2to3
+  start: 2020-02-07 14:23:24
+  end: 2020-02-07 14:41:02
+- kind: circle
+  name: c3
+  start: 2020-02-07 14:41:02
+  end: 2020-02-07 15:33:41
+- kind: straight_leg
+  name: leg1_outbound_NTAS
+  start: 2020-02-07 15:37:47
+  end: 2020-02-07 16:11:52
+- kind: radar_calibration_tilted
+  name: radar_cal_tilted
+  start: 2020-02-07 16:18:32
+  end: 2020-02-07 16:26:57
+- kind: straight_leg
+  name: leg2_inbound_NTAS
+  start: 2020-02-07 16:31:11
+  end: 2020-02-07 17:12:38
+- kind: circle
+  name: c4
+  start: 2020-02-07 17:14:54
+  end: 2020-02-07 18:11:04
+- kind: circle_break
+  name: cb4to5
+  start: 2020-02-07 18:11:04
+  end: 2020-02-07 18:29:20
+- kind: circle
+  name: c5
+  start: 2020-02-07 18:29:20
+  end: 2020-02-07 19:22:49
+- kind: circle_break
+  name: cb5to6
+  start: 2020-02-07 19:22:49
+  end: 2020-02-07 19:48:06
+- kind: circle
+  name: c6
+  start: 2020-02-07 19:48:06
+  end: 2020-02-07 20:36:43
+- kind: lidar_calibration
+  name: lidar_cal
+  start: 2020-02-07 20:45:50
+  end: 2020-02-07 20:54:41

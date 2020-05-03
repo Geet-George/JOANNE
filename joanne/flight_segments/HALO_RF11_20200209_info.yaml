@@ -1,0 +1,89 @@
+name: RF11
+mission: EUREC4A
+flight_id: HALO-0209
+contacts:
+- name: Marc Prange
+  email: marc.prange@uni-hamburg.de
+  tags:
+  - dataset creator
+- name: Sabrina Schnitt
+  email: s.schnitt@uni-koeln.de
+  tags:
+  - flight PI
+date: 2020-02-09
+flight_report: https://observations.ipsl.fr/aeris/eurec4a-data/REPORTS/HALO/2020/20200209/HALO-0209.pdf
+takeoff: 2020-02-09 09:14:31
+landing: 2020-02-09 18:03:00
+events: []
+remarks:
+- Two standard circle sets with an excursion to NTAS.
+- Radar calibration maneuver (20-deg-wiggles and 10-deg-circle) at NTAS.
+- Flyovers over the Ron Brown towards and backwards from NTAS.
+- At the 1st Ron Brown flyover a dropsonde was launched.
+- Mostly shallow sugar clouds during the flight.
+- Two cold pools entered the circle during the 2nd circle set.
+segments:
+- kind: circle
+  name: c1
+  start: 2020-02-09 09:36:08
+  end: 2020-02-09 10:27:24
+- kind: circle_break
+  name: cb1to2
+  start: 2020-02-09 10:27:24
+  end: 2020-02-09 10:50:11
+- kind: circle
+  name: c2
+  start: 2020-02-09 10:50:11
+  end: 2020-02-09 11:42:45
+- kind: circle_break
+  name: cb2to3
+  start: 2020-02-09 11:42:45
+  end: 2020-02-09 11:59:21
+- kind: circle
+  name: c3
+  start: 2020-02-09 11:59:21
+  end: 2020-02-09 12:54:05
+- kind: straight_leg
+  name: leg1_outbound_NTAS
+  start: 2020-02-09 12:59:59
+  end: 2020-02-09 13:17:03
+- kind: radar_calibration_wiggle
+  name: radar_cal_wiggle1
+  start: 2020-02-09 13:17:03
+  end: 2020-02-09 13:19:42
+- kind: radar_calibration_tilted
+  name: radar_cal_tilted
+  start: 2020-02-09 13:19:42
+  end: 2020-02-09 13:28:40
+- kind: radar_calibration_wiggle
+  name: radar_cal_wiggle2
+  start: 2020-02-09 13:28:40
+  end: 2020-02-09 13:36:18
+- kind: straight_leg
+  name: leg2_inbound_NTAS
+  start: 2020-02-09 13:36:18
+  end: 2020-02-09 13:49:00
+- kind: circle
+  name: c4
+  start: 2020-02-09 13:56:25
+  end: 2020-02-09 14:52:59
+- kind: circle_break
+  name: cb4to5
+  start: 2020-02-09 14:52:59
+  end: 2020-02-09 15:07:18
+- kind: circle
+  name: c5
+  start: 2020-02-09 15:07:18
+  end: 2020-02-09 16:03:31
+- kind: circle_break
+  name: cb5to6
+  start: 2020-02-09 16:03:31
+  end: 2020-02-09 16:28:13
+- kind: circle
+  name: c6
+  start: 2020-02-09 16:28:13
+  end: 2020-02-09 17:23:35
+- kind: lidar_calibration
+  name: lidar_cal
+  start: 2020-02-09 17:34:28
+  end: 2020-02-09 17:47:16

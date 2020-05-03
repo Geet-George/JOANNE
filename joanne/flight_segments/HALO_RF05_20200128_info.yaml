@@ -1,0 +1,77 @@
+name: RF05
+mission: EUREC4A
+flight_id: HALO-0128
+contacts:
+- name: Marc Prange
+  email: marc.prange@uni-hamburg.de
+  tags:
+  - dataset creator
+- name: Bjorn Stevens
+  email: bjorn.stevens@mpimet.mpg.de
+  tags:
+  - flight PI
+date: 2020-01-28
+flight_report: https://observations.ipsl.fr/aeris/eurec4a-data/REPORTS/HALO/2020/20200128/HALO-0128.pdf
+takeoff: 2020-01-28 14:58:34
+landing: 2020-01-28 23:55:17
+events: []
+remarks:
+- Rather long excursion towards NTAS with radar calibration maneuver.
+- Sugar cloud patterns within the circle.
+segments:
+- kind: circle
+  name: c1
+  start: 2020-01-28 15:21:54
+  end: 2020-01-28 16:13:03
+- kind: circle_break
+  name: cb1to2
+  start: 2020-01-28 16:13:03
+  end: 2020-01-28 16:32:33
+- kind: circle
+  name: c2
+  start: 2020-01-28 16:32:33
+  end: 2020-01-28 17:25:06
+- kind: circle_break
+  name: cb2to3
+  start: 2020-01-28 17:25:06
+  end: 2020-01-28 17:42:40
+- kind: circle
+  name: c3
+  start: 2020-01-28 17:42:40
+  end: 2020-01-28 18:37:26
+- kind: straight_leg
+  name: leg1_outbound_NTAS
+  start: 2020-01-28 18:41:47
+  end: 2020-01-28 19:01:46
+- kind: radar_calibration_tilted
+  name: radar_cal_tilted
+  start: 2020-01-28 19:07:44
+  end: 2020-01-28 19:25:26
+- kind: straight_leg
+  name: leg2_inbound_NTAS
+  start: 2020-01-28 19:29:47
+  end: 2020-01-28 19:50:47
+- kind: circle
+  name: c4
+  start: 2020-01-28 19:57:50
+  end: 2020-01-28 20:53:13
+- kind: circle_break
+  name: cb4to5
+  start: 2020-01-28 20:53:13
+  end: 2020-01-28 21:13:08
+- kind: circle
+  name: c5
+  start: 2020-01-28 21:13:08
+  end: 2020-01-28 22:07:21
+- kind: circle_break
+  name: cb5to6
+  start: 2020-01-28 22:07:21
+  end: 2020-01-28 22:29:35
+- kind: circle
+  name: c6
+  start: 2020-01-28 22:29:35
+  end: 2020-01-28 23:23:36
+- kind: lidar_calibration
+  name: lidar_cal
+  start: 2020-01-28 23:32:23
+  end: 2020-01-28 23:40:57

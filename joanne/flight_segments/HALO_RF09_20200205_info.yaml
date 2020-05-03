@@ -1,0 +1,84 @@
+name: RF09
+mission: EUREC4A
+flight_id: HALO-0205
+contacts:
+- name: Marc Prange
+  email: marc.prange@uni-hamburg.de
+  tags:
+  - dataset creator
+- name: Bernhard Mayer
+  email: bernhard.mayer@lmu.de
+  tags:
+  - flight PI
+date: 2020-02-05
+flight_report: https://observations.ipsl.fr/aeris/eurec4a-data/REPORTS/HALO/2020/20200205/HALO-0205.pdf
+takeoff: 2020-02-05 09:15:51
+landing: 2020-02-05 18:21:22
+events: []
+remarks:
+- Two standard 3.5 circle patterns. In between an excursion leg to NTAS and a leg
+  with satellite (Terra/MISR ) overpass.
+- At the beginning mostly flower pattern. Changed to gravel/sugar later on.
+- Higher cloud fraction than on previous days.
+- Well developed clouds with showers in some of them.
+segments:
+- kind: circle
+  name: c1
+  start: 2020-02-05 09:37:26
+  end: 2020-02-05 10:28:18
+- kind: circle_break
+  name: cb1to2
+  start: 2020-02-05 10:28:18
+  end: 2020-02-05 10:47:45
+- kind: circle
+  name: c2
+  start: 2020-02-05 10:47:45
+  end: 2020-02-05 11:40:02
+- kind: circle_break
+  name: cb2to3
+  start: 2020-02-05 11:40:02
+  end: 2020-02-05 11:55:58
+- kind: circle
+  name: c3
+  start: 2020-02-05 11:55:58
+  end: 2020-02-05 12:49:02
+- kind: straight_leg
+  name: leg1_outbound_NTAS
+  start: 2020-02-05 12:54:08
+  end: 2020-02-05 13:19:23
+- kind: straight_leg
+  name: leg2_inbound_NTAS
+  start: 2020-02-05 13:25:53
+  end: 2020-02-05 13:55:04
+- kind: straight_leg
+  name: leg3
+  start: 2020-02-05 14:00:18
+  end: 2020-02-05 14:13:45
+- kind: straight_leg
+  name: leg4_terra_underpass
+  start: 2020-02-05 14:21:13
+  end: 2020-02-05 14:31:56
+- kind: circle
+  name: c4
+  start: 2020-02-05 14:36:52
+  end: 2020-02-05 15:29:38
+- kind: circle_break
+  name: cb4to5
+  start: 2020-02-05 15:29:38
+  end: 2020-02-05 15:46:37
+- kind: circle
+  name: c5
+  start: 2020-02-05 15:46:37
+  end: 2020-02-05 16:35:08
+- kind: circle_break
+  name: cb5to6
+  start: 2020-02-05 16:35:08
+  end: 2020-02-05 16:58:54
+- kind: circle
+  name: c6
+  start: 2020-02-05 16:58:54
+  end: 2020-02-05 17:49:35
+- kind: lidar_calibration
+  name: lidar_cal
+  start: 2020-02-05 18:01:01
+  end: 2020-02-05 18:06:39

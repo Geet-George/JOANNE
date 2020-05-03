@@ -1,0 +1,90 @@
+name: RF04
+mission: EUREC4A
+flight_id: HALO-0126
+contacts:
+- name: Marc Prange
+  email: marc.prange@uni-hamburg.de
+  tags:
+  - dataset creator
+- name: Manfred Wendisch
+  email: m.wendisch@uni-leipzig.de
+  tags:
+  - flight PI
+date: 2020-01-26
+flight_report: https://observations.ipsl.fr/aeris/eurec4a-data/REPORTS/HALO/2020/20200126/HALO-0126.pdf
+takeoff: 2020-01-26 12:05:30
+landing: 2020-01-26 21:20:49
+events: []
+remarks:
+- Super curtain with Twin Otter and ATR after takeoff.
+- Four coordinated straight legs over Meteor.
+- Cirrus clouds in 14-17 km present for almost full flight.
+segments:
+- kind: straight_leg
+  name: super_curtain
+  start: 2020-01-26 12:07:06
+  end: 2020-01-26 12:15:10
+- kind: circle
+  name: c1
+  start: 2020-01-26 12:27:11
+  end: 2020-01-26 13:17:15
+- kind: circle_break
+  name: cb1to2
+  start: 2020-01-26 13:17:15
+  end: 2020-01-26 13:38:57
+- kind: circle
+  name: c2
+  start: 2020-01-26 13:38:57
+  end: 2020-01-26 14:27:36
+- kind: circle_break
+  name: cb2to3
+  start: 2020-01-26 14:27:36
+  end: 2020-01-26 14:43:29
+- kind: circle
+  name: c3
+  start: 2020-01-26 14:43:29
+  end: 2020-01-26 15:35:58
+- kind: straight_leg
+  name: leg1_over_Meteor
+  start: 2020-01-26 15:50:46
+  end: 2020-01-26 16:04:52
+- kind: straight_leg
+  name: leg2_over_Meteor
+  start: 2020-01-26 16:11:14
+  end: 2020-01-26 16:31:14
+- kind: straight_leg
+  name: leg3_over_Meteor
+  start: 2020-01-26 16:37:21
+  end: 2020-01-26 16:52:17
+- kind: straight_leg
+  name: leg4_over_Meteor
+  start: 2020-01-26 16:58:46
+  end: 2020-01-26 17:14:14
+- kind: radar_calibration_wiggle
+  name: radar_cal_wiggle
+  start: 2020-01-26 17:14:14
+  end: 2020-01-26 17:21:01
+- kind: circle
+  name: c4
+  start: 2020-01-26 17:21:01
+  end: 2020-01-26 18:12:50
+- kind: circle_break
+  name: cb4to5
+  start: 2020-01-26 18:12:50
+  end: 2020-01-26 18:36:01
+- kind: circle
+  name: c5
+  start: 2020-01-26 18:36:01
+  end: 2020-01-26 19:29:21
+- kind: circle_break
+  name: cb5to6
+  start: 2020-01-26 19:29:21
+  end: 2020-01-26 19:41:01
+- kind: circle
+  name: c6
+  start: 2020-01-26 19:51:32
+  end: 2020-01-26 20:45:42
+- kind: lidar_calibration
+  name: lidar_cal
+  start: 2020-01-26 20:54:26
+  end: 2020-01-26 21:03:44
