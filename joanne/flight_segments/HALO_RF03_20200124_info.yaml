@@ -11,6 +11,7 @@ contacts:
   tags:
   - flight PI
 date: 2020-01-24
+flight_report: https://observations.ipsl.fr/aeris/eurec4a-data/REPORTS/HALO/2020/20200124/HALO-0124.pdf
 takeoff: 2020-01-24 09:29:30
 landing: 2020-01-24 18:41:13
 events: []
@@ -63,11 +64,11 @@ segments:
   start: 2020-01-24 15:50:06
   end: 2020-01-24 16:45:10
 - kind: straight_leg
-  name: leg1_towards_NTAS
+  name: leg1_outbound_NTAS
   start: 2020-01-24 16:59:34
   end: 2020-01-24 17:27:19
 - kind: straight_leg
-  name: leg2_return_NTAS
+  name: leg2_inbound_NTAS
   start: 2020-01-24 17:33:45
   end: 2020-01-24 18:02:50
 - kind: lidar_calibration

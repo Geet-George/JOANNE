@@ -173,9 +173,9 @@ def get_advection(circles):
         advection_T = -(circle.mean_u * circle.dTdx) - (circle.mean_v * circle.dTdy)
         advection_p = -(circle.mean_u * circle.dpdx) - (circle.mean_v * circle.dpdy)
 
-    circle["h_adv_q"] = (["height"], advection_q)
-    circle["h_adv_T"] = (["height"], advection_T)
-    circle["h_adv_p"] = (["height"], advection_p)
+        circle["h_adv_q"] = (["height"], advection_q)
+        circle["h_adv_T"] = (["height"], advection_T)
+        circle["h_adv_p"] = (["height"], advection_p)
 
     return print("Finished estimating advection terms ...")
 
