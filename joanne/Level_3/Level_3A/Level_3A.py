@@ -39,10 +39,12 @@ for var in dicts.list_of_vars:
     )
 
 file_name = (
-    "EUREC4A" + "_Dropsonde-RD41_" + "Level_3A_v" + str(joanne.__version__) + ".nc"
+    "EUREC4A_JOANNE_Dropsonde-RD41_" + "Level_3A_v" + str(joanne.__version__) + ".nc"
 )
 
-save_directory = "/Users/geet/Documents/JOANNE/Data/Level_3/Test_data/"
+save_directory = (
+    "/Users/geet/Documents/JOANNE/Data/Level_3/Test_data/"  # Test_data/" #Level_3/"
+)
 
 comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max)
 
