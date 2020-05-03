@@ -3,7 +3,7 @@ import glob
 import xarray as xr
 import numpy as np
 
-# from datetime import date
+from datetime import date
 import datetime
 from pylab import cos
 
