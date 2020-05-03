@@ -7,6 +7,8 @@ import numpy as np
 import datetime
 from pylab import cos
 
+import dicts
+
 # %%
 
 yaml_directory = "/Users/geet/Documents/JOANNE/joanne/flight_segments/"
@@ -131,3 +133,15 @@ def get_xy_coords_for_circles(circles):
         circles[i]["dy"] = (["launch_time", "height"], delta_y)
 
     return print("Circles ready for regression")
+
+
+def create_variable(ds, var, data, dims=dicts.nc_dims, attrs=dicts.nc_attrs, **kwargs):
+    """Insert the data into a variable in an :class:`xr.Dataset`"""
+    data = data[var]  # must be of type array
+    attrs = attrs[var].copy()
+    dims = dims[var]
+
+    v = xr.Variable(dims, data, attrs=attrs)
+    ds[var] = v
+
+    return var
