@@ -2,17 +2,6 @@ import datetime
 import subprocess
 import joanne
 
-# git_dir = "/Users/geet/Documents/EUREC4A/JOANNE/"
-
-# try:
-#     git_module_version = (
-#         subprocess.check_output(["git", "describe"], cwd=git_dir)
-#         .strip()
-#         .decode("utf-8")
-#     )
-# except:
-#     git_module_version = "--"
-
 list_of_vars = [
     "launch_time",
     "height",
@@ -28,7 +17,7 @@ list_of_vars = [
     "potential_temperature",
     "specific_humidity",
     "precipitable_water",
-    "static_stability",
+    # "static_stability",
     "low_height_flag",
     "cloud_flag",
     "Platform",
