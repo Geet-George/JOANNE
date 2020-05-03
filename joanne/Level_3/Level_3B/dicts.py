@@ -398,9 +398,9 @@ nc_dims = {
     "mean_density": ["circle", "height"],
     "vertical_velocity": ["circle", "height"],
     "pressure_velocity": ["circle", "height"],
-    "adv_q": ["circle", "height"],
-    "adv_T": ["circle", "height"],
-    "adv_p": ["circle", "height"],
+    "h_adv_q": ["circle", "height"],
+    "h_adv_T": ["circle", "height"],
+    "h_adv_p": ["circle", "height"],
 }
 
 nc_global_attrs = {
