@@ -27,8 +27,11 @@ def run_regression(circle, parameter):
     id_q = ~np.isnan(circle.specific_humidity.values)
     id_x = ~np.isnan(circle.dx.values)
     id_y = ~np.isnan(circle.dy.values)
+    id_t = ~np.isnan(circle.temperature.values)
+    id_p = ~np.isnan(circle.pressure.values)
 
-    id_ = np.logical_and(np.logical_and(id_q, id_u), np.logical_and(id_x, id_y))
+    id_quxy = np.logical_and(np.logical_and(id_q, id_u), np.logical_and(id_x, id_y))
+    id_ = np.logical_and(np.logical_and(id_t, id_p), id_quxy)
 
     mean_parameter = np.full(len(circle.height), np.nan)
     m_parameter = np.full(len(circle.height), np.nan)
@@ -166,12 +169,31 @@ def get_density_vertical_velocity_and_omega(circles):
     return print("Finished estimating density, W and omega ...")
 
 
-def get_advection(circles):
+# def get_advection(circles, list_of_parameters=["u", "v", "q", "T", "p"]):
 
+#     for id_, circle in enumerate(circles):
+#         adv_dicts = {}
+#         for var in list_of_parameters:
+#             adv_dicts[f"h_adv_+{var}"] = (circle.u * eval(f"circle.d{var}dx")) + (
+#                 circle.v * eval(f"circle.d{var}dy")
+#             )
+#             # advection_q = (circle.u * circle.dqdx) + (circle.v * circle.dqdy)
+#             # advection_T = (circle.u * circle.dTdx) + (circle.v * circle.dTdy)
+#             # advection_p = (circle.u * circle.dpdx) + (circle.v * circle.dpdy)
+
+#             circle[f"h_adv_+{var}"] = (["height"], adv_dicts[f"h_adv_+{var}"])
+#         # circle["h_adv_T"] = (["height"], advection_T)
+#         # circle["h_adv_p"] = (["height"], advection_p)
+
+#     return print("Finished estimating advection terms ...")
+
+
+def get_advection(circles):
+    # FUNCTION COMMENTED ABOVE TO CHANGE WITH u AND v too
     for id_, circle in enumerate(circles):
-        advection_q = -(circle.mean_u * circle.dqdx) - (circle.mean_v * circle.dqdy)
-        advection_T = -(circle.mean_u * circle.dTdx) - (circle.mean_v * circle.dTdy)
-        advection_p = -(circle.mean_u * circle.dpdx) - (circle.mean_v * circle.dpdy)
+        advection_q = -(circle.u * circle.dqdx) - (circle.v * circle.dqdy)
+        advection_T = -(circle.u * circle.dTdx) - (circle.v * circle.dTdy)
+        advection_p = -(circle.u * circle.dpdx) - (circle.v * circle.dpdy)
 
         circle["h_adv_q"] = (["height"], advection_q)
         circle["h_adv_T"] = (["height"], advection_T)
