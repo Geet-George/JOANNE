@@ -243,7 +243,7 @@ def check_launch_detect(sonde_path):
 def create_variable(ds, vname, data, **kwargs):
     """Insert the data into a variable in an :class:`xr.Dataset`"""
     attrs = nc_meta[vname].copy()
-    dims = ["obs"]  # nc_dims[vname]
+    dims = ["time"]  # nc_dims[vname]
 
     v = xr.Variable(dims, np.asarray(data), attrs=attrs)
     ds[vname] = v
@@ -789,31 +789,31 @@ for i in tqdm(range(len(sonde_ds))):
 
         ###----- Variables -----###
 
-        height = sonde_ds[i].alt[ht_indices].values
+        height = np.float32(sonde_ds[i].alt[ht_indices].values)
         # Variable array: geopotential height
 
         time = sonde_ds[i].time[ht_indices].astype("float").values / 1e9
         # Variable array: time
 
-        wind_speed = sonde_ds[i].wspd[ht_indices].values
+        wind_speed = np.float32(sonde_ds[i].wspd[ht_indices].values)
         # Variable array: wind speed
 
-        wind_direction = sonde_ds[i].wdir[ht_indices].values
+        wind_direction = np.float32(sonde_ds[i].wdir[ht_indices].values)
         # Variable array: wind direction
 
-        temperature = sonde_ds[i].tdry[ht_indices].values
+        temperature = np.float32(sonde_ds[i].tdry[ht_indices].values)
         # Variable array: temperature
 
-        pressure = sonde_ds[i].pres[ht_indices].values
+        pressure = np.float32(sonde_ds[i].pres[ht_indices].values)
         # Variable array: pressure
 
-        relative_humidity = sonde_ds[i].rh[ht_indices].values
+        relative_humidity = np.float32(sonde_ds[i].rh[ht_indices].values)
         # Variable array: relative humidity
 
-        latitude = sonde_ds[i].lat[ht_indices].values
+        latitude = np.float32(sonde_ds[i].lat[ht_indices].values)
         # Variable array: latitude
 
-        longitude = sonde_ds[i].lon[ht_indices].values
+        longitude = np.float32(sonde_ds[i].lon[ht_indices].values)
         # Variable array: longitude
 
         ###----- Global Attributes -----###
@@ -873,7 +873,7 @@ for i in tqdm(range(len(sonde_ds))):
 
         ###--------- Creating and populating dataset --------###
 
-        to_save_ds = xr.Dataset(coords={"obs": obs})
+        to_save_ds = xr.Dataset(coords={"time": obs})
 
         for var in nc_meta.keys():
             # v = var
