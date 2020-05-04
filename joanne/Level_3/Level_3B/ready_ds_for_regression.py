@@ -1,3 +1,4 @@
+# %%
 import yaml
 import glob
 import xarray as xr
@@ -8,6 +9,7 @@ import datetime
 from pylab import cos
 
 import dicts
+import circle_fit as cf
 
 # %%
 
@@ -117,18 +119,30 @@ def get_xy_coords_for_circles(circles):
         y_coor = circles[i]["latitude"] * 110.54 * 1000
 
         # converting from lat, lon to coordinates in metre from (0,0).
+        xc = np.full(np.size(x_coor, 1), np.nan)
+        yc = np.full(np.size(x_coor, 1), np.nan)
+        r = np.full(np.size(x_coor, 1), np.nan)
 
-        xc = [None] * len(x_coor.T)
-        yc = [None] * len(y_coor.T)
+        for j in range(np.size(x_coor, 1)):
+            a = ~np.isnan(x_coor.values[:, j])
+            if a.sum() > 4:
+                xc[j], yc[j], r[j], _ = cf.least_squares_circle(
+                    list(zip(x_coor.values[:, j], y_coor.values[:, j]))
+                )
 
-        xc = np.mean(x_coor, axis=0)
-        yc = np.mean(y_coor, axis=0)
+        # xc = [None] * len(x_coor.T)
+        # yc = [None] * len(y_coor.T)
+
+        # xc = np.mean(x_coor, axis=0)
+        # yc = np.mean(y_coor, axis=0)
 
         delta_x = x_coor - xc  # *111*1000 # difference of sonde long from mean long
         delta_y = y_coor - yc  # *111*1000 # difference of sonde lat from mean lat
+        # radius = sqrt((delta_x.values ** 2) + (delta_y.values ** 2))
 
         circles[i]["xc"] = (["height"], xc)
         circles[i]["yc"] = (["height"], yc)
+        circles[i]["radius"] = (["height"], r)
         circles[i]["dx"] = (["launch_time", "height"], delta_x)
         circles[i]["dy"] = (["launch_time", "height"], delta_y)
 
