@@ -50,10 +50,15 @@ lv3b_dataset = xr.concat(circles, dim="circle")
 nc_data = {}
 
 for var in dicts.list_of_vars:
-    nc_data[var] = lv3b_dataset[var].values
+    if var != "Platform":
+        nc_data[var] = np.float32(lv3b_dataset[var].values)
 
-    if var == 'launch_time' :
+    if var == "Platform":
+        nc_data[var] = lv3b_dataset[var].values
+
+    if var == "launch_time":
         nc_data[var] = lv3b_dataset[var].astype("float").values / 1e9
+
 
 # %%
 
@@ -82,9 +87,7 @@ comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float3
 
 encoding = {}
 
-encoding = {
-    var: comp for var in to_save_ds.data_vars if var not in ["Platform"]
-}
+encoding = {var: comp for var in to_save_ds.data_vars if var not in ["Platform"]}
 
 for key in dicts.nc_global_attrs.keys():
     to_save_ds.attrs[key] = dicts.nc_global_attrs[key]
@@ -92,3 +95,5 @@ for key in dicts.nc_global_attrs.keys():
 to_save_ds.to_netcdf(
     save_directory + file_name, mode="w", format="NETCDF4", encoding=encoding
 )
+
+# %%
