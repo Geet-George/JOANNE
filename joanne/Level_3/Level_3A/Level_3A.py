@@ -31,7 +31,7 @@ for var in dicts.list_of_vars:
 obs = lv3_dataset.obs.values
 sounding = lv3_dataset.sounding.values
 
-to_save_ds = xr.Dataset(coords={"obs": obs, "sounding": sounding})
+to_save_ds = xr.Dataset(coords={"height": obs, "sounding": sounding})
 
 for var in dicts.list_of_vars:
     f3a.create_variable(
