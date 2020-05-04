@@ -21,3 +21,6 @@ JOANNE.code-workspace
 
 # egg directories
 joanne.egg*/
+
+# YAML files
+**/*.yaml
