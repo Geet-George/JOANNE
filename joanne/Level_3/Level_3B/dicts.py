@@ -405,15 +405,15 @@ nc_dims = {
 
 nc_global_attrs = {
     "Title": "Level-3B : Circle Products",
-    "Campaign_ID": "EUREC4A",
-    "Project_ID": "JOANNE",
+    "Campaign-ID": "EUREC4A",
+    "Project-ID": "JOANNE",
     "Instrument": "Vaisala RD-41",
-    "Data Processing for Level-2": "BatchAspen v3.4.3",
+    "Data-Processing-for-Level-2": "BatchAspen v3.4.3",
     "Author": "Geet George",
-    "Author Email": "geet.george@mpimet.mpg.de",
-    "version": joanne.__version__,
-    "Reference Study": "https://doi.org/10.1175/JAS-D-18-0141.1",
+    "Author-Email": "geet.george@mpimet.mpg.de",
+    "JOANNE-version": joanne.__version__,
+    "Reference-Study": "https://doi.org/10.1175/JAS-D-18-0141.1",
     "Conventions": "CF-1.7",
     "featureType": "trajectory",
-    "Creation Time": str(datetime.datetime.utcnow()) + " UTC",
+    "Creation-Time": str(datetime.datetime.utcnow()) + " UTC",
 }

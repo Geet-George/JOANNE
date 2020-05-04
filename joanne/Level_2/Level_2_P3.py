@@ -824,18 +824,18 @@ for i in tqdm(range(len(sonde_ds))):
             "Campaign": "EUREC4A-ATOMIC (Jan-Feb, 2020)",
             "Platform": Platform_Name,
             "Instrument": "Vaisala RD41",
-            "Launch_date": str(pd.to_datetime(file_time[i]).date()),
-            "Launch time (UTC)": str(sonde_ds[i].launch_time.values),
-            "Sonde Serial ID": sonde_ds[i].SondeId,
-            "ASPEN Version": sonde_ds[i].AspenVersion,
-            "Processing Time": sonde_ds[i].ProcessingTime,
-            "Mission PI": "Mission PI",
+            "Launch-date": str(pd.to_datetime(file_time[i]).date()),
+            "Launch-time-(UTC)": str(sonde_ds[i].launch_time.values),
+            "Sonde-Serial-ID": sonde_ds[i].SondeId,
+            "ASPEN-Version": sonde_ds[i].AspenVersion,
+            "Processing-Time": sonde_ds[i].ProcessingTime,
+            "Mission-PI": "Mission PI",
             "Author": "Geet George",
-            "Author Email": "geet.george@mpimet.mpg.de",
-            "version": joanne.__version__,
+            "Author-Email": "geet.george@mpimet.mpg.de",
+            "JOANNE-version": joanne.__version__,
             "Conventions": "CF-1.7",
             "featureType": "trajectory",
-            "Creation Time": str(datetime.datetime.utcnow()) + " UTC",
+            "Creation-Time": str(datetime.datetime.utcnow()) + " UTC",
         }
 
         ###--------- Retrieving flight parameters during launch --------###
@@ -856,13 +856,15 @@ for i in tqdm(range(len(sonde_ds))):
                     break
 
             if attr == "True Air Speed (m/s)":
-                attr = "True Air Speed (m s-1)"
+                attr = "True-Air-Speed-(ms-1)"
             elif attr == "Ground Speed (m/s)":
-                attr = "Ground Speed (m s-1)"
+                attr = "Ground-Speed-(ms-1)"
             elif attr == "Software Notes":
-                attr = "AVAPS Software Notes"
+                attr = "AVAPS-Software-Notes"
             elif attr == "Format Notes":
-                attr = "AVAPS Format Notes"
+                attr = "AVAPS-Format-Notes"
+
+            attr = attr.replace(" ", "-")
 
             if "AVAPS" in attr:
                 flight_attrs[i][attr] = lines[line_id].split("= ")[1]
@@ -880,7 +882,7 @@ for i in tqdm(range(len(sonde_ds))):
             create_variable(to_save_ds, var, eval(var))
 
         file_name = (
-            "EUREC4A_"
+            "EUREC4A_JOANNE_"
             + str(Platform_Name)
             + "_Dropsonde-RD41_"
             + file_time_str[i]
