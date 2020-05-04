@@ -76,7 +76,7 @@ def regress_for_all_parameters(circle, list_of_parameters):
     for par in list_of_parameters:
         (par_mean, par_m, par_c, Ns) = run_regression(circle, par)
 
-        circle["mean_" + rename_dict[par]] = (["height"], par_mean)
+        circle[rename_dict[par]] = (["height"], par_mean)
         circle["d" + rename_dict[par] + "dx"] = (["height"], par_m)
         circle["d" + rename_dict[par] + "dy"] = (["height"], par_c)
 
