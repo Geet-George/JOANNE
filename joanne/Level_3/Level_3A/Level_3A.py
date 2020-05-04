@@ -24,8 +24,10 @@ lv3_dataset = f3a.lv3_structure_from_lv2(lv2_data_directory)
 nc_data = {}
 
 for var in dicts.list_of_vars:
-    nc_data[var] = lv3_dataset[var].values
-
+    if lv3_dataset[var].values.dtype == "float64":
+        nc_data[var] = np.float32(lv3_dataset[var].values)
+    else:
+        nc_data[var] = lv3_dataset[var].values
 # %%
 
 obs = lv3_dataset.obs.values

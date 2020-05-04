@@ -45,8 +45,6 @@ print(f"Finished in {round(finish - start,2)} seconds ...")
 
 lv3b_dataset = xr.concat(circles, dim="circle")
 
-# %%
-
 nc_data = {}
 
 for var in dicts.list_of_vars:
@@ -57,8 +55,7 @@ for var in dicts.list_of_vars:
         nc_data[var] = lv3b_dataset[var].values
 
     if var == "launch_time":
-        nc_data[var] = lv3b_dataset[var].astype("float").values / 1e9
-
+        nc_data[var] = np.float32(lv3b_dataset[var].astype("float").values / 1e9)
 
 # %%
 
