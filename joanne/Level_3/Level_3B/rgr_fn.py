@@ -156,7 +156,7 @@ def get_density_vertical_velocity_and_omega(circles):
             if m in nan_ids:
                 w_vel[m] = np.nan
             else:
-                w_vel[m] = -(w_vel[last] + D[m] * 10 * (m - last))
+                w_vel[m] = w_vel[last] - D[m] * 10 * (m - last)
                 last = m
 
         for n in range(1, len(circle.height)):
