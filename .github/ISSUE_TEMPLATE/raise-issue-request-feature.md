@@ -5,12 +5,4 @@ title: "[ISSUE / FEATURE]: "
 labels:
 assignees:
 ---
-
-**What is the issue you are facing? Please describe.**
-
-
-**Describe the solution you'd like**
-
-
-**Additional context**
-
+Please give details here... 
