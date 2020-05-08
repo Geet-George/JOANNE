@@ -1,8 +1,8 @@
-# Level - 3A
+# Level - 3
 
 <div style="text-align: justify">
 
-Level-3A is a dataset where all Level-2 soundings are gridded to a uniform vertical resolution of 10 m, along the geopotential height dimension, up to an altitude of 10 km. For Level-3A, the P3 and HALO dropsondes are also integrated into a single dataset.
+Level-3 is a dataset where all Level-2 soundings are gridded to a uniform vertical resolution of 10 m, along the geopotential height dimension, up to an altitude of 10 km. For Level-3, the P3 and HALO dropsondes are also integrated into a single dataset.
 
 <div id="TOC">
 <b>Contents :</b>
@@ -173,12 +173,12 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
 <td>kg m-2</sup></td>
 <td>sounding</td>
 </tr>
-<tr>
+<!-- <tr>
 <td></td>
 <td>static_stability</td>
 <td>K hPa-1</td>
 <td>obs, sounding</td>
-</tr>
+</tr> -->
 <tr>
 <td></td>
 <td>low_height_flag</td>
@@ -226,7 +226,7 @@ Level-3A is a dataset where all Level-2 soundings are gridded to a uniform verti
 <h4>Launch Time</h4>
 <!-- </a></h4></div> -->
 
-Level-3A data are of the trajectory type with a single timestamp associated with each sounding, i.e. the launch time. The soundings in Level-3 do not have time at all levels, because for the original sounding, time is the independent variable, and interpolating that does not make sense. If it is essential for the user to obtain time for the relevant levels here, the data are still available in the Level-1 files, and thus, can still be retrieved. It would not be recommended though, to use "time of recording" in conjunction with interpolated variables.
+Level-3 data are of the trajectory type with a single timestamp associated with each sounding, i.e. the launch time. The soundings in Level-3 do not have time at all levels, because for the original sounding, time is the independent variable, and interpolating that does not make sense. If it is essential for the user to obtain time for the relevant levels here, the data are still available in the Level-1 files, and thus, can still be retrieved. It would not be recommended though, to use "time of recording" in conjunction with interpolated variables.
 
 <!-- <div id="potential_temperature"><a href="#TOC"> -->
 <h4>Potential Temperature</h4>
@@ -246,9 +246,9 @@ Precipitable water (PW) is computed before the interpolation of the soundings is
 The value of PW is obtained by integrating from surface up to the top of the measured column and thus, will naturally depend on the height of the atmospheric column in consideration. This means that PW cannot be compared across soundings without considering flight altitude. Generally since the moisture in the upper layers of the atmosphere is very low, this does not cause a major difference in PW, even if the flight altitude varies by a couple of km, above ~6-7 km. However, the difference between flight altitudes during EUREC<sup>4</sup>A sonde launches was significant. See more in the discussion of the <a href="#low_height_flag">`low_height_flag`</a> variable.
 
 <!-- <div id="static_stability"><a href="#TOC"> -->
-<h4>Static Stability</h4>
+<!-- <h4>Static Stability</h4>
 
-Static stability is considered here as the gradient of potential temperature with respect to pressure. This value is estimated after the interpolation of variables to the common grid.
+Static stability is considered here as the gradient of potential temperature with respect to pressure. This value is estimated after the interpolation of variables to the common grid. -->
 
 <!-- <div id="platform"><a href="#TOC"> -->
 <h4>Platform</h4>
@@ -257,7 +257,7 @@ Although all soundings are in a single file in Level-3, they can still be separa
 
 <div id="gridding"><h2><a href="#TOC">Gridding</a></h2></div>
 
-The primary objective behind the Level-3A product is gridding all soundings on a common, vertical grid, thus making it easier to use the soundings for different analyses in bulk. The vertical grid spacing for the dataset is kept at 10 m, up to an altitude of 10 km. 
+The primary objective behind the Level-3 product is gridding all soundings on a common, vertical grid, thus making it easier to use the soundings for different analyses in bulk. The vertical grid spacing for the dataset is kept at 10 m, up to an altitude of 10 km. 
 
 In the case of a regular drop, i.e. if there are no issues like a fast fall, or a failed parachute, the average descent rate of the dropsondes is ~21 m/s at 12 km altitude and ~11 m/s near to the surface<a href="#vaisala_datasheet"><sup>1</sup></a>. The PTU (pressure, temperature and humidity(U)) sensors have a measurement frequency of 2 Hz, while the GPS has a 4 Hz measurement frequency. This would translate to a vertical resolution of roughly 9-10 m at HALO's flight altitude, and 5-6 m close to the surface for the PTU values. For the more frequently measured wind values, the resolution will accordingly be higher. However, this vertical spacing will vary depending on the actual vertical wind velocity.
 
