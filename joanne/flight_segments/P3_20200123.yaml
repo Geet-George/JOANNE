@@ -1,0 +1,29 @@
+name: RFXX # Only circle kind has been documented; all timestamps are approximate
+mission: EUREC4A
+flight_id: P3-0123
+contacts:
+- name: Marc Prange
+  email: marc.prange@uni-hamburg.de
+  tags:
+  - dataset creator
+- name: Chris Fairall
+  email: first.name@get.this.info.from.P3
+  tags:
+  - flight PI
+date: 2020-01-23
+flight_report: https://observations.ipsl.fr/aeris/eurec4a-data/REPORTS/WP-3D/2020/20200123/WP-3D_0123.pdf
+takeoff: 2020-01-24 13:20:00
+landing: 2020-01-24 21:30:00
+events: []
+remarks:
+- Circle pattern, in the end excursion towards NTAS.
+- Deeper convection in the SE circle, spreading cold pools and stratiform clouds.
+segments:
+- kind: circle
+  name: c1
+  start: 2020-01-23 14:03:00
+  end: 2020-01-23 15:10:00
+- kind: circle
+  name: c2
+  start: 2020-01-23 19:40:08
+  end: 2020-01-23 21:00:00
