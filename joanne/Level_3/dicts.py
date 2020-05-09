@@ -38,7 +38,7 @@ nc_attrs = {
         "standard_name": "geopotential_height",
         "long_name": "Geopotential Height",
         "description": "Height obtained by integrating upwards the atmospheric thickness estimated from the hypsometric equation",
-        "units": "gpm",
+        "units": "m",
         "axis": "Z",
         "positive": "up",
     },

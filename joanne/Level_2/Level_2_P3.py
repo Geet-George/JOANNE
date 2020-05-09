@@ -713,7 +713,7 @@ nc_meta = {
     "height": {
         "standard_name": "geopotential_height",
         "long_name": "Geopotential Height obtained by integrating upwards the atmospheric thickness estimated using the hypsometric equation",
-        "units": "gpm",
+        "units": "m",
         "axis": "Z",
         "positive": "up",
     },
