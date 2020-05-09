@@ -23,25 +23,12 @@ def get_level3a_dataset(lv3_directory=lv3_directory, lv3a_filename=lv3a_filename
     return xr.open_dataset(lv3_directory + lv3a_filename)
 
 
-def dim_ready_ds(ds_lv3a=get_level3a_dataset(), Platform="HALO"):
-
-    dims_to_drop = ["obs", "sounding"]
-
-    all_sondes = (
-        ds_lv3a.where(ds_lv3a.Platform == Platform, drop=True)
-        .swap_dims({"sounding": "launch_time"})
-        .swap_dims({"obs": "height"})
-        .drop(dims_to_drop)
-    )
-
-    return all_sondes
-
-
 def get_circle_times_from_yaml(yaml_directory=yaml_directory):
     allyamlfiles = sorted(glob.glob(yaml_directory + "*.yaml"))
 
     circle_times = []
     flight_date = []
+    platform_name = []
 
     for i in allyamlfiles:
         with open(i) as source:
@@ -55,9 +42,29 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
             ]
         )
 
+        if "HALO" in i:
+            platform_name.append("HALO")
+        elif "P3" in i:
+            platform_name.append("P3")
+        else:
+            platform_name.append("")
+
         flight_date.append(np.datetime64(date.strftime(flightinfo["date"], "%Y-%m-%d")))
 
-    return circle_times, flight_date
+    return circle_times, flight_date, platform_name
+
+
+def dim_ready_ds(ds_lv3a=get_level3a_dataset()):
+
+    dims_to_drop = ["obs", "sounding"]
+
+    all_sondes = (
+        ds_lv3a.swap_dims({"sounding": "launch_time"})
+        .swap_dims({"obs": "height"})
+        .drop(dims_to_drop)
+    )
+
+    return all_sondes
 
 
 def get_circles(
@@ -69,16 +76,20 @@ def get_circles(
 
     ds_lv3a = get_level3a_dataset(lv3_directory, lv3a_filename)
 
-    all_sondes = dim_ready_ds(ds_lv3a, Platform)
+    all_sondes = dim_ready_ds(ds_lv3a)
 
-    circle_times, flight_date = get_circle_times_from_yaml(yaml_directory)
+    circle_times, flight_date, platform_name = get_circle_times_from_yaml(
+        yaml_directory
+    )
 
     circles = []
 
     for i in range(len(flight_date)):
         for j in range(len(circle_times[i])):
             circles.append(
-                all_sondes.sel(
+                all_sondes.where(
+                    all_sondes.Platform == platform_name[i], drop=True
+                ).sel(
                     launch_time=slice(
                         circle_times[i][j][0] - datetime.timedelta(minutes=2),
                         circle_times[i][j][1] + datetime.timedelta(minutes=2),
@@ -142,7 +153,8 @@ def get_xy_coords_for_circles(circles):
 
         delta_x = x_coor - xc  # *111*1000 # difference of sonde long from mean long
         delta_y = y_coor - yc  # *111*1000 # difference of sonde lat from mean lat
-        # radius = sqrt((delta_x.values ** 2) + (delta_y.values ** 2))
+
+        circles[i]["platform"] = circles[i].Platform.values[0]
 
         circles[i]["circle_time"] = circles[i].launch_time.mean().values
         circles[i]["circle_x"] = np.nanmean(c_xc)
