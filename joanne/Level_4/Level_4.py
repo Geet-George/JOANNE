@@ -8,16 +8,15 @@ import numpy as np
 import xarray as xr
 import yaml
 
-import rgr_fn as rf
-import ready_ds_for_regression as prep
-import dicts
+import joanne
+
+from joanne.Level_4 import rgr_fn as rf
+from joanne.Level_4 import ready_ds_for_regression as prep
+from joanne.Level_4 import dicts
 
 reload(prep)
 reload(rf)
 reload(dicts)
-
-import joanne
-
 # %%
 circles = prep.get_circles()
 prep.get_xy_coords_for_circles(circles)

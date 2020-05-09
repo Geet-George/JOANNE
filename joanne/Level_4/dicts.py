@@ -19,8 +19,8 @@ list_of_vars = [
     # "static_stability",
     # "low_height_flag",
     # "cloud_flag",
-    # "Platform",
-    # "flight_height",
+    "Platform",
+    "flight_height",
     # "flight_lat",
     # "flight_lon",
     "circle_x",
@@ -68,7 +68,7 @@ nc_attrs = {
         "standard_name": "geopotential_height",
         "long_name": "Geopotential Height",
         "description": "Height obtained by integrating upwards the atmospheric thickness estimated from the hypsometric equation",
-        "units": "gpm",
+        "units": "m",
         "axis": "Z",
         "positive": "up",
     },
@@ -165,14 +165,14 @@ nc_attrs = {
     },
     "Platform": {
         "standard_name": "platform",
-        "long_name": "platform from which the sounding was made",
-        "coordinates": "launch_time",
+        "long_name": "platform of the flown circle",
+        "coordinates": "circle",
     },
     "flight_height": {
         "standard_name": "height",
-        "long_name": "height of the aircraft when the dropsonde was launched",
+        "long_name": "mean height of the aircraft during the circle",
         "units": "m",
-        "coordinates": "launch_time",
+        "coordinates": "circle",
     },
     "flight_lat": {
         "standard_name": "latitude",
@@ -382,8 +382,8 @@ nc_dims = {
     "static_stability": ["circle", "sounding", "height"],
     "low_height_flag": ["circle", "sounding"],
     "cloud_flag": ["circle", "sounding", "height"],
-    "Platform": ["circle", "sounding"],
-    "flight_height": ["circle", "sounding"],
+    "Platform": ["circle"],
+    "flight_height": ["circle"],
     "flight_lat": ["circle", "sounding"],
     "flight_lon": ["circle", "sounding"],
     "circle_x": ["circle"],
@@ -420,7 +420,7 @@ nc_dims = {
 }
 
 nc_global_attrs = {
-    "Title": "Level-3B : Circle Products",
+    "Title": "Level-4 : Circle Products",
     "Campaign-ID": "EUREC4A",
     "Project-ID": "JOANNE",
     "Instrument": "Vaisala RD-41",

@@ -8,7 +8,7 @@ from datetime import date
 import datetime
 from pylab import cos
 
-import dicts
+from joanne.Level_4 import dicts
 import circle_fit as cf
 
 # %%
@@ -154,8 +154,8 @@ def get_xy_coords_for_circles(circles):
         delta_x = x_coor - xc  # *111*1000 # difference of sonde long from mean long
         delta_y = y_coor - yc  # *111*1000 # difference of sonde lat from mean lat
 
-        circles[i]["platform"] = circles[i].Platform.values[0]
-
+        circles[i]["Platform"] = circles[i].Platform.values[0]
+        circles[i]["flight_height"] = circles[i].flight_height.mean().values
         circles[i]["circle_time"] = circles[i].launch_time.mean().values
         circles[i]["circle_x"] = np.nanmean(c_xc)
         circles[i]["circle_y"] = np.nanmean(c_yc)
