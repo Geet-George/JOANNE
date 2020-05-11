@@ -596,7 +596,7 @@ def interpolate_for_level_3(
     )
 
     interpolated_dataset = add_cloud_flag(interpolated_dataset)
-    interpolated_dataset = adding_static_stability_to_dataset(interpolated_dataset)
+    # interpolated_dataset = adding_static_stability_to_dataset(interpolated_dataset)
 
     return interpolated_dataset
 
