@@ -121,13 +121,8 @@ def get_xy_coords_for_circles(circles):
 
     for i in range(len(circles)):
 
-        x_coor = (
-            circles[i]["longitude"]
-            * 111.320
-            * cos(np.radians(circles[i]["latitude"]))
-            * 1000
-        )
-        y_coor = circles[i]["latitude"] * 110.54 * 1000
+        x_coor = circles[i]["lon"] * 111.320 * cos(np.radians(circles[i]["lat"])) * 1000
+        y_coor = circles[i]["lat"] * 110.54 * 1000
 
         # converting from lat, lon to coordinates in metre from (0,0).
         c_xc = np.full(np.size(x_coor, 1), np.nan)
