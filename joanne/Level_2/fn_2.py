@@ -4,7 +4,7 @@ import glob
 import sys
 import warnings
 
-# from importlib import reload
+from importlib import reload
 
 # import matplotlib.pyplot as plt
 import numpy as np
@@ -17,7 +17,9 @@ import xarray as xr
 from tqdm import tqdm
 
 import joanne
+from joanne.Level_2 import dicts
 
+reload(dicts)
 warnings.filterwarnings("ignore", message="Mean of empty slice")
 warnings.filterwarnings("ignore", message="All-NaN slice encounter")
 warnings.filterwarnings(
@@ -673,7 +675,7 @@ def check_launch_detect(sonde_path):
 
 def create_variable(ds, vname, data, **kwargs):
     """Insert the data into a variable in an :class:`xr.Dataset`"""
-    attrs = nc_meta[vname].copy()
+    attrs = dicts.nc_meta[vname].copy()
     dims = ["time"]  # nc_dims[vname]
 
     v = xr.Variable(dims, np.asarray(data), attrs=attrs)
