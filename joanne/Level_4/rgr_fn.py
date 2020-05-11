@@ -169,37 +169,36 @@ def get_density_vertical_velocity_and_omega(circles):
     return print("Finished estimating density, W and omega ...")
 
 
-# def get_advection(circles, list_of_parameters=["u", "v", "q", "T", "p"]):
+def get_advection(circles, list_of_parameters=["u", "v", "q", "T", "p"]):
 
-#     for id_, circle in enumerate(circles):
-#         adv_dicts = {}
-#         for var in list_of_parameters:
-#             adv_dicts[f"h_adv_+{var}"] = (circle.u * eval(f"circle.d{var}dx")) + (
-#                 circle.v * eval(f"circle.d{var}dy")
-#             )
-#             # advection_q = (circle.u * circle.dqdx) + (circle.v * circle.dqdy)
-#             # advection_T = (circle.u * circle.dTdx) + (circle.v * circle.dTdy)
-#             # advection_p = (circle.u * circle.dpdx) + (circle.v * circle.dpdy)
-
-#             circle[f"h_adv_+{var}"] = (["height"], adv_dicts[f"h_adv_+{var}"])
-#         # circle["h_adv_T"] = (["height"], advection_T)
-#         # circle["h_adv_p"] = (["height"], advection_p)
-
-#     return print("Finished estimating advection terms ...")
-
-
-def get_advection(circles):
-    # FUNCTION COMMENTED ABOVE TO CHANGE WITH u AND v too
     for id_, circle in enumerate(circles):
-        advection_q = -(circle.u * circle.dqdx) - (circle.v * circle.dqdy)
-        advection_T = -(circle.u * circle.dTdx) - (circle.v * circle.dTdy)
-        advection_p = -(circle.u * circle.dpdx) - (circle.v * circle.dpdy)
+        adv_dicts = {}
+        for var in list_of_parameters:
+            adv_dicts[f"h_adv_+{var}"] = (circle.u * eval(f"circle.d{var}dx")) + (
+                circle.v * eval(f"circle.d{var}dy")
+            )
+            # advection_q = (circle.u * circle.dqdx) + (circle.v * circle.dqdy)
+            # advection_T = (circle.u * circle.dTdx) + (circle.v * circle.dTdy)
+            # advection_p = (circle.u * circle.dpdx) + (circle.v * circle.dpdy)
 
-        circle["h_adv_q"] = (["height"], advection_q)
-        circle["h_adv_T"] = (["height"], advection_T)
-        circle["h_adv_p"] = (["height"], advection_p)
+            circle[f"h_adv_+{var}"] = (["height"], adv_dicts[f"h_adv_+{var}"])
+        # circle["h_adv_T"] = (["height"], advection_T)
+        # circle["h_adv_p"] = (["height"], advection_p)
 
     return print("Finished estimating advection terms ...")
+
+# def get_advection(circles):
+#     # FUNCTION COMMENTED ABOVE TO CHANGE WITH u AND v too
+#     for id_, circle in enumerate(circles):
+#         advection_q = -(circle.u * circle.dqdx) - (circle.v * circle.dqdy)
+#         advection_T = -(circle.u * circle.dTdx) - (circle.v * circle.dTdy)
+#         advection_p = -(circle.u * circle.dpdx) - (circle.v * circle.dpdy)
+
+#         circle["h_adv_q"] = (["height"], advection_q)
+#         circle["h_adv_T"] = (["height"], advection_T)
+#         circle["h_adv_p"] = (["height"], advection_p)
+
+#     return print("Finished estimating advection terms ...")
 
 
 def get_circle_products(circles, list_of_parameters):
