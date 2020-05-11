@@ -8,7 +8,7 @@ import numpy as np
 import xarray as xr
 
 import dicts
-import fn_3 as f3
+from joanne.Level_3 import fn_3 as f3
 import joanne
 
 warnings.filterwarnings(
@@ -30,7 +30,7 @@ for var in dicts.list_of_vars:
         nc_data[var] = lv3_dataset[var].values
 # %%
 
-obs = lv3_dataset.obs.values
+obs = np.arange(0,len(lv3_dataset.height),1)
 sounding = lv3_dataset.sounding.values
 
 to_save_ds = xr.Dataset(coords={"height": obs, "sounding": sounding})

@@ -23,15 +23,16 @@ def run_regression(circle, parameter):
         m_parameter, c_parameter    : coefficients of regression
 
     """
-    id_u = ~np.isnan(circle.u_wind.values)
-    id_q = ~np.isnan(circle.specific_humidity.values)
+    id_u = ~np.isnan(circle.u.values)
+    id_v = ~np.isnan(circle.v.values)
+    id_q = ~np.isnan(circle.q.values)
     id_x = ~np.isnan(circle.dx.values)
     id_y = ~np.isnan(circle.dy.values)
-    id_t = ~np.isnan(circle.temperature.values)
-    id_p = ~np.isnan(circle.pressure.values)
+    id_t = ~np.isnan(circle.T.values)
+    id_p = ~np.isnan(circle.p.values)
 
-    id_quxy = np.logical_and(np.logical_and(id_q, id_u), np.logical_and(id_x, id_y))
-    id_ = np.logical_and(np.logical_and(id_t, id_p), id_quxy)
+    id_quxv = np.logical_and(np.logical_and(id_q, id_u), np.logical_and(id_x, id_v))
+    id_ = np.logical_and(np.logical_and(id_t, id_p), id_quxv)
 
     mean_parameter = np.full(len(circle.height), np.nan)
     m_parameter = np.full(len(circle.height), np.nan)
@@ -65,13 +66,13 @@ def run_regression(circle, parameter):
     return (mean_parameter, m_parameter, c_parameter, Ns)
 
 
-rename_dict = {
-    "u_wind": "u",
-    "v_wind": "v",
-    "specific_humidity": "q",
-    "temperature": "T",
-    "pressure": "p",
-}
+# rename_dict = {
+#     "u_wind": "u",
+#     "v_wind": "v",
+#     "specific_humidity": "q",
+#     "temperature": "T",
+#     "pressure": "p",
+# }
 
 
 def regress_for_all_parameters(circle, list_of_parameters):
@@ -79,9 +80,9 @@ def regress_for_all_parameters(circle, list_of_parameters):
     for par in list_of_parameters:
         (par_mean, par_m, par_c, Ns) = run_regression(circle, par)
 
-        circle[rename_dict[par]] = (["height"], par_mean)
-        circle["d" + rename_dict[par] + "dx"] = (["height"], par_m)
-        circle["d" + rename_dict[par] + "dy"] = (["height"], par_c)
+        circle[par] = (["height"], par_mean)
+        circle["d" + par + "dx"] = (["height"], par_m)
+        circle["d" + par + "dy"] = (["height"], par_c)
 
         if "sondes_regressed" not in list(circle.data_vars):
             circle["sondes_regressed"] = (["height"], Ns)
@@ -116,8 +117,8 @@ def get_div_and_vor(circles):
 
         vor = circle.dvdx.values - circle.dudy.values
 
-        circle["divergence"] = (["height"], D)
-        circle["vorticity"] = (["height"], vor)
+        circle["D"] = (["height"], D)
+        circle["vor"] = (["height"], vor)
 
     return print("Finished estimating divergence and vorticity for all circles....")
 
@@ -128,19 +129,19 @@ def get_density_vertical_velocity_and_omega(circles):
         den_m = [None] * len(circle.launch_time)
 
         for sounding in range(len(circle.launch_time)):
-            q = mpcalc.mixing_ratio_from_specific_humidity(
-                circle.isel(launch_time=sounding).specific_humidity.values
+            mr = mpcalc.mixing_ratio_from_specific_humidity(
+                circle.isel(launch_time=sounding).q.values
             )
             den_m[sounding] = mpcalc.density(
-                circle.isel(launch_time=sounding).pressure.values * units.hPa,
-                circle.isel(launch_time=sounding).temperature.values * units.degC,
-                q,
+                circle.isel(launch_time=sounding).p.values * units.hPa,
+                circle.isel(launch_time=sounding).T.values * units.degC,
+                mr,
             ).magnitude
 
         circle["density"] = (["launch_time", "height"], den_m)
         circle["mean_density"] = (["height"], np.nanmean(den_m, axis=0))
 
-        D = circle.divergence.values
+        D = circle.D.values
         mean_den = circle.mean_density
 
         nan_ids = np.where(np.isnan(D) == True)[0]
@@ -163,41 +164,21 @@ def get_density_vertical_velocity_and_omega(circles):
 
             p_vel[n] = -mean_den[n] * 9.81 * w_vel[n] * 60 * 60 / 100
 
-        circle["vertical_velocity"] = (["height"], w_vel)
-        circle["pressure_velocity"] = (["height"], p_vel)
+        circle["W"] = (["height"], w_vel)
+        circle["omega"] = (["height"], p_vel)
 
     return print("Finished estimating density, W and omega ...")
 
 
-# def get_advection(circles, list_of_parameters=["u", "v", "q", "T", "p"]):
+def get_advection(circles, list_of_parameters=["u", "v", "q", "T", "p"]):
 
-#     for id_, circle in enumerate(circles):
-#         adv_dicts = {}
-#         for var in list_of_parameters:
-#             adv_dicts[f"h_adv_+{var}"] = (circle.u * eval(f"circle.d{var}dx")) + (
-#                 circle.v * eval(f"circle.d{var}dy")
-#             )
-#             # advection_q = (circle.u * circle.dqdx) + (circle.v * circle.dqdy)
-#             # advection_T = (circle.u * circle.dTdx) + (circle.v * circle.dTdy)
-#             # advection_p = (circle.u * circle.dpdx) + (circle.v * circle.dpdy)
-
-#             circle[f"h_adv_+{var}"] = (["height"], adv_dicts[f"h_adv_+{var}"])
-#         # circle["h_adv_T"] = (["height"], advection_T)
-#         # circle["h_adv_p"] = (["height"], advection_p)
-
-#     return print("Finished estimating advection terms ...")
-
-
-def get_advection(circles):
-    # FUNCTION COMMENTED ABOVE TO CHANGE WITH u AND v too
     for id_, circle in enumerate(circles):
-        advection_q = -(circle.u * circle.dqdx) - (circle.v * circle.dqdy)
-        advection_T = -(circle.u * circle.dTdx) - (circle.v * circle.dTdy)
-        advection_p = -(circle.u * circle.dpdx) - (circle.v * circle.dpdy)
-
-        circle["h_adv_q"] = (["height"], advection_q)
-        circle["h_adv_T"] = (["height"], advection_T)
-        circle["h_adv_p"] = (["height"], advection_p)
+        adv_dicts = {}
+        for var in list_of_parameters:
+            adv_dicts[f"h_adv_{var}"] = (circle.u * eval(f"circle.d{var}dx")) + (
+                circle.v * eval(f"circle.d{var}dy")
+            )
+            circle[f"h_adv_{var}"] = (["height"], adv_dicts[f"h_adv_{var}"])
 
     return print("Finished estimating advection terms ...")
 

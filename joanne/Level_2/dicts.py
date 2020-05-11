@@ -24,43 +24,43 @@ nc_meta = {
         "axis": "Z",
         "positive": "up",
     },
-    "latitude": {
+    "lat": {
         "standard_name": "latitude",
         "long_name": "North Latitude",
         "units": "degrees_north",
         "axis": "X",
     },
-    "longitude": {
+    "lon": {
         "standard_name": "longitude",
         "long_name": "East Longitude",
         "units": "degrees_east",
         "axis": "Y",
     },
-    "pressure": {
+    "p": {
         "standard_name": "air_pressure",
         "long_name": "Atmospheric Pressure",
         "units": "hPa",
         "coordinates": "time longitude latitude height",
     },
-    "temperature": {
+    "T": {
         "standard_name": "air_temperature",
         "long_name": "Dry Bulb Temperature",
         "units": "degree_Celsius",
         "coordinates": "time longitude latitude height",
     },
-    "relative_humidity": {
+    "rh": {
         "standard_name": "relative_humidity",
         "long_name": "Relative Humidity",
         "units": "%",
         "coordinates": "time longitude latitude height",
     },
-    "wind_speed": {
+    "wspd": {
         "standard_name": "wind_speed",
         "long_name": "Wind Speed",
         "units": "m s-1",
         "coordinates": "time longitude latitude height",
     },
-    "wind_direction": {
+    "wdir": {
         "standard_name": "wind_from_direction",
         "long_name": "Wind Direction",
         "units": "degrees",
@@ -118,7 +118,6 @@ def get_flight_attrs(a_filepath, list_of_flight_attrs=list_of_flight_attrs):
     f.close()
 
     return flight_attrs
-
 
 def get_global_attrs(Platform, file_time, sonde_ds):
     ###----- Global Attributes -----###
