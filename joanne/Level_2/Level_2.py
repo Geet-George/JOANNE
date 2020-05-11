@@ -21,11 +21,21 @@ reload(f2)
 reload(dicts)
 
 # %%
-for Platform in ['HALO','P3'] :
+for Platform in ["HALO", "P3"]:
 
-    sonde_ds, directory, a_dir, logs_directory, a_files, file_time, sonde_paths = f2.get_all_sondes_list(Platform)
+    (
+        sonde_ds,
+        directory,
+        a_dir,
+        logs_directory,
+        a_files,
+        file_time,
+        sonde_paths,
+    ) = f2.get_all_sondes_list(Platform)
 
-    status_ds = xr.open_dataset(f'{logs_directory}Status_of_sondes_{Platform}_v0.5.1+1.g0c163c5.dirty.nc')
+    status_ds = xr.open_dataset(
+        f"{logs_directory}Status_of_sondes_{Platform}_v0.5.1+1.g0c163c5.dirty.nc"
+    )
 
     a_filepaths = []
 
@@ -81,7 +91,6 @@ for Platform in ['HALO','P3'] :
             longitude = np.float32(sonde_ds[i].lon[ht_indices].values)
             # Variable array: longitude
 
-            
             ###--------- Creating and populating dataset --------###
 
             to_save_ds = xr.Dataset(coords={"time": obs})
@@ -102,12 +111,17 @@ for Platform in ['HALO','P3'] :
             save_directory = "/Users/geet/Documents/JOANNE/Data/Level_2/"
 
             comp = dict(
-                zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max
+                zlib=True,
+                complevel=4,
+                fletcher32=True,
+                _FillValue=np.finfo("float32").max,
             )
 
             encoding = {var: comp for var in to_save_ds.data_vars}
 
-            nc_global_attrs = dicts.get_global_attrs(Platform,file_time[i],sonde_ds[i])
+            nc_global_attrs = dicts.get_global_attrs(
+                Platform, file_time[i], sonde_ds[i]
+            )
 
             for key in nc_global_attrs.keys():
                 to_save_ds.attrs[key] = nc_global_attrs[key]
@@ -120,6 +134,9 @@ for Platform in ['HALO','P3'] :
             ###--------- Saving dataset to NetCDF file --------###
 
             to_save_ds.to_netcdf(
-                save_directory + file_name, mode="w", format="NETCDF4", encoding=encoding
+                save_directory + file_name,
+                mode="w",
+                format="NETCDF4",
+                encoding=encoding,
             )
     # %%
