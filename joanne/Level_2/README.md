@@ -133,6 +133,18 @@ For Level-2, only variables that are measurements from the dropsonde sensors are
 
 Note that file names of the soundings are not always indicative of launch times, although this will be the case for most soundings. The attribute `Launch_time_(UTC)` in every sounding file should be considered as the final authority on launch time.
 
+|Variable|Long Name|Unit|Dimension|
+|---|---|---|---|
+|height|Geopotential Height obtained by integrating upwards the atmospheric thickness estimated using the hypsometric equation|m|time|
+|time|Time of recorded measurement|seconds since 1970-01-01 00:00:00 UTC|time|
+|wspd|Wind Speed|m s-1|time|
+|wdir|Wind Direction|degrees|time|
+|T|Dry Bulb Temperature|degree_Celsius|time|
+|p|Atmospheric Pressure|hPa|time|
+|rh|Relative Humidity|%|time|
+|lat|North Latitude|degrees_north|time|
+|lon|East Longitude|degrees_east|time|
+
 </div>
 <div id="quality_control">
     <h1>
