@@ -5,18 +5,18 @@ import joanne
 list_of_vars = [
     "launch_time",
     "height",
-    "latitude",
-    "longitude",
-    "pressure",
-    "temperature",
-    "relative_humidity",
-    "wind_speed",
-    "wind_direction",
-    "u_wind",
-    "v_wind",
-    "potential_temperature",
-    "specific_humidity",
-    "precipitable_water",
+    "lat",
+    "lon",
+    "p",
+    "T",
+    "rh",
+    "wspd",
+    "wdir",
+    "u",
+    "v",
+    "theta",
+    "q",
+    "PW",
     # "static_stability",
     "low_height_flag",
     "cloud_flag",
@@ -42,73 +42,73 @@ nc_attrs = {
         "axis": "Z",
         "positive": "up",
     },
-    "latitude": {
+    "lat": {
         "standard_name": "latitude",
         "long_name": "North Latitude",
         "units": "degrees_north",
         "axis": "X",
     },
-    "longitude": {
+    "lon": {
         "standard_name": "longitude",
         "long_name": "East Longitude",
         "units": "degrees_east",
         "axis": "Y",
     },
-    "pressure": {
+    "p": {
         "standard_name": "air_pressure",
         "long_name": "Atmospheric Pressure",
         "units": "hPa",
         "coordinates": "launch_time longitude latitude height",
     },
-    "temperature": {
+    "T": {
         "standard_name": "air_temperature",
         "long_name": "Dry Bulb Temperature",
         "units": "degree_Celsius",
         "coordinates": "launch_time longitude latitude height",
     },
-    "potential_temperature": {
+    "theta": {
         "standard_name": "potential_temperature",
         "long_name": "potential temperature",
         "units": "K",
         "coordinates": "launch_time longitude latitude height",
     },
-    "relative_humidity": {
+    "rh": {
         "standard_name": "relative_humidity",
         "long_name": "Relative Humidity",
         "units": "%",
         "coordinates": "launch_time longitude latitude height",
     },
-    "specific_humidity": {
+    "q": {
         "standard_name": "specific_humidity",
         "long_name": "Specific humidity",
         "units": "kg kg-1",
         "coordinates": "launch_time longitude latitude height",
     },
-    "wind_speed": {
+    "wspd": {
         "standard_name": "wind_speed",
         "long_name": "Wind Speed",
         "units": "m s-1",
         "coordinates": "launch_time longitude latitude height",
     },
-    "u_wind": {
+    "u": {
         "standard_name": "eastward_wind",
         "long_name": "u-component of the wind",
         "units": "m s-1",
         "coordinates": "launch_time longitude latitude height",
     },
-    "v_wind": {
+    "v": {
         "standard_name": "northward_wind",
         "long_name": "v-component of the wind",
         "units": "m s-1",
         "coordinates": "launch_time longitude latitude height",
     },
-    "wind_direction": {
+    "wdir": {
         "standard_name": "wind_from_direction",
         "long_name": "Wind Direction",
         "units": "degrees",
         "coordinates": "launch_time longitude latitude height",
     },
-    "precipitable_water": {
+    "PW": {
         "standard_name": "precipitable_water",
         "long_name": "integrated water vapour in the measured column",
         "units": "kg m-2",
@@ -161,18 +161,18 @@ nc_attrs = {
 nc_dims = {
     "launch_time": ["sounding"],
     "height": ["height"],
-    "latitude": ["sounding", "height"],
-    "longitude": ["sounding", "height"],
-    "pressure": ["sounding", "height"],
-    "temperature": ["sounding", "height"],
-    "relative_humidity": ["sounding", "height"],
-    "wind_speed": ["sounding", "height"],
-    "wind_direction": ["sounding", "height"],
-    "u_wind": ["sounding", "height"],
-    "v_wind": ["sounding", "height"],
-    "potential_temperature": ["sounding", "height"],
-    "specific_humidity": ["sounding", "height"],
-    "precipitable_water": ["sounding"],
+    "lat": ["sounding", "height"],
+    "lon": ["sounding", "height"],
+    "p": ["sounding", "height"],
+    "T": ["sounding", "height"],
+    "rh": ["sounding", "height"],
+    "wspd": ["sounding", "height"],
+    "wdir": ["sounding", "height"],
+    "u": ["sounding", "height"],
+    "v": ["sounding", "height"],
+    "theta": ["sounding", "height"],
+    "q": ["sounding", "height"],
+    "PW": ["sounding"],
     "static_stability": ["sounding", "height"],
     "low_height_flag": ["sounding"],
     "cloud_flag": ["sounding", "height"],
