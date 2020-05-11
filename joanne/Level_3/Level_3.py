@@ -8,14 +8,14 @@ import numpy as np
 import xarray as xr
 
 import dicts
-import fn_3 as f3
+from joanne.Level_3 import fn_3 as f3
 import joanne
 
 warnings.filterwarnings(
     "ignore", module="metpy.calc.thermo", message="invalid value encountered"
 )
 # %%
-lv2_data_directory = "/Users/geet/Documents/JOANNE/Data/Level_2/"  # Level_2/"  # code_testing_data/"
+lv2_data_directory = "/Users/geet/Documents/JOANNE/Data/code_testing_data/"  # Level_2/"  # code_testing_data/"
 
 lv3_dataset = f3.lv3_structure_from_lv2(lv2_data_directory)
 
@@ -30,7 +30,7 @@ for var in dicts.list_of_vars:
         nc_data[var] = lv3_dataset[var].values
 # %%
 
-obs = lv3_dataset.obs.values
+obs = np.arange(0,len(lv3_dataset.height),1)
 sounding = lv3_dataset.sounding.values
 
 to_save_ds = xr.Dataset(coords={"height": obs, "sounding": sounding})
@@ -45,7 +45,7 @@ file_name = (
 )
 
 save_directory = (
-    "/Users/geet/Documents/JOANNE/Data/Level_3/"  # Test_data/" #Level_3/"
+    "/Users/geet/Documents/JOANNE/Data/Level_3/Test_data/"  # Test_data/" #Level_3/"
 )
 
 comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max)

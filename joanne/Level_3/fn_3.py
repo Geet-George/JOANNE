@@ -15,7 +15,7 @@ from metpy.future import precipitable_water
 from metpy.units import units
 from tqdm import tqdm
 
-import dicts
+from joanne.Level_3 import dicts
 
 #  %%
 
@@ -614,9 +614,9 @@ def concatenate_soundings(list_of_interpolated_dataset):
                                making 'height' a variable
     """
     concatenated_dataset = xr.concat(list_of_interpolated_dataset, dim="sounding")
-    concatenated_dataset = concatenated_dataset.drop(
-        "time"
-    )  # .swap_dims({"height": "obs"})
+    # concatenated_dataset = concatenated_dataset.drop(
+    #     "time"
+    # )  # .swap_dims({"height": "obs"})
 
     return concatenated_dataset
 
@@ -671,3 +671,6 @@ def create_variable(ds, var, data, dims=dicts.nc_dims, attrs=dicts.nc_attrs, **k
     ds[var] = v
 
     return var
+
+
+# %%
