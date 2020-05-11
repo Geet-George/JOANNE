@@ -421,9 +421,9 @@ nc_dims = {
 
 nc_global_attrs = {
     "Title": "Level-4 : Circle Products",
-    "Campaign-ID": "EUREC4A",
-    "Project-ID": "JOANNE",
-    "Instrument": "Vaisala RD-41",
+    "campaign_id": "EUREC4A",
+    "project_id": "JOANNE",
+    "instrument_id": "Dropsonde-RD41",
     "Data-Processing-for-Level-2": "BatchAspen v3.4.3",
     "Author": "Geet George",
     "Author-Email": "geet.george@mpimet.mpg.de",
