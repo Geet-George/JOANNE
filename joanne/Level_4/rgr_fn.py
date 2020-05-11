@@ -24,14 +24,15 @@ def run_regression(circle, parameter):
 
     """
     id_u = ~np.isnan(circle.u.values)
+    id_v = ~np.isnan(circle.v.values)
     id_q = ~np.isnan(circle.q.values)
     id_x = ~np.isnan(circle.dx.values)
     id_y = ~np.isnan(circle.dy.values)
     id_t = ~np.isnan(circle.T.values)
     id_p = ~np.isnan(circle.p.values)
 
-    id_quxy = np.logical_and(np.logical_and(id_q, id_u), np.logical_and(id_x, id_y))
-    id_ = np.logical_and(np.logical_and(id_t, id_p), id_quxy)
+    id_quxv = np.logical_and(np.logical_and(id_q, id_u), np.logical_and(id_x, id_v))
+    id_ = np.logical_and(np.logical_and(id_t, id_p), id_quxv)
 
     mean_parameter = np.full(len(circle.height), np.nan)
     m_parameter = np.full(len(circle.height), np.nan)
@@ -140,7 +141,7 @@ def get_density_vertical_velocity_and_omega(circles):
         circle["density"] = (["launch_time", "height"], den_m)
         circle["mean_density"] = (["height"], np.nanmean(den_m, axis=0))
 
-        D = circle.divergence.values
+        D = circle.D.values
         mean_den = circle.mean_density
 
         nan_ids = np.where(np.isnan(D) == True)[0]
@@ -174,10 +175,10 @@ def get_advection(circles, list_of_parameters=["u", "v", "q", "T", "p"]):
     for id_, circle in enumerate(circles):
         adv_dicts = {}
         for var in list_of_parameters:
-            adv_dicts[f"h_adv_+{var}"] = (circle.u * eval(f"circle.d{var}dx")) + (
+            adv_dicts[f"h_adv_{var}"] = (circle.u * eval(f"circle.d{var}dx")) + (
                 circle.v * eval(f"circle.d{var}dy")
             )
-            circle[f"h_adv_+{var}"] = (["height"], adv_dicts[f"h_adv_+{var}"])
+            circle[f"h_adv_{var}"] = (["height"], adv_dicts[f"h_adv_{var}"])
 
     return print("Finished estimating advection terms ...")
 

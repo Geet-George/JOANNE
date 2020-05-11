@@ -16,11 +16,11 @@ import circle_fit as cf
 yaml_directory = "/Users/geet/Documents/JOANNE/joanne/flight_segments/"
 lv3_directory = "/Users/geet/Documents/JOANNE/Data/Level_3/"
 
-lv3a_filename = "EUREC4A_Dropsonde-RD41_Level_3A.nc"
+lv3_filename = "EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v0.5.3+2.g7d4be47.dirty.nc"
 
 
-def get_level3a_dataset(lv3_directory=lv3_directory, lv3a_filename=lv3a_filename):
-    return xr.open_dataset(lv3_directory + lv3a_filename)
+def get_level3_dataset(lv3_directory=lv3_directory, lv3_filename=lv3_filename):
+    return xr.open_dataset(lv3_directory + lv3_filename)
 
 
 def get_circle_times_from_yaml(yaml_directory=yaml_directory):
@@ -54,13 +54,13 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
     return circle_times, flight_date, platform_name
 
 
-def dim_ready_ds(ds_lv3a=get_level3a_dataset()):
+def dim_ready_ds(ds_lv3=get_level3_dataset()):
 
-    dims_to_drop = ["obs", "sounding"]
+    dims_to_drop = ["sounding"]
 
     all_sondes = (
-        ds_lv3a.swap_dims({"sounding": "launch_time"})
-        .swap_dims({"obs": "height"})
+        ds_lv3.swap_dims({"sounding": "launch_time"})
+        # .swap_dims({"obs": "height"})
         .drop(dims_to_drop)
     )
 
@@ -69,14 +69,14 @@ def dim_ready_ds(ds_lv3a=get_level3a_dataset()):
 
 def get_circles(
     lv3_directory=lv3_directory,
-    lv3a_filename=lv3a_filename,
+    lv3_filename=lv3_filename,
     Platform="HALO",
     yaml_directory=yaml_directory,
 ):
 
-    ds_lv3a = get_level3a_dataset(lv3_directory, lv3a_filename)
+    ds_lv3 = get_level3_dataset(lv3_directory, lv3_filename)
 
-    all_sondes = dim_ready_ds(ds_lv3a)
+    all_sondes = dim_ready_ds(ds_lv3)
 
     circle_times, flight_date, platform_name = get_circle_times_from_yaml(
         yaml_directory

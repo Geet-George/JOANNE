@@ -25,11 +25,11 @@ prep.get_xy_coords_for_circles(circles)
 start = time.perf_counter()
 
 list_of_parameters = [
-    "u_wind",
-    "v_wind",
-    "specific_humidity",
-    "temperature",
-    "pressure",
+    "u",
+    "v",
+    "q",
+    "T",
+    "p",
 ]
 
 rf.get_circle_products(circles, list_of_parameters)
@@ -72,7 +72,7 @@ for var in dicts.list_of_vars:
     )
 
 file_name = (
-    "EUREC4A_JOANNE_Dropsonde-RD41_" + "Level_3B_v" + str(joanne.__version__) + ".nc"
+    "EUREC4A_JOANNE_Dropsonde-RD41_" + "Level_4_v" + str(joanne.__version__) + ".nc"
 )
 
 save_directory = (
