@@ -54,6 +54,8 @@ list_of_vars = [
     "h_adv_q",
     "h_adv_T",
     "h_adv_p",
+    "h_adv_u",
+    "h_adv_v",
 ]
 
 nc_attrs = {
@@ -347,7 +349,7 @@ nc_attrs = {
     "h_adv_q": {
         "standard_name": "q_advection",
         "long_name": "horizontal advection of specific humidity",
-        "units": "s-1",
+        "units": "kg kg-1 s-1",
         "coordinates": "circle height",
     },
     "h_adv_T": {
@@ -360,6 +362,18 @@ nc_attrs = {
         "standard_name": "p_advection",
         "long_name": "horizontal advection of pressure",
         "units": "hPa s-1",
+        "coordinates": "circle height",
+    },
+    "h_adv_u": {
+        "standard_name": "u_advection",
+        "long_name": "horizontal advection of eastward wind",
+        "units": "m s-1 s-1",
+        "coordinates": "circle height",
+    },
+    "h_adv_v": {
+        "standard_name": "v_advection",
+        "long_name": "horizontal advection of northward wind",
+        "units": "m s-1 s-1",
         "coordinates": "circle height",
     },
 }
@@ -417,6 +431,8 @@ nc_dims = {
     "h_adv_q": ["circle", "height"],
     "h_adv_T": ["circle", "height"],
     "h_adv_p": ["circle", "height"],
+    "h_adv_u": ["circle", "height"],
+    "h_adv_v": ["circle", "height"],
 }
 
 nc_global_attrs = {
