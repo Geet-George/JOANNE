@@ -127,11 +127,11 @@ def calc_q_from_rh(dataset):
                         
     """
     dp = mpcalc.dewpoint_from_relative_humidity(
-        dataset.temperature.values * units.degC, dataset.relative_humidity.values / 100,
+        dataset.T.values * units.degC, dataset.rh.values / 100,
     ).magnitude
 
     q = mpcalc.specific_humidity_from_dewpoint(
-        dp * units.degC, dataset.pressure.values * units.hPa
+        dp * units.degC, dataset.p.values * units.hPa
     ).magnitude
 
     return q
@@ -155,7 +155,7 @@ def calc_theta_from_T(dataset):
     
     """
     theta = mpcalc.potential_temperature(
-        dataset.pressure.values * units.hPa, dataset.temperature.values * units.degC
+        dataset.p.values * units.hPa, dataset.T.values * units.degC
     ).magnitude
 
     return theta
@@ -180,8 +180,7 @@ def calc_T_from_theta(dataset):
     """
     T = (
         mpcalc.temperature_from_potential_temperature(
-            dataset.pressure.values * units.hPa,
-            dataset.potential_temperature.values * units.kelvin,
+            dataset.p.values * units.hPa, dataset.theta.values * units.kelvin,
         ).magnitude
         - 273.15
     )
@@ -214,9 +213,7 @@ def calc_rh_from_q(dataset, T=None):
         T = calc_T_from_theta(dataset)
 
     rh = mpcalc.relative_humidity_from_specific_humidity(
-        dataset.specific_humidity.values,
-        T * units.degC,
-        dataset.pressure.values * units.hPa,
+        dataset.q.values, T * units.degC, dataset.p.values * units.hPa,
     ).magnitude
 
     return rh
@@ -237,13 +234,12 @@ def add_wind_components_to_dataset(dataset):
     Function to compute u and v components of wind, from wind speed and direction in the given dataset,
     and add them as variables to the dataset.                   
     """
-    u_wind, v_wind = mpcalc.wind_components(
-        dataset.wind_speed.values * units["m/s"],
-        dataset.wind_direction.values * units.deg,
+    u, v = mpcalc.wind_components(
+        dataset.wspd.values * units["m/s"], dataset.wdir.values * units.deg,
     )
 
-    dataset["u_wind"] = (dataset.pressure.dims, u_wind.magnitude)
-    dataset["v_wind"] = (dataset.pressure.dims, v_wind.magnitude)
+    dataset["u"] = (dataset.p.dims, u.magnitude)
+    dataset["v"] = (dataset.p.dims, v.magnitude)
 
     return dataset
 
@@ -267,15 +263,15 @@ def adding_q_and_theta_to_dataset(dataset):
     (ii) calc_theta
     
     """
-    if "potential_temperature" not in list(dataset.data_vars):
+    if "theta" not in list(dataset.data_vars):
 
         theta = calc_theta_from_T(dataset)
-        dataset["potential_temperature"] = (dataset.pressure.dims, theta)
+        dataset["theta"] = (dataset.p.dims, theta)
 
-    if "specific_humidity" not in list(dataset.data_vars):
+    if "q" not in list(dataset.data_vars):
 
         q = calc_q_from_rh(dataset)
-        dataset["specific_humidity"] = (dataset.pressure.dims, q)
+        dataset["q"] = (dataset.p.dims, q)
 
     return dataset
 
@@ -296,52 +292,52 @@ def adding_precipitable_water_to_dataset(dataset, altitude_limit=None):
     (ii) mpcalc.dewpoint_from_relative_humidity()
     """
     dp = mpcalc.dewpoint_from_relative_humidity(
-        dataset.temperature.values * units.degC, dataset.relative_humidity.values / 100
+        dataset.T.values * units.degC, dataset.rh.values / 100
     ).magnitude
 
     pw = precipitable_water(
-        dataset.pressure.values * units.hPa, dp * units.degC, top=altitude_limit
+        dataset.p.values * units.hPa, dp * units.degC, top=altitude_limit
     ).magnitude
 
-    dataset["precipitable_water"] = pw
+    dataset["PW"] = pw
 
     return dataset
 
 
-def adding_static_stability_to_dataset(dataset, method="gradient"):
-    """
-    Input :
-        dataset : xarray dataset
+# def adding_static_stability_to_dataset(dataset, method="gradient"):
+#     """
+#     Input :
+#         dataset : xarray dataset
 
-    Output :
-        dataset : xarray dataset
-                  Original dataset with added variable of static_stability
+#     Output :
+#         dataset : xarray dataset
+#                   Original dataset with added variable of static_stability
 
-    Function to add variable 'static_stability' to given dataset, along height dimension,
-    using gradient of theta with p or using the MetPy functions of mpcalc.static_stability(). 
-    The former is the default method, the latter can be selected by giving keyword argument as
-    method = 'B92', which stands for Bluestein(1992).
-    """
-    if method == "gradient":
-        pot = calc_theta_from_T(dataset)
-        pres = dataset.pressure.values
-        d_pot = pot[:-1] - pot[1:]
-        d_pres = pres[1:] - pres[:-1]
-        ss = d_pot / d_pres
+#     Function to add variable 'static_stability' to given dataset, along height dimension,
+#     using gradient of theta with p or using the MetPy functions of mpcalc.static_stability().
+#     The former is the default method, the latter can be selected by giving keyword argument as
+#     method = 'B92', which stands for Bluestein(1992).
+#     """
+#     if method == "gradient":
+#         pot = calc_theta_from_T(dataset)
+#         pres = dataset.pressure.values
+#         d_pot = pot[:-1] - pot[1:]
+#         d_pres = pres[1:] - pres[:-1]
+#         ss = d_pot / d_pres
 
-    if method == "B92":
-        ss = mpcalc.static_stability(
-            dataset.pressure.values * units.hPa, dataset.temperature.values * units.degC
-        ).magnitude
+#     if method == "B92":
+#         ss = mpcalc.static_stability(
+#             dataset.pressure.values * units.hPa, dataset.temperature.values * units.degC
+#         ).magnitude
 
-    static_stability = np.full(len(dataset.temperature), np.nan)
+#     static_stability = np.full(len(dataset.temperature), np.nan)
 
-    static_stability[0] = 0
-    static_stability[1:] = ss
+#     static_stability[0] = 0
+#     static_stability[1:] = ss
 
-    dataset["static_stability"] = (dataset.temperature.dims, static_stability)
+#     dataset["static_stability"] = (dataset.temperature.dims, static_stability)
 
-    return dataset
+#     return dataset
 
 
 def substitute_T_and_RH_for_interpolated_dataset(dataset):
@@ -362,8 +358,8 @@ def substitute_T_and_RH_for_interpolated_dataset(dataset):
     T = calc_T_from_theta(dataset)
     rh = calc_rh_from_q(dataset, T=T)
 
-    dataset["temperature"] = (dataset.pressure.dims, T)
-    dataset["relative_humidity"] = (dataset.pressure.dims, rh * 100)
+    dataset["T"] = (dataset.p.dims, T)
+    dataset["rh"] = (dataset.p.dims, rh * 100)
 
     return dataset
 
@@ -372,9 +368,9 @@ def add_cloud_flag(dataset):
     """
     Function under construction
     """
-    cloud_flag = np.full(len(dataset.obs), 0)
+    cloud_flag = np.full(len(dataset.time), 0)
 
-    dataset["cloud_flag"] = (dataset.pressure.dims, cloud_flag)
+    dataset["cloud_flag"] = (dataset.p.dims, cloud_flag)
 
     return dataset
 
@@ -490,11 +486,11 @@ def add_log_interp_pressure_to_dataset(
             dataset, height_limit=height_limit, vertical_spacing=vertical_spacing
         )
 
-    pressure = pressure_interpolation(
-        dataset.pressure.values, dataset.height.values, interp_dataset.height.values
+    p = pressure_interpolation(
+        dataset.p.values, dataset.height.values, interp_dataset.height.values
     )
 
-    interp_dataset["pressure"] = (dataset.pressure.dims, pressure)
+    interp_dataset["p"] = (dataset.p.dims, p)
 
     return interp_dataset
 
@@ -511,12 +507,12 @@ def add_platform_details_as_var(dataset):
     """
 
     dataset["launch_time"] = (
-        np.datetime64(dataset.attrs["Launch time (UTC)"]).astype("float") / 1e9
+        np.datetime64(dataset.attrs["Launch-time-(UTC)"]).astype("float") / 1e9
     )
     dataset["Platform"] = dataset.attrs["Platform"]
-    dataset["flight_height"] = dataset.attrs["Geopotential Altitude (m)"]
-    dataset["flight_lat"] = dataset.attrs["Latitude (deg)"]
-    dataset["flight_lon"] = dataset.attrs["Longitude (deg)"]
+    dataset["flight_height"] = dataset.attrs["Geopotential-Altitude-(m)"]
+    dataset["flight_lat"] = dataset.attrs["Latitude-(deg)"]
+    dataset["flight_lon"] = dataset.attrs["Longitude-(deg)"]
 
     if dataset.attrs["Geopotential Altitude (m)"] < 4000:
         low_height_flag = 1
@@ -546,7 +542,7 @@ def ready_to_interpolate(file_path):
     and platform details variables to the dataset.                                
     """
 
-    dataset_to_interpolate = xr.open_dataset(file_path).swap_dims({"obs": "height"})
+    dataset_to_interpolate = xr.open_dataset(file_path).swap_dims({"time": "height"})
     dataset_to_interpolate = adding_q_and_theta_to_dataset(dataset_to_interpolate)
     dataset_to_interpolate = add_wind_components_to_dataset(dataset_to_interpolate)
     dataset_to_interpolate = add_platform_details_as_var(dataset_to_interpolate)
@@ -618,7 +614,9 @@ def concatenate_soundings(list_of_interpolated_dataset):
                                making 'height' a variable
     """
     concatenated_dataset = xr.concat(list_of_interpolated_dataset, dim="sounding")
-    concatenated_dataset = concatenated_dataset.drop("obs").swap_dims({"height": "obs"})
+    concatenated_dataset = concatenated_dataset.drop(
+        "time"
+    )  # .swap_dims({"height": "obs"})
 
     return concatenated_dataset
 
