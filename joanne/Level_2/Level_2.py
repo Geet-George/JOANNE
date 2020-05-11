@@ -21,6 +21,10 @@ reload(f2)
 reload(dicts)
 
 # %%
+
+varname_L1 = ["height", "time", "wspd", "wdir", "tdry", "pres", "rh", "lat", "lon"]
+varname_L2 = ["height", "time", "wspd", "wdir", "T", "p", "rh", "lat", "lon"]
+
 for Platform in ["HALO", "P3"]:
 
     (
@@ -70,26 +74,14 @@ for Platform in ["HALO", "P3"]:
             time = sonde_ds[i].time[ht_indices].astype("float").values / 1e9
             # Variable array: time
 
-            wind_speed = np.float32(sonde_ds[i].wspd[ht_indices].values)
-            # Variable array: wind speed
+            variables = {}
 
-            wind_direction = np.float32(sonde_ds[i].wdir[ht_indices].values)
-            # Variable array: wind direction
-
-            temperature = np.float32(sonde_ds[i].tdry[ht_indices].values)
-            # Variable array: temperature
-
-            pressure = np.float32(sonde_ds[i].pres[ht_indices].values)
-            # Variable array: pressure
-
-            relative_humidity = np.float32(sonde_ds[i].rh[ht_indices].values)
-            # Variable array: relative humidity
-
-            latitude = np.float32(sonde_ds[i].lat[ht_indices].values)
-            # Variable array: latitude
-
-            longitude = np.float32(sonde_ds[i].lon[ht_indices].values)
-            # Variable array: longitude
+            variables['time'] = time
+            variables['height'] = height
+            
+            for var1,var2 in zip(varname_L1,varname_L2) :
+                if var2 not in variables.keys() :
+                    variables[var2] = np.float32(sonde_ds[i][var1][ht_indices].values)
 
             ###--------- Creating and populating dataset --------###
 
@@ -97,7 +89,7 @@ for Platform in ["HALO", "P3"]:
 
             for var in dicts.nc_meta.keys():
                 # v = var
-                f2.create_variable(to_save_ds, var, eval(var))
+                f2.create_variable(to_save_ds, var, variables[var])
 
             file_name = (
                 "EUREC4A_JOANNE_"
