@@ -2,6 +2,7 @@ import datetime
 import glob
 
 import xarray as xr
+import pandas as pd
 
 import joanne
 
@@ -126,7 +127,7 @@ def get_global_attrs(Platform, file_time, sonde_ds):
         "Title": "Sounding data containing temperature, pressure, humidity,"
         " latitude, longitude, wind direction, wind speed, and time",
         "Campaign": "EUREC4A-ATOMIC (Jan-Feb, 2020)",
-        "Platform": Platform_Name,
+        "Platform": Platform,
         "Instrument": "Vaisala RD41",
         "Launch-date": str(pd.to_datetime(file_time).date()),
         "Launch-time-(UTC)": str(sonde_ds.launch_time.values),
