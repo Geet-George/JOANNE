@@ -45,12 +45,12 @@ list_of_vars = [
     "p",
     "dpdx",
     "dpdy",
-    "divergence",
-    "vorticity",
+    "D",
+    "vor",
     # "density",
     # "mean_density",
-    "vertical_velocity",
-    "pressure_velocity",
+    "W",
+    "omega",
     "h_adv_q",
     "h_adv_T",
     "h_adv_p",
@@ -86,13 +86,13 @@ nc_attrs = {
         "units": "degree_east",
         "axis": "Y",
     },
-    "pressure": {
+    "p": {
         "standard_name": "air_pressure",
         "long_name": "Atmospheric Pressure",
         "units": "hPa",
         "coordinates": "launch_time longitude latitude height",
     },
-    "temperature": {
+    "T": {
         "standard_name": "air_temperature",
         "long_name": "Dry Bulb Temperature",
         "units": "degree_Celsius",
@@ -310,15 +310,15 @@ nc_attrs = {
         "units": "hPa m-1",
         "coordinates": "circle height",
     },
-    "divergence": {
+    "D": {
         "standard_name": "divergence",
         "long_name": "horizontal mass divergence",
         "units": "s-1",
         "coordinates": "circle height",
     },
-    "vorticity": {
+    "vor": {
         "standard_name": "vorticity",
-        "long_name": "horizontal mass divergence",
+        "long_name": "horizontal mass vorticity",
         "units": "s-1",
         "coordinates": "circle height",
     },
@@ -334,13 +334,13 @@ nc_attrs = {
         "units": "kg m-3",
         "coordinates": "circle height",
     },
-    "vertical_velocity": {
+    "W": {
         "standard_name": "vertical_velocity",
         "long_name": "large-scale atmospheric vertical velocity",
         "units": "m s-1",
         "coordinates": "circle height",
     },
-    "pressure_velocity": {
+    "omega": {
         "standard_name": "pressure_velocity",
         "long_name": "large-scale atmospheric pressure velocity",
         "units": "hPa h-1",
@@ -422,12 +422,12 @@ nc_dims = {
     "p": ["circle", "height"],
     "dpdx": ["circle", "height"],
     "dpdy": ["circle", "height"],
-    "divergence": ["circle", "height"],
-    "vorticity": ["circle", "height"],
+    "D": ["circle", "height"],
+    "vor": ["circle", "height"],
     "density": ["circle", "sounding", "height"],
     "mean_density": ["circle", "height"],
-    "vertical_velocity": ["circle", "height"],
-    "pressure_velocity": ["circle", "height"],
+    "W": ["circle", "height"],
+    "omega": ["circle", "height"],
     "h_adv_q": ["circle", "height"],
     "h_adv_T": ["circle", "height"],
     "h_adv_p": ["circle", "height"],
