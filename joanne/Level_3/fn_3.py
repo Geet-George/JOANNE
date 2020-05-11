@@ -368,7 +368,7 @@ def add_cloud_flag(dataset):
     """
     Function under construction
     """
-    cloud_flag = np.full(len(dataset.time), 0)
+    cloud_flag = np.full(len(dataset.height), 0)
 
     dataset["cloud_flag"] = (dataset.p.dims, cloud_flag)
 
@@ -514,7 +514,7 @@ def add_platform_details_as_var(dataset):
     dataset["flight_lat"] = dataset.attrs["Latitude-(deg)"]
     dataset["flight_lon"] = dataset.attrs["Longitude-(deg)"]
 
-    if dataset.attrs["Geopotential Altitude (m)"] < 4000:
+    if dataset.attrs["Geopotential-Altitude-(m)"] < 4000:
         low_height_flag = 1
     else:
         low_height_flag = 0
