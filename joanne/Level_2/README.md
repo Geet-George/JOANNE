@@ -59,91 +59,24 @@ Contents :
 For Level-2, only variables that are measurements from the dropsonde sensors are included. There are no redundant state variables. 
     </p>
 
-<table>
-<tbody>
-<tr>
-<td><b>OBJECT</b></td>
-<td><b>NAME</b></td>
-<td><b>UNITS</b></td>
-</tr>
-<tr>
-<td><b>Dimension</b></td>
-<td>obs</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td><b>Coordinates</b></td>
-<td>time (independent) </td>
-<td>seconds since<br>1970-01-01 00:00:00 UTC</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>height </td>
-<td>m</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>latitude </td>
-<td>degree_north</td> 
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>longitude </td>
-<td>degree_east</td> 
-</tr>
-<tr>
-<td><b>Variables</b></td>
-<td>pressure </td>
-<td>hPa</td>
-</tr>
-<tr>
-<td></td>
-<td>temperature </td>
-<td>degree_Celsius</td>
-</tr>
-<tr>
-<td></td>
-<td>relative_humidity </td>
-<td>%</td>
-</tr>
-<tr>
-<td></td>
-<td>wind_speed </td>
-<td>m s-1</td>
-</tr>
-<tr>
-<td></td>
-<td>wind_direction </td>
-<td>degree</td>
-</tr>
-<tr>
-<td></td>
-<td>GPS_altitude<sup>*</sup></td>
-<td>m</td>
-</tr>
-<tr>
-<td></td>
-<td>vertical_velocity<sup>*</sup></td>
-<td>m s-1</td>
-</tr>
-</tbody>
-</table>
+
+| **OBJECT**      | **NAME**   | **DESCRIPTION**                                                                                                        | **UNITS**                             | **DIMENSION** |
+| --------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------- | ------------- |
+| **Dimensions**  | `time`     | Time of recorded measurement                                                                                           | seconds since 1970-01-01 00:00:00 UTC | time          |
+| **Coordinates** | `height`   | Geopotential Height obtained by integrating upwards the atmospheric thickness estimated using the hypsometric equation | m                                     | time          |
+|                 | `lat`      | North Latitude                                                                                                         | degrees_north                         | time          |
+|                 | `lon`      | East Longitude                                                                                                         | degrees_east                          | time          |
+| **Variables**   | `wspd`     | Wind Speed                                                                                                             | m s-1                                 | time          |
+|                 | `wdir`     | Wind Direction                                                                                                         | degrees                               | time          |
+|                 | `T`        | Dry Bulb Temperature                                                                                                   | degree_Celsius                        | time          |
+|                 | `p`        | Atmospheric Pressure                                                                                                   | hPa                                   | time          |
+|                 | `rh`       | Relative Humidity                                                                                                      | %                                     | time          |
+|                 | `gps_alt`* | GPS Altitude                                                                                                           | m                                     | time          |
+|                 | `w`*       | Vertical Velocity                                                                                                      | m s-1                                 | time          |
 
 <sup>*</sup> - variables haven't been included in the data in the current version, as they need to go through further quality checks.
 
 Note that file names of the soundings are not always indicative of launch times, although this will be the case for most soundings. The attribute `Launch_time_(UTC)` in every sounding file should be considered as the final authority on launch time.
-
-|Variable|Long Name|Unit|Dimension|
-|---|---|---|---|
-|height|Geopotential Height obtained by integrating upwards the atmospheric thickness estimated using the hypsometric equation|m|time|
-|time|Time of recorded measurement|seconds since 1970-01-01 00:00:00 UTC|time|
-|wspd|Wind Speed|m s-1|time|
-|wdir|Wind Direction|degrees|time|
-|T|Dry Bulb Temperature|degree_Celsius|time|
-|p|Atmospheric Pressure|hPa|time|
-|rh|Relative Humidity|%|time|
-|lat|North Latitude|degrees_north|time|
-|lon|East Longitude|degrees_east|time|
 
 </div>
 <div id="quality_control">
