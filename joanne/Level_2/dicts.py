@@ -8,8 +8,9 @@ import joanne
 
 # %%
 
+list_of_vars = ["height", "time", "wspd", "wdir", "T", "p", "rh", "lat", "lon"]
+
 nc_meta = {
-    #         'trajectory' : {'cf_role' : 'trajectory_id'},
     "time": {
         "standard_name": "time",
         "long_name": "Time of recorded measurement",
@@ -118,6 +119,7 @@ def get_flight_attrs(a_filepath, list_of_flight_attrs=list_of_flight_attrs):
     f.close()
 
     return flight_attrs
+
 
 def get_global_attrs(Platform, file_time, sonde_ds):
     ###----- Global Attributes -----###
