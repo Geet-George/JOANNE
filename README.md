@@ -8,7 +8,7 @@ JOANNE is the dataset for all dropsondes launched as part of the EUREC<sup>4</su
 
 The acronym JOANNE stands for **J**oint dropsonde-**O**bservations of the **A**tmosphere in tropical **N**orth atla**N**tic large-scale **E**nvironments. The name is an ode to Joanne Malkus Simpson, whose contributions to tropical meteorology are fundamental to the field.
 
----
+## Products 
 
 The different products of JOANNE are listed in the table below. Click on a product to go to its directory, which contains sample data files, along with more information about the product.
 
@@ -20,4 +20,18 @@ The different products of JOANNE are listed in the table below. Click on a produ
 | [Level - 3](joanne/Level_3/) | All sounding files in Level-2 gridded on a uniform, vertical grid, with some derived variables |
 | [Level - 4](joanne/Level_4)  | Circle products from all circles flown during EUREC<sup>4</sup>A                               |
 
----
+## Sampling Coverage
+
+| Platform  | Sondes   | Circles        |
+| --------- | -------- | -------------- |
+| HALO      | 896      | 71 (+1 clover) |
+| P3        | 322      | 14             |
+| **Total** | **1218** | **85**         |
+
+<br>
+
+![Dropsonde Temporal Coverage](joanne/extra/ds_temporal_coverage.png)
+
+<br>
+
+![Dropsonde Spatial Coverage](joanne/extra/ds_spatial_coverage.png)
