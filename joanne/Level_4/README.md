@@ -42,7 +42,7 @@ All variables in the dataset are along the `circle` dimension, and individual so
 |                 | `sondes_regressed` | number of sondes regressed                                                    |                                       | circle, height   |
 |                 | `v`                | intercept value from regressed northward wind in circle                       | m s-1                                 | circle, height   |
 |                 | `dvdx`             | zonal gradient of northward wind                                              | s-1                                   | circle, height   |
-|                 | `dvdy`             | meridional gradient of northward wind                                         | s-1                                   | circle,&nbspheight   |
+|                 | `dvdy`             | meridional gradient of northward wind                                         | s-1                                   | circle,&nbsp;height   |
 |                 | `q`                | intercept value from regressed specific humidity in circle                    | kg kg-1                               | circle, height   |
 |                 | `dqdx`             | zonal gradient of specific humidity                                           | m-1                                   | circle, height   |
 |                 | `dqdy`             | meridional gradient of specific humidity                                      | m-1                                   | circle, height   |
