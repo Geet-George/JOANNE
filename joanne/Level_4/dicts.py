@@ -2,6 +2,8 @@ import datetime
 import joanne
 
 list_of_vars = [
+    "sounding",
+    "circle",
     "launch_time",
     "height",
     # "latitude",
@@ -59,6 +61,18 @@ list_of_vars = [
 ]
 
 nc_attrs = {
+    "sounding": {
+        "standard_name": "sounding",
+        "long_name": "Sonde number",
+        "units": "",
+        "axis": "T",
+    },
+    "circle": {
+        "standard_name": "time",
+        "long_name": "Circle number",
+        "units": "",
+        "axis": "T",
+    },
     "launch_time": {
         "standard_name": "time",
         "long_name": "Time of dropsonde launch",
@@ -156,12 +170,14 @@ nc_attrs = {
     "low_height_flag": {
         "long_name": "flag to indicate if flight height at launch was low",
         "flag_values": "1, 0",
+        "units": "",
         "flag_meanings": "flight height below 4 km flight height at or above 4 km",
         "valid_range": "0, 1",
     },
     "cloud_flag": {
         "long_name": "flag to indicate presence of cloud",
         "flag_values": "1, 0",
+        "units": "",
         "flag_meanings": "cloud no_cloud",
         "valid_range": "0, 1",
     },
@@ -169,6 +185,7 @@ nc_attrs = {
         "standard_name": "platform",
         "long_name": "platform of the flown circle",
         "coordinates": "circle",
+        "units": "",
     },
     "flight_height": {
         "standard_name": "height",
@@ -243,7 +260,7 @@ nc_attrs = {
     "sondes_regressed": {
         # "standard_name": "longitudinal gradient of eastward wind",
         "long_name": "number of sondes regressed",
-        # "units": "s-1",
+        "units": "",
         "coordinates": "circle height",
     },
     "v": {
@@ -379,6 +396,8 @@ nc_attrs = {
 }
 
 nc_dims = {
+    "sounding":["sounding"],
+    "circle": ["circle"],
     "launch_time": ["circle", "sounding"],
     "height": ["height"],
     "latitude": ["circle", "sounding", "height"],
