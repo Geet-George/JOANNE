@@ -66,7 +66,7 @@ Level-3 is a dataset where all Level-2 soundings are gridded to a uniform vertic
 | --------------- | ----------------- | -------------------------------------------------------------- | ------------------------------------- | ---------------- |
 | **Dimensions**  | `sounding`        | Sonde number                                                   |                                       | sounding         |
 |                 | `height`          | Geopotential Height                                            | m                                     | height           |
-| **Coordinates** | `launch_time`     | Time of dropsonde launch                                       | seconds since 1970-01-01 00:00:00 UTC | sounding         |
+| **Coordinates** | `launch_time`     | Time of dropsonde launch                                       | seconds since <br> 1970-01-01<br> UTC | sounding         |
 |                 | `lat`             | North Latitude                                                 | degrees_north                         | sounding, height |
 |                 | `lon`             | East Longitude                                                 | degrees_east                          | sounding, height |
 | **Variables**   | `p`               | Atmospheric Pressure                                           | hPa                                   | sounding, height |
