@@ -6,7 +6,7 @@
 
 JOANNE is the dataset for all dropsondes launched as part of the EUREC<sup>4</sup>A-ATOMIC campaign held in January-February, 2020. These include the dropsondes from DLR's [HALO](https://www.halo.dlr.de/) aircraft and NOAA's [WP-3D (N43-RF)](https://www.omao.noaa.gov/learn/aircraft-operations/aircraft/lockheed-wp-3d-orion) aircraft.
 
-The full form of the acronym JOANNE stands for **J**oint dropsonde-**O**bservations of the **A**tmosphere in tropical **N**orth atla**N**tic large-scale **E**nvironments. The name is an ode to Joanne Malkus Simpson, whose contributions to tropical meteorology are fundamental to the field.
+The acronym JOANNE stands for **J**oint dropsonde-**O**bservations of the **A**tmosphere in tropical **N**orth atla**N**tic large-scale **E**nvironments. The name is an ode to Joanne Malkus Simpson, whose contributions to tropical meteorology are fundamental to the field.
 
 ---
 
