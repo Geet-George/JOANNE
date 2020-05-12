@@ -1,6 +1,6 @@
 # JOANNE - The EUREC<sup>4</sup>A Dropsonde Dataset
 
-  ![version](https://img.shields.io/github/v/release/Geet-George/JOANNE?color=teal&include_prereleases&label=LATEST%20RELEASE&style=for-the-badge)
+  ![version](https://img.shields.io/github/v/release/Geet-George/JOANNE?color=purple&include_prereleases&label=LATEST%20RELEASE&style=for-the-badge)
 
 JOANNE is the dataset for all dropsondes launched as part of the EUREC<sup>4</sup>A-ATOMIC campaign held in January-February, 2020.
 
