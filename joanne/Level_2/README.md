@@ -4,6 +4,8 @@
 
 ![version](https://img.shields.io/github/v/release/Geet-George/JOANNE?color=teal&include_prereleases&label=Latest%20JOANNE%20VERSION&style=for-the-badge)
 
+Total size : **~85 MB** <br>
+Total files : **~1069 files** <br>
 
 <div id="TOC">
 Contents :
@@ -138,6 +140,10 @@ There are 3 individual processes used to classify sondes, which are combined lat
 
 - For each parameter, if this proportional ratio is higher than the set threshold, then the sonde is flagged as `good`. If the ratio is lower than set threshold, but non-zero, then the sonde is flagged `ugly` and if the ratio is zero, i.e. this particular parameter was not measured at all for the sonde, then, it is flagged as `bad`. (This value might later be changed from zero to 10% of the time counts).
   
+  ![HALO Distribution of parameter counts](../extra/Count_of_measurements_HALO.png)
+
+  ![P3 Distribution of parameter counts](../extra/Count_of_measurements_P3.png)
+
   - If all individual ind_flags are `good`, the sonde is flagged as `GOOD` for `ind_FLAG`,  
   - if all individual ind_flags are `bad`, the sonde is flagged as `BAD` for `ind_FLAG`,  
   - if neither of these conditions is met, the sonde is flagged as `UGLY` for `ind_FLAG`.
