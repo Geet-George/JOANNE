@@ -2,10 +2,21 @@
 
 ![version](https://img.shields.io/github/v/release/Geet-George/JOANNE?color=teal&include_prereleases&label=Latest%20JOANNE%20VERSION&style=for-the-badge)
 
+Total size : **~6 MB** <br>
+Total files : **~1 file** <br>
 
 <div style="text-align: justify">
 
-Level-4 is a dataset of circle products.
+Level-4 is a dataset of circle products, estimated by regressing the parameters at each level. The input data is the gridded dataset from Level-3. Regression of the parameters follows from [Bony and Stevens (2019)](https://journals.ametsoc.org/doi/full/10.1175/JAS-D-18-0141.1). 
+
+Regressed products are available at the same vertical grid of 10 m, and the number of sondes regressed at every level is provided as a variable. If at any level, fewer than 6 sondes have data available, the value for regressed products at that level is set to `NaN`. This includes data missing due to no data being recorded as well as sondes removed in any of the previous QC steps.
+
+Additionally, with the regression, parameters such as `divergence`,`vertical velocity`,`pressure velocity`,`vorticity` and `advection` terms are also derived and included in the dataset. 
+
+Circles are determined from the timestamps provided by the YAML files from the [flight segmentation](https://github.com/Smpljack/halo-flight-phase-separation) project by Marc Prange. These files are only available for HALO currently, and thus, P3 circles are worked out manually.
+
+All variables in the dataset are along the `circle` dimension, and individual sondes are excluded to avoid redundancy. The list of the `launch_time` of the sondes included in every circle is included as a variable, if there is a need to retrieve data for individual sondes in the circle. 
+
 <!-- 
 [File Structure](#file-structure)
 
