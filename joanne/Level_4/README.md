@@ -29,7 +29,7 @@ All variables in the dataset are along the `circle` dimension, and individual so
 | **Dimensions**  | `sounding`         | Sonde number                                                                  |                                       | sounding         |
 |                 | `circle`           | Circle number                                                                 |                                       | circle           |
 |                 | `height`           | Geopotential Height                                                           | m                                     | height           |
-| **Coordinates** | `launch_time`      | Time of dropsonde launch                                                      | seconds since 1970-01-01 00:00:00 UTC | circle, sounding |
+| **Coordinates** | `launch_time`      | Time of dropsonde launch                                                      | seconds<br>since<br>1970-01-01<br>UTC | circle, sounding |
 |                 | `flight_height`    | mean height of the aircraft during the circle                                 | m                                     | circle           |
 |                 | `circle_x`         | mean zonal distance from zero longitude of all regressed sondes in circle     | m                                     | circle           |
 |                 | `circle_y`         | mean meridional distance from zero latitude of all regressed sondes in circle | m                                     | circle           |
@@ -42,7 +42,7 @@ All variables in the dataset are along the `circle` dimension, and individual so
 |                 | `sondes_regressed` | number of sondes regressed                                                    |                                       | circle, height   |
 |                 | `v`                | intercept value from regressed northward wind in circle                       | m s-1                                 | circle, height   |
 |                 | `dvdx`             | zonal gradient of northward wind                                              | s-1                                   | circle, height   |
-|                 | `dvdy`             | meridional gradient of northward wind                                         | s-1                                   | circle, height   |
+|                 | `dvdy`             | meridional gradient of northward wind                                         | s-1                                   | circle,&nbspheight   |
 |                 | `q`                | intercept value from regressed specific humidity in circle                    | kg kg-1                               | circle, height   |
 |                 | `dqdx`             | zonal gradient of specific humidity                                           | m-1                                   | circle, height   |
 |                 | `dqdy`             | meridional gradient of specific humidity                                      | m-1                                   | circle, height   |
