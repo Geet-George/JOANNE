@@ -23,7 +23,7 @@ Contents :
                 <li>
                     <a href="#quality_checks">Quality Checks</a>
                 </li>
-                    <ul>
+                    <!-- <ul>
                         <li>
                             <a href="#ind_flags">ind_FLAG</a>
                         </li>
@@ -36,7 +36,7 @@ Contents :
                         <li>
                             <a href="#flag">FLAG</a>
                         </li>
-                    </ul>
+                    </ul> -->
             </ul>
             <li>
             <a href="#output">Output</a>
