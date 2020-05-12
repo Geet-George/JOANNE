@@ -1,5 +1,7 @@
 # JOANNE - The EUREC<sup>4</sup>A Dropsonde Dataset
 
+  ![version](https://img.shields.io/github/v/release/Geet-George/JOANNE?color=teal&include_prereleases&label=LATEST%20RELEASE&style=for-the-badge)
+
 JOANNE is the dataset for all dropsondes launched as part of the EUREC<sup>4</sup>A-ATOMIC campaign held in January-February, 2020.
 
 The full form of the acronym JOANNE stands for **J**oint dropsonde-**O**bservations of the **A**tmosphere in tropical **N**orth atla**N**tic large-scale **E**nvironments
