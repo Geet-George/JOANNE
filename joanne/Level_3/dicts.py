@@ -3,6 +3,7 @@ import subprocess
 import joanne
 
 list_of_vars = [
+    "sounding",
     "launch_time",
     "height",
     "lat",
@@ -27,6 +28,12 @@ list_of_vars = [
 ]
 
 nc_attrs = {
+    "sounding": {
+        "standard_name": "sounding",
+        "long_name": "Sonde number",
+        "units": "",
+        "axis": "T",
+    },
     "launch_time": {
         "standard_name": "time",
         "long_name": "Time of dropsonde launch",
@@ -118,24 +125,27 @@ nc_attrs = {
         "standard_name": "static_stability",
         "long_name": "static stability",
         "description": "gradient of potential temperature along the pressure grid",
-        "units": " K hPa-1",
+        "units": "K hPa-1",
         "coordinates": "launch_time longitude latitude height",
     },
     "low_height_flag": {
         "long_name": "flag to indicate if flight height at launch was low",
         "flag_values": "1, 0",
         "flag_meanings": "flight height below 4 km flight height at or above 4 km",
+        "units": "",
         "valid_range": "0, 1",
     },
     "cloud_flag": {
         "long_name": "flag to indicate presence of cloud",
         "flag_values": "1, 0",
         "flag_meanings": "cloud no_cloud",
+        "units": "",
         "valid_range": "0, 1",
     },
     "Platform": {
         "standard_name": "platform",
         "long_name": "platform from which the sounding was made",
+        "units": "",
         "coordinates": "launch_time",
     },
     "flight_height": {
@@ -159,6 +169,7 @@ nc_attrs = {
 }
 
 nc_dims = {
+    "sounding": ["sounding"],
     "launch_time": ["sounding"],
     "height": ["height"],
     "lat": ["sounding", "height"],

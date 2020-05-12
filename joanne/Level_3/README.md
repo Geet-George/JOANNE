@@ -57,166 +57,33 @@ Level-3 is a dataset where all Level-2 soundings are gridded to a uniform vertic
 
 <div id="file_str"><h2><a href="#TOC"> File Structure</a></h2></div>
 
-<table>
-<tbody>
-<tr>
-<td><b>OBJECT</b></td>
-<td><b>NAME</b></td>
-<td><b>UNITS</b></td>
-<td><b>DIMENSIONS</b></td>
-</tr>
-<tr>
-<td><b>Dimensions</b></td>
-<td>obs</td>
-<td>&nbsp;</td>
-<td>obs</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>sounding</td>
-<td></td>
-<td>sounding</td>
-</tr>
-<tr>
-<td><b>Coordinates</b></td>
-<td>launch_time</td>
-<td>seconds since<br>1970-01-01 00:00:00 UTC</td>
-<td>sounding</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>height </td>
-<td>m</td>
-<td>obs</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>latitude </td>
-<td>degree_north</td>
-<td>obs, sounding</td> 
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>longitude </td>
-<td>degree_east</td>
-<td>obs, sounding</td> 
-</tr>
-<tr>
-<td><b>Variables</b></td>
-<td>pressure </td>
-<td>hPa</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>temperature </td>
-<td>degree_Celsius</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>relative_humidity </td>
-<td>%</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>wind_speed </td>
-<td>m s-1</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>wind_direction </td>
-<td>degree</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>GPS_altitude<sup>*</sup></td>
-<td>m</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>vertical_velocity<sup>*</sup></td>
-<td>m s-1</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>u_wind</td>
-<td>m s-1</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>v_wind</td>
-<td>m s-1</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>potential_temperature</td>
-<td>K</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>specific_humidity</td>
-<td>kg kg-1</td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>precipitable_water</td>
-<td>kg m-2</sup></td>
-<td>sounding</td>
-</tr>
-<!-- <tr>
-<td></td>
-<td>static_stability</td>
-<td>K hPa-1</td>
-<td>obs, sounding</td>
-</tr> -->
-<tr>
-<td></td>
-<td>low_height_flag</td>
-<td></td>
-<td>sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>cloud_flag</td>
-<td></td>
-<td>obs, sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>platform</td>
-<td></td>
-<td>sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>flight_height</td>
-<td>m</td>
-<td>sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>flight_latitude</td>
-<td>degree_north</td>
-<td>sounding</td>
-</tr>
-<tr>
-<td></td>
-<td>flight_longitude</td>
-<td>degree_east</td>
-<td>sounding</td>
-</tr>
-</tbody>
-</table>
+| **OBJECT**      | **NAME**          | **DESCRIPTION**                                                | **UNITS**                             | **DIMENSION**    |
+| --------------- | ----------------- | -------------------------------------------------------------- | ------------------------------------- | ---------------- |
+| **Dimensions**  | `sounding`        | Sonde number                                                   |                                       | sounding         |
+|                 | `height`          | Geopotential Height                                            | m                                     | height           |
+| **Coordinates** | `launch_time`     | Time of dropsonde launch                                       | seconds since 1970-01-01 00:00:00 UTC | sounding         |
+|                 | `lat`             | North Latitude                                                 | degrees_north                         | sounding, height |
+|                 | `lon`             | East Longitude                                                 | degrees_east                          | sounding, height |
+| **Variables**   | `p`               | Atmospheric Pressure                                           | hPa                                   | sounding, height |
+|                 | `T`               | Dry Bulb Temperature                                           | degree_Celsius                        | sounding, height |
+|                 | `rh`              | Relative Humidity                                              | %                                     | sounding, height |
+|                 | `wspd`            | Wind Speed                                                     | m s-1                                 | sounding, height |
+|                 | `wdir`            | Wind Direction                                                 | degrees                               | sounding, height |
+|                 | `u`               | u-component of the wind                                        | m s-1                                 | sounding, height |
+|                 | `v`               | v-component of the wind                                        | m s-1                                 | sounding, height |
+|                 | `gps_alt`*        | GPS Altitude                                                   | m                                     | sounding, height |
+|                 | `w`*              | Vertical Velocity                                              | m s-1                                 | sounding, height |
+|                 | `theta`           | potential temperature                                          | K                                     | sounding, height |
+|                 | `q`               | Specific humidity                                              | kg kg-1                               | sounding, height |
+|                 | `PW`              | integrated water vapour in the measured column                 | kg m-2                                | sounding         |
+|                 | `low_height_flag` | flag to indicate if flight height at launch was low            |                                       | sounding         |
+|                 | `cloud_flag`      | flag to indicate presence of cloud                             |                                       | sounding, height |
+|                 | `Platform`        | platform from which the sounding was made                      |                                       | sounding         |
+|                 | `flight_height`   | height of the aircraft when the dropsonde was launched         | m                                     | sounding         |
+|                 | `flight_lat`      | north latitude of the aircraft when the dropsonde was launched | degrees_north                         | sounding         |
+|                 | `flight_lon`      | east longitude of the aircraft when the dropsonde was launched | degrees_east                          | sounding         |
+
+
 
 <sup>*</sup> - variables haven't been included in the data in the current version, as they need to go through further quality checks.
 
