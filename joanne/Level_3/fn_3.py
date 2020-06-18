@@ -16,6 +16,7 @@ from metpy.units import units
 from tqdm import tqdm
 
 from joanne.Level_3 import dicts
+from eurec4a_snd.interpolate import postprocessing as pp
 
 #  %%
 
@@ -108,11 +109,11 @@ def interp_along_height(dataset, height_limit=10000, vertical_spacing=10):
     return new_interpolated_ds
 
 
-def calc_q_from_rh(dataset):
+def calc_q_from_rh(ds):
     """
     Input :
 
-        dataset : Dataset 
+        ds : Dataset 
 
     Output :
 
@@ -126,13 +127,18 @@ def calc_q_from_rh(dataset):
     (ii) mpcalc.specific_humidity_from_dewpoint()
                         
     """
-    dp = mpcalc.dewpoint_from_relative_humidity(
-        dataset.T.values * units.degC, dataset.rh.values / 100,
-    ).magnitude
+    # dp = mpcalc.dewpoint_from_relative_humidity(
+    #     dataset.T.values * units.degC, dataset.rh.values / 100,
+    # ).magnitude
 
-    q = mpcalc.specific_humidity_from_dewpoint(
-        dp * units.degC, dataset.p.values * units.hPa
-    ).magnitude
+    # q = mpcalc.specific_humidity_from_dewpoint(
+    #     dp * units.degC, dataset.p.values * units.hPa
+    # ).magnitude
+
+    e_s = pp.calc_saturation_pressure(ds.T.values + 273.15)
+    w_s = mpcalc.mixing_ratio(e_s * units.Pa, ds.p.values * units.hPa).magnitude
+    w = ds.rh.values / 100.0 * w_s
+    q = w / (1 + w)
 
     return q
 
@@ -212,9 +218,15 @@ def calc_rh_from_q(dataset, T=None):
     if T is None:
         T = calc_T_from_theta(dataset)
 
-    rh = mpcalc.relative_humidity_from_specific_humidity(
-        dataset.q.values, T * units.degC, dataset.p.values * units.hPa,
-    ).magnitude
+    # rh = mpcalc.relative_humidity_from_specific_humidity(
+    #     dataset.q.values, T * units.degC, dataset.p.values * units.hPa,
+    # ).magnitude
+
+    w = dataset.q / (1 - dataset.q)
+    e_s = pp.calc_saturation_pressure(dataset.T.values + 273.15)
+    w_s = mpcalc.mixing_ratio(e_s * units.Pa, dataset.p.values * units.hPa).magnitude
+
+    rh = (w / w_s) * 100
 
     return rh
 
