@@ -194,14 +194,17 @@ nc_dims = {
 }
 
 nc_global_attrs = {
-    "Title": "Gridded sounding dataset",
-    "Campaign": "EUREC4A-ATOMIC (Jan-Feb, 2020)",
-    "Instrument": "Vaisala RD-41",
-    "Data-Processing for Level-2": "BatchAspen v3.4.3",
-    "Author": "Geet George",
-    "Author-Email": "geet.george@mpimet.mpg.de",
+    "title": "EUREC4A JOANNE Level-3",
+    "Conventions": "CF-1.8",
+    "campaign_id": "EUREC4A",
+    "project_id" : "JOANNE",
+    "instrument_id": "Vaisala RD-41",
+    "product_id" : 'Level-3',
+    "AVAPS-Software-version" = "Version 4.1.2",
+    "ASPEN-version": "BatchAspen v3.4.3",
     "JOANNE-version": joanne.__version__,
-    "Conventions": "CF-1.7",
+    "author": "Geet George",
+    "author_email": "geet.george@mpimet.mpg.de",
     "featureType": "trajectory",
-    "Creation-Time": str(datetime.datetime.utcnow()) + " UTC",
+    "creation_time": str(datetime.datetime.utcnow()) + " UTC",
 }
