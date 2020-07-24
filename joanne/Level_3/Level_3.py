@@ -58,3 +58,6 @@ for key in dicts.nc_global_attrs.keys():
 to_save_ds.to_netcdf(
     save_directory + file_name, mode="w", format="NETCDF4", encoding=encoding
 )
+
+
+# %%
