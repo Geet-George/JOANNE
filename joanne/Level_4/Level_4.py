@@ -42,25 +42,25 @@ print(f"Finished in {round(finish - start,2)} seconds ...")
 
 # %%
 
-lv3b_dataset = xr.concat(circles, dim="circle")
+lv4_dataset = xr.concat(circles, dim="circle")
 
 nc_data = {}
 
 for var in dicts.list_of_vars:
     if var != "Platform":
-        nc_data[var] = np.float32(lv3b_dataset[var].values)
+        nc_data[var] = np.float32(lv4_dataset[var].values)
 
     if var == "Platform":
-        nc_data[var] = lv3b_dataset[var].values
+        nc_data[var] = lv4_dataset[var].values
 
     if var == "launch_time":
-        nc_data[var] = np.float32(lv3b_dataset[var].astype("float").values / 1e9)
+        nc_data[var] = np.float32(lv4_dataset[var].astype("float").values / 1e9)
 
 # %%
 
-height = lv3b_dataset.height.values
-sounding = lv3b_dataset.sounding.values
-circle = lv3b_dataset.circle.values
+height = lv4_dataset.height.values
+sounding = lv4_dataset.sounding.values
+circle = lv4_dataset.circle.values
 
 to_save_ds = xr.Dataset(
     coords={"height": height, "sounding": sounding, "circle": circle}
@@ -76,7 +76,7 @@ file_name = (
 )
 
 save_directory = (
-    "/Users/geet/Documents/JOANNE/Data/Level_3/Test_data/"  # Test_data/" #Level_3/"
+    "/Users/geet/Documents/JOANNE/Data/Level_4/Test_data/"  # Test_data/" #Level_3/"
 )
 
 comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max)

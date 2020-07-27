@@ -38,7 +38,7 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
             [
                 (c["start"], c["end"])
                 for c in flightinfo["segments"]
-                if c["kind"] == "circle"
+                if "circle" in c["kinds"]
             ]
         )
 
