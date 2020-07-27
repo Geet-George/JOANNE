@@ -6,6 +6,7 @@ Data/
 
 # Virtual environment directory
 joanne_env/
+flight_segments/
 
 # Test folders
 test_setup/
