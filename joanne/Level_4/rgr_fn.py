@@ -175,7 +175,7 @@ def get_advection(circles, list_of_parameters=["u", "v", "q", "T", "p"]):
     for id_, circle in enumerate(circles):
         adv_dicts = {}
         for var in list_of_parameters:
-            adv_dicts[f"h_adv_{var}"] = (circle.u * eval(f"circle.d{var}dx")) + (
+            adv_dicts[f"h_adv_{var}"] = -(circle.u * eval(f"circle.d{var}dx")) - (
                 circle.v * eval(f"circle.d{var}dy")
             )
             circle[f"h_adv_{var}"] = (["height"], adv_dicts[f"h_adv_{var}"])
