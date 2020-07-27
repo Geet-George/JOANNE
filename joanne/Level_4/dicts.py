@@ -396,7 +396,7 @@ nc_attrs = {
 }
 
 nc_dims = {
-    "sounding":["sounding"],
+    "sounding": ["sounding"],
     "circle": ["circle"],
     "launch_time": ["circle", "sounding"],
     "height": ["height"],
@@ -455,16 +455,18 @@ nc_dims = {
 }
 
 nc_global_attrs = {
-    "Title": "Level-4 : Circle Products",
+    "title": "EUREC4A JOANNE Level-4",
+    "Conventions": "CF-1.8",
     "campaign_id": "EUREC4A",
-    "project_id": "JOANNE",
-    "instrument_id": "Dropsonde-RD41",
-    "Data-Processing-for-Level-2": "BatchAspen v3.4.3",
-    "Author": "Geet George",
-    "Author-Email": "geet.george@mpimet.mpg.de",
+    "project_id" : "JOANNE",
+    "instrument_id": "Vaisala RD-41",
+    "product_id" : 'Level-4',
+    "AVAPS-Software-version" = "Version 4.1.2",
+    "ASPEN-version": "BatchAspen v3.4.3",
     "JOANNE-version": joanne.__version__,
-    "Reference-Study": "https://doi.org/10.1175/JAS-D-18-0141.1",
-    "Conventions": "CF-1.7",
+    "author": "Geet George",
+    "author_email": "geet.george@mpimet.mpg.de",
     "featureType": "trajectory",
-    "Creation-Time": str(datetime.datetime.utcnow()) + " UTC",
+    "creation_time": str(datetime.datetime.utcnow()) + " UTC",
+    "Reference-Study": "https://doi.org/10.1175/JAS-D-18-0141.1",
 }
