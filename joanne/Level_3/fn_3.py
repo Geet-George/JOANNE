@@ -3,6 +3,7 @@ import datetime
 import glob
 import subprocess
 import warnings
+from importlib import reload
 
 import matplotlib.pyplot as plt
 import metpy.calc as mpcalc
@@ -18,6 +19,7 @@ from tqdm import tqdm
 from joanne.Level_3 import dicts
 from eurec4a_snd.interpolate import postprocessing as pp
 
+reload(dicts)
 #  %%
 
 ### Defining functions
@@ -82,7 +84,7 @@ def strictly_increasing(L):
     return all(x < y for x, y in zip(L, L[1:]))
 
 
-def interp_along_height(dataset, height_limit=10000, vertical_spacing=10):
+def interp_along_height(dataset, height_limit=10000, vertical_spacing=10, max_gap=50):
     """
     Input :
     
@@ -91,6 +93,8 @@ def interp_along_height(dataset, height_limit=10000, vertical_spacing=10):
         default = 10 km
         vertical_spacing : vertical spacing to which values are to be interpolated;
         default = 10 m
+        max_gap : no interpolation if gap between two datapoints is > max_gap; 
+        default = 50 m
 
     Output :
 
@@ -104,7 +108,9 @@ def interp_along_height(dataset, height_limit=10000, vertical_spacing=10):
     """
     new_index = np.arange(0, height_limit + vertical_spacing, vertical_spacing)
 
-    new_interpolated_ds = dataset.interp(height=new_index)
+    new_interpolated_ds = dataset.interpolate_na(
+        height=new_index, method="linear", max_gap=max_gap
+    )
 
     return new_interpolated_ds
 
@@ -369,6 +375,53 @@ def substitute_T_and_RH_for_interpolated_dataset(dataset):
     """
     T = calc_T_from_theta(dataset)
     rh = calc_rh_from_q(dataset, T=T)
+
+    dataset["T"] = (dataset.p.dims, T)
+    dataset["rh"] = (dataset.p.dims, rh * 100)
+
+    return dataset
+
+
+def compute_wdir_from_u_and_v(u, v):
+
+    """
+    Input :
+
+        u : u (zonal) component of wind
+        v : v (meridional) component of wind
+
+    Output :
+
+        w_dir : wind direction from north in degree
+        w_spd : magnitude of wind speed in m/s
+    """
+
+    if v > 0:
+        w_dir = (180 / np.pi) * np.arctan(v / u) + 180
+    elif u < 0 & v < 0:
+        w_dir = (180 / np.pi) * np.arctan(v / u) + 0
+    elif u > 0 & v < 0:
+        w_dir = (180 / np.pi) * np.arctan(v / u) + 360
+
+    wspd = np.sqrt(u ** 2 + v ** 2)
+
+    return w_dir, w_spd
+
+
+def substitute_wdir_for_interpolated_dataset(dataset):
+
+    """
+    Input :
+
+        dataset : Dataset interpolated along height
+
+    Output :
+
+        dataset : Original dataset with new wind direction
+
+    Function to remove interoplated values of wdir in the original dataset and 
+    replace with new values of wdir computed from u and v
+    """
 
     dataset["T"] = (dataset.p.dims, T)
     dataset["rh"] = (dataset.p.dims, rh * 100)
