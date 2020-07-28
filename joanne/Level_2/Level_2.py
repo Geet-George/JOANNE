@@ -84,7 +84,7 @@ for Platform in ["HALO", "P3"]:
 
     for i in tqdm(range(len(sonde_ds))):
 
-        if status_ds.FLAG[i] == "GOOD" #or status_ds.FLAG[i] == "UGLY":
+        if status_ds.FLAG[i] == "GOOD":  # or status_ds.FLAG[i] == "UGLY":
 
             ht_indices = ~np.isnan(sonde_ds[i].alt)
             # retrieving non-NaN indices of geopotential height (sonde_ds[i].alt)
