@@ -23,7 +23,7 @@ reload(dicts)
 # %%
 
 varname_L1 = ["height", "time", "wspd", "wdir", "tdry", "pres", "rh", "lat", "lon"]
-varname_L2 = ["height", "time", "wspd", "wdir", "T", "p", "rh", "lat", "lon"]
+varname_L2 = ["alt", "time", "wspd", "wdir", "ta", "p", "rh", "lat", "lon"]
 
 for Platform in ["HALO", "P3"]:
 
@@ -76,11 +76,11 @@ for Platform in ["HALO", "P3"]:
 
             variables = {}
 
-            variables['time'] = time
-            variables['height'] = height
-            
-            for var1,var2 in zip(varname_L1,varname_L2) :
-                if var2 not in variables.keys() :
+            variables["time"] = time
+            variables["alt"] = height
+
+            for var1, var2 in zip(varname_L1, varname_L2):
+                if var2 not in variables.keys():
                     variables[var2] = np.float32(sonde_ds[i][var1][ht_indices].values)
 
             ###--------- Creating and populating dataset --------###

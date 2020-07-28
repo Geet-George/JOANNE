@@ -8,7 +8,7 @@ import joanne
 
 # %%
 
-list_of_vars = ["height", "time", "wspd", "wdir", "T", "p", "rh", "lat", "lon"]
+list_of_vars = ["alt", "time", "wspd", "wdir", "ta", "p", "rh", "lat", "lon"]
 
 nc_meta = {
     "time": {
@@ -18,9 +18,9 @@ nc_meta = {
         "calendar": "gregorian",
         "axis": "T",
     },
-    "height": {
+    "alt": {
         "standard_name": "geopotential_height",
-        "long_name": "Geopotential Height obtained by integrating upwards the atmospheric thickness estimated using the hypsometric equation",
+        "long_name": "Geopotential Height",  # obtained by integrating upwards the atmospheric thickness estimated using the hypsometric equation",
         "units": "m",
         "axis": "Z",
         "positive": "up",
@@ -41,31 +41,31 @@ nc_meta = {
         "standard_name": "air_pressure",
         "long_name": "Atmospheric Pressure",
         "units": "hPa",
-        "coordinates": "time longitude latitude height",
+        "coordinates": "time lon lat height",
     },
-    "T": {
+    "ta": {
         "standard_name": "air_temperature",
         "long_name": "Dry Bulb Temperature",
         "units": "degree_Celsius",
-        "coordinates": "time longitude latitude height",
+        "coordinates": "time lon lat height",
     },
     "rh": {
         "standard_name": "relative_humidity",
         "long_name": "Relative Humidity",
         "units": "%",
-        "coordinates": "time longitude latitude height",
+        "coordinates": "time lon lat height",
     },
     "wspd": {
         "standard_name": "wind_speed",
         "long_name": "Wind Speed",
         "units": "m s-1",
-        "coordinates": "time longitude latitude height",
+        "coordinates": "time lon lat height",
     },
     "wdir": {
         "standard_name": "wind_from_direction",
         "long_name": "Wind Direction",
         "units": "degrees",
-        "coordinates": "time longitude latitude height",
+        "coordinates": "time lon lat height",
     },
 }
 
@@ -125,21 +125,23 @@ def get_global_attrs(Platform, file_time, sonde_ds):
     ###----- Global Attributes -----###
 
     nc_global_attrs = {
-        "Title": "Sounding data containing temperature, pressure, humidity,"
-        " latitude, longitude, wind direction, wind speed, and time",
-        "Campaign": "EUREC4A-ATOMIC (Jan-Feb, 2020)",
-        "Platform": Platform,
-        "Instrument": "Vaisala RD41",
-        "Launch-date": str(pd.to_datetime(file_time).date()),
-        "Launch-time-(UTC)": str(sonde_ds.launch_time.values),
-        "Sonde-Serial-ID": sonde_ds.SondeId,
-        "ASPEN-Version": sonde_ds.AspenVersion,
-        "Processing-Time": sonde_ds.ProcessingTime,
-        "Mission-PI": "Mission PI",
-        "Author": "Geet George",
-        "Author-Email": "geet.george@mpimet.mpg.de",
+        "title": "EUREC4A JOANNE Level-2",
+        "Conventions": "CF-1.8",
+        "campaign_id": "EUREC4A",
+        "project_id": "JOANNE",
+        "platform_id": Platform,
+        "instrument_id": "Vaisala RD-41",
+        "product_id": "Level-2",
+        "AVAPS-Software-version": "Version 4.1.2",
+        "ASPEN-version": sonde_ds.AspenVersion,
         "JOANNE-version": joanne.__version__,
-        "Conventions": "CF-1.7",
+        "launch-date": str(pd.to_datetime(file_time).date()),
+        "launch-time-(UTC)": str(sonde_ds.launch_time.values),
+        "sonde-serial-ID": sonde_ds.SondeId,
+        "processing-time": sonde_ds.ProcessingTime,
+        # "Mission-PI": "Mission PI",
+        "author": "Geet George",
+        "author_email": "geet.george@mpimet.mpg.de",
         "featureType": "trajectory",
         "Creation-Time": str(datetime.datetime.utcnow()) + " UTC",
     }
