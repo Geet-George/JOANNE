@@ -131,6 +131,16 @@ for Platform in ["HALO", "P3"]:
                 # v = var
                 f2.create_variable(to_save_ds, var, variables[var])
 
+            attrs = {
+                "descripion": "unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
+                "long_name": "sonde identifier",
+                "cf_role": "trajectory_id",
+            }
+            sonde_id_var = xr.Variable([], sonde_id[i], attrs=attrs)
+            to_save_ds["sonde_id"] = sonde_id_var
+
+            # to_save_ds["sonde_id"] = ([],sonde_id[i],attrs={"descripion":"unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT"})#,"long_name": "sonde identifier","cf_role": "trajectory_id",})
+
             file_name = (
                 "EUREC4A_JOANNE_"
                 + str(Platform)
@@ -149,10 +159,10 @@ for Platform in ["HALO", "P3"]:
                 _FillValue=np.finfo("float32").max,
             )
 
-            encoding = {var: comp for var in to_save_ds.data_vars}
+            encoding = {var: comp for var in to_save_ds.data_vars if var != "sonde_id"}
 
             nc_global_attrs = dicts.get_global_attrs(
-                Platform, file_time[i], sonde_ds[i], sonde_id[i]
+                Platform, file_time[i], sonde_ds[i]
             )
 
             for key in nc_global_attrs.keys():

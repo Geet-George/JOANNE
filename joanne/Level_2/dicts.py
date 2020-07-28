@@ -74,6 +74,8 @@ nc_meta = {
     # },
 }
 
+# nc_dims = {"alt":["time"], "time", "wspd", "wdir", "ta", "p", "rh", "lat", "lon"}
+
 list_of_flight_attrs = [
     "True Heading (deg)",
     "True Air Speed (m/s)",
@@ -126,7 +128,7 @@ def get_flight_attrs(a_filepath, list_of_flight_attrs=list_of_flight_attrs):
     return flight_attrs
 
 
-def get_global_attrs(Platform, file_time, sonde_ds, sonde_id):
+def get_global_attrs(Platform, file_time, sonde_ds):
     ###----- Global Attributes -----###
 
     nc_global_attrs = {
@@ -143,7 +145,7 @@ def get_global_attrs(Platform, file_time, sonde_ds, sonde_id):
         "launch-date": str(pd.to_datetime(file_time).date()),
         "launch-time-(UTC)": str(sonde_ds.launch_time.values),
         "sonde-serial-ID": sonde_ds.SondeId,
-        "sounding_id": sonde_id,
+        # "sounding_id": sonde_id,
         "processing-time": sonde_ds.ProcessingTime,
         # "Mission-PI": "Mission PI",
         "author": "Geet George",

@@ -22,6 +22,16 @@ from eurec4a_snd.interpolate import postprocessing as pp
 reload(dicts)
 #  %%
 
+### Interpolation values (Thanks to Hauke Schulz, MPIM (eurec4a_snd))
+
+interpolation_grid = np.arange(0, 10010, 10)  # meters
+interpolation_bins = np.arange(-5, 10015, 10).astype(
+    "int"
+)  # Bins len(interpolation_grid)+1; (a,b]; (meters)
+max_gap_fill = (
+    50  # Maximum data gap size that should be filled by interpolation (meters)
+)
+
 ### Defining functions
 
 
@@ -51,7 +61,7 @@ def remove_non_mono_incr_alt(lv2dataset):
     geopotential height ('alt') array that are not monotonically 
     increasing and return a list of the remaining indices
     """
-    ds_ka_alt = lv2dataset.height
+    ds_ka_alt = lv2dataset.alt
 
     mono_ind = []
     g = 0
@@ -108,8 +118,9 @@ def interp_along_height(dataset, height_limit=10000, vertical_spacing=10, max_ga
     """
     new_index = np.arange(0, height_limit + vertical_spacing, vertical_spacing)
 
-    new_interpolated_ds = dataset.interpolate_na(
-        height=new_index, method="linear", max_gap=max_gap
+    new_interpolated_ds = dataset.interp(alt=interpolation_grid)
+    new_interpolated_ds = new_interpolated_ds.interpolate_na(
+        "alt", max_gap=max_gap, use_coordinate=True
     )
 
     return new_interpolated_ds
@@ -141,9 +152,9 @@ def calc_q_from_rh(ds):
     #     dp * units.degC, dataset.p.values * units.hPa
     # ).magnitude
 
-    e_s = pp.calc_saturation_pressure(ds.T.values + 273.15)
-    w_s = mpcalc.mixing_ratio(e_s * units.Pa, ds.p.values * units.hPa).magnitude
-    w = ds.rh.values / 100.0 * w_s
+    e_s = pp.calc_saturation_pressure(ds.ta.values)
+    w_s = mpcalc.mixing_ratio(e_s * units.Pa, ds.p.values * units.Pa).magnitude
+    w = ds.rh.values * w_s
     q = w / (1 + w)
 
     return q
@@ -167,7 +178,7 @@ def calc_theta_from_T(dataset):
     
     """
     theta = mpcalc.potential_temperature(
-        dataset.p.values * units.hPa, dataset.T.values * units.degC
+        dataset.p.values * units.Pa, dataset.ta.values * units.kelvin
     ).magnitude
 
     return theta
@@ -190,14 +201,11 @@ def calc_T_from_theta(dataset):
     (i) mpcalc.temperature_from_potential_temperature()
     
     """
-    T = (
-        mpcalc.temperature_from_potential_temperature(
-            dataset.p.values * units.hPa, dataset.theta.values * units.kelvin,
-        ).magnitude
-        - 273.15
-    )
+    ta = mpcalc.temperature_from_potential_temperature(
+        dataset.p.values * units.Pa, dataset.theta.values * units.kelvin,
+    ).magnitude
 
-    return T
+    return ta
 
 
 def calc_rh_from_q(dataset, T=None):
@@ -229,10 +237,10 @@ def calc_rh_from_q(dataset, T=None):
     # ).magnitude
 
     w = dataset.q / (1 - dataset.q)
-    e_s = pp.calc_saturation_pressure(dataset.T.values + 273.15)
-    w_s = mpcalc.mixing_ratio(e_s * units.Pa, dataset.p.values * units.hPa).magnitude
+    e_s = pp.calc_saturation_pressure(dataset.ta.values)
+    w_s = mpcalc.mixing_ratio(e_s * units.Pa, dataset.p.values * units.Pa).magnitude
 
-    rh = (w / w_s) * 100
+    rh = w / w_s
 
     return rh
 
@@ -310,11 +318,11 @@ def adding_precipitable_water_to_dataset(dataset, altitude_limit=None):
     (ii) mpcalc.dewpoint_from_relative_humidity()
     """
     dp = mpcalc.dewpoint_from_relative_humidity(
-        dataset.T.values * units.degC, dataset.rh.values / 100
+        (dataset.ta.values - 273.15) * units.degC, dataset.rh.values
     ).magnitude
 
     pw = precipitable_water(
-        dataset.p.values * units.hPa, dp * units.degC, top=altitude_limit
+        dataset.p.values * units.Pa, dp * units.degC, top=altitude_limit
     ).magnitude
 
     dataset["PW"] = pw
@@ -376,8 +384,8 @@ def substitute_T_and_RH_for_interpolated_dataset(dataset):
     T = calc_T_from_theta(dataset)
     rh = calc_rh_from_q(dataset, T=T)
 
-    dataset["T"] = (dataset.p.dims, T)
-    dataset["rh"] = (dataset.p.dims, rh * 100)
+    dataset["ta"] = (dataset.p.dims, T)
+    dataset["rh"] = (dataset.p.dims, rh)
 
     return dataset
 
@@ -417,14 +425,16 @@ def substitute_wdir_for_interpolated_dataset(dataset):
 
     Output :
 
-        dataset : Original dataset with new wind direction
+        dataset : Original dataset with new wind direction and wind speed
 
     Function to remove interoplated values of wdir in the original dataset and 
     replace with new values of wdir computed from u and v
     """
+    w_dir, w_spd = compute_wdir_from_u_and_v(dataset.u, dataset.v)
 
-    dataset["T"] = (dataset.p.dims, T)
-    dataset["rh"] = (dataset.p.dims, rh * 100)
+    dataset["w_dir"] = (dataset.p.dims, w_dir)
+    dataset["w_spd"] = (dataset.p.dims, w_spd)
+    # dataset["rh"] = (dataset.p.dims, rh * 100)
 
     return dataset
 
@@ -433,7 +443,7 @@ def add_cloud_flag(dataset):
     """
     Function under construction
     """
-    cloud_flag = np.full(len(dataset.height), 0)
+    cloud_flag = np.full(len(dataset.alt), 0)
 
     dataset["cloud_flag"] = (dataset.p.dims, cloud_flag)
 
@@ -552,7 +562,7 @@ def add_log_interp_pressure_to_dataset(
         )
 
     p = pressure_interpolation(
-        dataset.p.values, dataset.height.values, interp_dataset.height.values
+        dataset.p.values, dataset.alt.values, interp_dataset.alt.values
     )
 
     interp_dataset["p"] = (dataset.p.dims, p)
@@ -572,9 +582,9 @@ def add_platform_details_as_var(dataset):
     """
 
     dataset["launch_time"] = (
-        np.datetime64(dataset.attrs["Launch-time-(UTC)"]).astype("float") / 1e9
+        np.datetime64(dataset.attrs["launch-time-(UTC)"]).astype("float") / 1e9
     )
-    dataset["Platform"] = dataset.attrs["Platform"]
+    dataset["platform"] = dataset.attrs["platform_id"]
     dataset["flight_height"] = dataset.attrs["Geopotential-Altitude-(m)"]
     dataset["flight_lat"] = dataset.attrs["Latitude-(deg)"]
     dataset["flight_lon"] = dataset.attrs["Longitude-(deg)"]
@@ -607,7 +617,7 @@ def ready_to_interpolate(file_path):
     and platform details variables to the dataset.                                
     """
 
-    dataset_to_interpolate = xr.open_dataset(file_path).swap_dims({"time": "height"})
+    dataset_to_interpolate = xr.open_dataset(file_path).swap_dims({"time": "alt"})
     dataset_to_interpolate = adding_q_and_theta_to_dataset(dataset_to_interpolate)
     dataset_to_interpolate = add_wind_components_to_dataset(dataset_to_interpolate)
     dataset_to_interpolate = add_platform_details_as_var(dataset_to_interpolate)
@@ -616,6 +626,51 @@ def ready_to_interpolate(file_path):
     )
 
     return dataset_to_interpolate
+
+
+def get_N_and_m_values(interp_dataset, original_dataset, bin_length=10):
+    """
+    Input :
+
+        dataset : Dataset
+
+    Output :
+
+        N_ptu : number of PTU values in a bin
+        m_ptu : method for binning PTU values
+        N_gps : number of GPS values in a bin
+        m_gps : method for binning GPS values
+
+    Function to estimate number of observations in bin and the method for retrieving 
+    data in the bin, i.e. either no data, interpolation or averaging    
+    """
+    interp_dataset["N_ptu"] = xr.DataArray(
+        original_dataset.p.groupby_bins(
+            "alt",
+            interpolation_bins,
+            labels=interpolation_grid,
+            restore_coord_dims=True,
+        )
+        .count()
+        .values,
+        dims=["alt"],
+        coords={"alt": interp_dataset.alt.values},
+    )
+
+    interp_dataset["N_gps"] = xr.DataArray(
+        original_dataset.u.groupby_bins(
+            "alt",
+            interpolation_bins,
+            labels=interpolation_grid,
+            restore_coord_dims=True,
+        )
+        .count()
+        .values,
+        dims=["alt"],
+        coords={"alt": interp_dataset.alt.values},
+    )
+
+    return interp_dataset
 
 
 def interpolate_for_level_3(
@@ -651,6 +706,10 @@ def interpolate_for_level_3(
         dataset, height_limit=height_limit, vertical_spacing=vertical_spacing
     )
 
+    interpolated_dataset = get_N_and_m_values(
+        interpolated_dataset, dataset, bin_length=vertical_spacing
+    )
+
     if pressure_log_interp is True:
         interpolated_dataset = add_log_interp_pressure_to_dataset(
             dataset, interpolated_dataset
@@ -660,7 +719,7 @@ def interpolate_for_level_3(
         interpolated_dataset
     )
 
-    interpolated_dataset = add_cloud_flag(interpolated_dataset)
+    # interpolated_dataset = add_cloud_flag(interpolated_dataset)
     # interpolated_dataset = adding_static_stability_to_dataset(interpolated_dataset)
 
     return interpolated_dataset
