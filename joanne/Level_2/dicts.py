@@ -27,46 +27,51 @@ nc_meta = {
     },
     "lat": {
         "standard_name": "latitude",
-        "long_name": "North Latitude",
+        "long_name": "Latitude",
         "units": "degrees_north",
         "axis": "X",
     },
     "lon": {
         "standard_name": "longitude",
-        "long_name": "East Longitude",
+        "long_name": "Longitude",
         "units": "degrees_east",
         "axis": "Y",
     },
     "p": {
         "standard_name": "air_pressure",
         "long_name": "Atmospheric Pressure",
-        "units": "hPa",
-        "coordinates": "time lon lat height",
+        "units": "Pa",
+        "coordinates": "time lon lat alt",
     },
     "ta": {
         "standard_name": "air_temperature",
         "long_name": "Dry Bulb Temperature",
-        "units": "degree_Celsius",
-        "coordinates": "time lon lat height",
+        "units": "K",
+        "coordinates": "time lon lat alt",
     },
     "rh": {
         "standard_name": "relative_humidity",
         "long_name": "Relative Humidity",
-        "units": "%",
-        "coordinates": "time lon lat height",
+        "units": "",
+        "coordinates": "time lon lat alt",
     },
     "wspd": {
         "standard_name": "wind_speed",
         "long_name": "Wind Speed",
         "units": "m s-1",
-        "coordinates": "time lon lat height",
+        "coordinates": "time lon lat alt",
     },
     "wdir": {
         "standard_name": "wind_from_direction",
         "long_name": "Wind Direction",
         "units": "degrees",
-        "coordinates": "time lon lat height",
+        "coordinates": "time lon lat alt",
     },
+    # "sonde_id": {
+    #     "descripion": "unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
+    #     "long_name": "sonde identifier",
+    #     "cf_role": "trajectory_id",
+    # },
 }
 
 list_of_flight_attrs = [
@@ -121,7 +126,7 @@ def get_flight_attrs(a_filepath, list_of_flight_attrs=list_of_flight_attrs):
     return flight_attrs
 
 
-def get_global_attrs(Platform, file_time, sonde_ds):
+def get_global_attrs(Platform, file_time, sonde_ds, sonde_id):
     ###----- Global Attributes -----###
 
     nc_global_attrs = {
@@ -138,6 +143,7 @@ def get_global_attrs(Platform, file_time, sonde_ds):
         "launch-date": str(pd.to_datetime(file_time).date()),
         "launch-time-(UTC)": str(sonde_ds.launch_time.values),
         "sonde-serial-ID": sonde_ds.SondeId,
+        "sounding_id": sonde_id,
         "processing-time": sonde_ds.ProcessingTime,
         # "Mission-PI": "Mission PI",
         "author": "Geet George",

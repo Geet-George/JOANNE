@@ -41,6 +41,32 @@ for Platform in ["HALO", "P3"]:
         f"{logs_directory}Status_of_sondes_{Platform}_v0.5.1+1.g0c163c5.dirty.nc"
     )
 
+    launch_time = [None] * len(sonde_ds)
+
+    for i in range(len(sonde_ds)):
+        launch_time[i] = min(sonde_ds[i].time.values)
+
+    sonde_id = [None] * len(launch_time)
+    platform = [None] * len(launch_time)
+    flight_id = [None] * len(launch_time)
+
+    months = list(pd.DatetimeIndex(launch_time).month.astype(str).str.zfill(2))
+    days = list(pd.DatetimeIndex(launch_time).day.astype(str).str.zfill(2))
+
+    flight_id = [months[x] + days[x] for x in range(len(months))]
+
+    for i in range(len(flight_id)):
+        if i == 0:
+            cntr = 1
+
+        elif flight_id[i] == flight_id[i - 1]:
+            cntr += 1
+        elif flight_id[i] != flight_id[i - 1]:
+            cntr = 1
+
+        sonde_id[i] = Platform + "-" + flight_id[i] + "_s" + str(cntr).zfill(2)
+    # platform[i] = "HALO"
+
     a_filepaths = []
 
     for i in a_files:
@@ -49,11 +75,16 @@ for Platform in ["HALO", "P3"]:
     file_time_str = [None] * len(sonde_paths)
 
     for i in range(len(sonde_paths)):
-        file_time_str[i] = sonde_paths[i][-22:-7]
+        # file_time_str[i] = sonde_paths[i][-22:-7]
+        lt_pd = pd.to_datetime(min(sonde_ds[i].time.values))
+
+        file_time_str[
+            i
+        ] = f"{(lt_pd.year)}{(lt_pd.month):02}{(lt_pd.day):02}_{(lt_pd.hour):02}{(lt_pd.minute):02}{(lt_pd.second):02}"
 
     for i in tqdm(range(len(sonde_ds))):
 
-        if status_ds.FLAG[i] == "GOOD":
+        if status_ds.FLAG[i] == "GOOD" or status_ds.FLAG[i] == "UGLY":
 
             ht_indices = ~np.isnan(sonde_ds[i].alt)
             # retrieving non-NaN indices of geopotential height (sonde_ds[i].alt)
@@ -78,6 +109,15 @@ for Platform in ["HALO", "P3"]:
 
             variables["time"] = time
             variables["alt"] = height
+
+            ###--------- Unit Conversions --------###
+
+            variables["rh"] = np.float32(sonde_ds[i]["rh"][ht_indices].values / 100)
+            variables["p"] = np.float32(sonde_ds[i]["pres"][ht_indices].values * 100)
+            variables["ta"] = np.float32(
+                sonde_ds[i]["tdry"][ht_indices].values + 273.15
+            )
+            # variables["sonde_id"] = sonde_id[i]
 
             for var1, var2 in zip(varname_L1, varname_L2):
                 if var2 not in variables.keys():
@@ -112,7 +152,7 @@ for Platform in ["HALO", "P3"]:
             encoding = {var: comp for var in to_save_ds.data_vars}
 
             nc_global_attrs = dicts.get_global_attrs(
-                Platform, file_time[i], sonde_ds[i]
+                Platform, file_time[i], sonde_ds[i], sonde_id[i]
             )
 
             for key in nc_global_attrs.keys():
