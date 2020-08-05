@@ -23,5 +23,9 @@ JOANNE.code-workspace
 # egg directories
 joanne.egg*/
 
+# extra files (detours)
+joanne/Level_2/ds_list.nc
+joanne/Level_2/list_for_flight_segmentation.py
+
 # YAML files
 **/*.yaml
