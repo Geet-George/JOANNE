@@ -70,9 +70,10 @@ def get_var_count_sums(list_nc):
     s_z = [None] * len(list_nc)
     s_u = [None] * len(list_nc)
     s_v = [None] * len(list_nc)
+    s_alt = [None] * len(list_nc)
     # creating lists to store non-NaN index sums for all parameters
 
-    list_of_variables = ["s_time", "s_t", "s_rh", "s_p", "s_z", "s_u", "s_v"]
+    list_of_variables = ["s_time", "s_t", "s_rh", "s_p", "s_z", "s_u", "s_v", "s_alt"]
     # list of parameter names as strings
 
     # sorting the non-NaN index sums from list_nc to the respective parameters' lists
@@ -80,7 +81,7 @@ def get_var_count_sums(list_nc):
         for i in range(len(list_nc)):
             eval(var)[i] = list_nc[i][j]
 
-    return list_of_variables, s_time, s_t, s_rh, s_p, s_z, s_u, s_v
+    return list_of_variables, s_time, s_t, s_rh, s_p, s_z, s_u, s_v, s_alt
 
 
 def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=True):
@@ -165,7 +166,7 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=True
 
 
 def init_status_ds(
-    list_of_variables, s_time, s_t, s_rh, s_p, s_z, s_u, s_v, ld_FLAG, file_time
+    list_of_variables, s_time, s_t, s_rh, s_p, s_z, s_u, s_v, s_alt, ld_FLAG, file_time
 ):
 
     # adding ld_FLAG to the list of variables, for easy addition to the dataset
@@ -268,7 +269,15 @@ def add_ind_flags_to_statusds(status_ds, list_of_variables):
             if rat[i][j] == 0:
                 rat_id[i][j] = "bad"
 
-    ind_flag_vars = ["t_flag", "rh_flag", "p_flag", "z_flag", "u_flag", "v_flag"]
+    ind_flag_vars = [
+        "t_flag",
+        "rh_flag",
+        "p_flag",
+        "z_flag",
+        "u_flag",
+        "v_flag",
+        "alt_flag",
+    ]
     # list of all ind_flags
 
     # adding the flags to the dataset
@@ -481,6 +490,7 @@ def get_total_non_nan_indices(sonde):
     c_z = ~np.isnan(sonde.gpsalt).values
     c_u = ~np.isnan(sonde.u_wind).values
     c_v = ~np.isnan(sonde.v_wind).values
+    c_alt = ~np.isnan(sonde.alt).values
 
     s_time = c_time.sum()
     s_t = c_t.sum()
@@ -489,8 +499,9 @@ def get_total_non_nan_indices(sonde):
     s_z = c_z.sum()
     s_u = c_u.sum()
     s_v = c_v.sum()
+    s_alt = c_alt.sum()
 
-    return s_time, s_t, s_rh, s_p, s_z, s_u, s_v
+    return s_time, s_t, s_rh, s_p, s_z, s_u, s_v, s_alt
 
 
 def pres_bounds(sonde, u_lim=1020, l_lim=1000):
@@ -637,19 +648,6 @@ def palt_gpsalt_rms_check(sonde, rms_limit=100):
             return False
 
 
-# Function to check if geopotential altitude estimation by ASPEN failed (for whatever reason)
-
-
-def check_alt_values(sonde):
-    """
-    Input : 
-        sonde : Opened xarray dataset of ASPEN-processed PQC dropsonde file
-    Output :
-        bool : True, if at least 50 values for 'alt' are available
-               False, if less than 50 values for 'alt' are available
-    """
-
-
 # Function to check if sonde failed due to no detection of launch
 
 
@@ -712,14 +710,32 @@ def get_status_ds_for_platform(Platform):
     # Retrieving all non NaN index sums in to a list for all sondes
     list_nc = list(map(get_total_non_nan_indices, sonde_ds))
 
-    list_of_variables, s_time, s_t, s_rh, s_p, s_z, s_u, s_v = get_var_count_sums(
-        list_nc
-    )
+    (
+        list_of_variables,
+        s_time,
+        s_t,
+        s_rh,
+        s_p,
+        s_z,
+        s_u,
+        s_v,
+        s_alt,
+    ) = get_var_count_sums(list_nc)
 
     ld_FLAG = get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform)
 
     status_ds = init_status_ds(
-        list_of_variables, s_time, s_t, s_rh, s_p, s_z, s_u, s_v, ld_FLAG, file_time
+        list_of_variables,
+        s_time,
+        s_t,
+        s_rh,
+        s_p,
+        s_z,
+        s_u,
+        s_v,
+        s_alt,
+        ld_FLAG,
+        file_time,
     )
 
     status_ds, ind_flag_vars = add_ind_flags_to_statusds(status_ds, list_of_variables)

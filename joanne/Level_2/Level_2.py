@@ -38,7 +38,7 @@ for Platform in ["HALO", "P3"]:
     ) = f2.get_all_sondes_list(Platform)
 
     status_ds = xr.open_dataset(
-        f"{logs_directory}Status_of_sondes_{Platform}_v0.5.1+1.g0c163c5.dirty.nc"
+        f"{logs_directory}Status_of_sondes_{Platform}_v0.7.0+2.g4a878b3.dirty.nc"
     )
 
     launch_time = [None] * len(sonde_ds)
