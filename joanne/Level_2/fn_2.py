@@ -37,7 +37,7 @@ def get_all_sondes_list(Platform):
     logs_directory = "/Users/geet/Documents/JOANNE/Data/Level_2/logs_and_stats/"
     # directory to store logs and stats
 
-    sonde_paths = sorted(glob.glob(directory + "*_PQC.nc"))
+    sonde_paths = sorted(glob.glob(directory + "*QC.nc"))
     # paths to the individual sonde files
 
     file_time_str = [None] * len(sonde_paths)
@@ -635,6 +635,19 @@ def palt_gpsalt_rms_check(sonde, rms_limit=100):
             return True
         else:
             return False
+
+
+# Function to check if geopotential altitude estimation by ASPEN failed (for whatever reason)
+
+
+def check_alt_values(sonde):
+    """
+    Input : 
+        sonde : Opened xarray dataset of ASPEN-processed PQC dropsonde file
+    Output :
+        bool : True, if at least 50 values for 'alt' are available
+               False, if less than 50 values for 'alt' are available
+    """
 
 
 # Function to check if sonde failed due to no detection of launch
