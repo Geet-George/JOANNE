@@ -1,6 +1,7 @@
 # %%
 import datetime
 import glob
+import os.path
 import subprocess
 import warnings
 from importlib import reload
@@ -11,13 +12,14 @@ import metpy.interpolate as mpinterp
 import numpy as np
 import requests
 import xarray as xr
+from eurec4a_snd.interpolate import postprocessing as pp
 from metpy import constants as mpconsts
 from metpy.future import precipitable_water
 from metpy.units import units
 from tqdm import tqdm
 
+import joanne
 from joanne.Level_3 import dicts
-from eurec4a_snd.interpolate import postprocessing as pp
 
 reload(dicts)
 #  %%
@@ -772,13 +774,32 @@ def lv3_structure_from_lv2(
 
     interp_list = [None] * len(list_of_files)
 
+    save_directory = "/Users/geet/Documents/JOANNE/Data/Level_3/Interim_files/"
+
     for id_, file_path in enumerate(tqdm(list_of_files)):
-        interp_list[id_] = interpolate_for_level_3(
-            file_path,
-            height_limit=height_limit,
-            vertical_spacing=vertical_spacing,
-            pressure_log_interp=pressure_log_interp,
+
+        file_name = (
+            "EUREC4A_JOANNE_Dropsonde-RD41_"
+            + str(file_path[file_path.find("2020") : file_path.find("2020") + 15])
+            + "Level_3_v"
+            + str(joanne.__version__)
+            + ".nc"
         )
+
+        if os.path.exists(save_directory + file_name):
+
+            interp_list[id_] = xr.open_dataset(save_directory + file_name)
+
+        else:
+
+            interp_list[id_] = interpolate_for_level_3(
+                file_path,
+                height_limit=height_limit,
+                vertical_spacing=vertical_spacing,
+                pressure_log_interp=pressure_log_interp,
+            )
+
+            interp_list[id_].to_netcdf(save_directory + file_name)
 
     dataset = concatenate_soundings(interp_list)
 
