@@ -51,7 +51,7 @@ def get_all_sondes_list(Platform):
     # list to store individual datasets of all sondes from PQC files
 
     for i in range(len(sonde_paths)):
-        file_time_str[i] = sonde_paths[i][-22:-7]
+        file_time_str[i] = sonde_paths[i][-20:-5]
         file_time[i] = np.datetime64(
             pd.to_datetime(file_time_str[i], format="%Y%m%d_%H%M%S"), "s"
         )
