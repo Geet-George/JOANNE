@@ -60,7 +60,7 @@ def dim_ready_ds(ds_lv3=get_level3_dataset()):
 
     all_sondes = (
         ds_lv3.swap_dims({"sounding": "launch_time"})
-        # .swap_dims({"obs": "height"})
+        # .swap_dims({"obs": "alt"})
         .drop(dims_to_drop)
     )
 
@@ -149,14 +149,14 @@ def get_xy_coords_for_circles(circles):
         delta_x = x_coor - xc  # *111*1000 # difference of sonde long from mean long
         delta_y = y_coor - yc  # *111*1000 # difference of sonde lat from mean lat
 
-        circles[i]["Platform"] = circles[i].Platform.values[0]
+        circles[i]["platform"] = circles[i].platform.values[0]
         circles[i]["flight_height"] = circles[i].flight_height.mean().values
         circles[i]["circle_time"] = circles[i].launch_time.mean().values
         circles[i]["circle_x"] = np.nanmean(c_xc)
         circles[i]["circle_y"] = np.nanmean(c_yc)
         circles[i]["circle_radius"] = np.nanmean(c_r)
-        circles[i]["dx"] = (["launch_time", "height"], delta_x)
-        circles[i]["dy"] = (["launch_time", "height"], delta_y)
+        circles[i]["dx"] = (["launch_time", "alt"], delta_x)
+        circles[i]["dy"] = (["launch_time", "alt"], delta_y)
 
     return print("Circles ready for regression")
 
