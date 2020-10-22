@@ -4,6 +4,10 @@
 # All dropsonde data (too storage-heavy for Git)
 Data/
 
+# build and dist
+build/
+dist/
+
 # Virtual environment directory
 joanne_env/
 flight_segments/
