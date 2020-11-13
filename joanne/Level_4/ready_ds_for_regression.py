@@ -29,6 +29,7 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
     circle_times = []
     flight_date = []
     platform_name = []
+    segment_id = []
 
     for i in allyamlfiles:
         with open(i) as source:
@@ -37,6 +38,15 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
         circle_times.append(
             [
                 (c["start"], c["end"])
+                for c in flightinfo["segments"]
+                if "circle" in c["kinds"]
+                if len(c["dropsondes"]["GOOD"]) >= 6
+            ]
+        )
+
+        segment_id.append(
+            [
+                (c["segment_id"])
                 for c in flightinfo["segments"]
                 if "circle" in c["kinds"]
                 if len(c["dropsondes"]["GOOD"]) >= 6
@@ -52,7 +62,7 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
 
         flight_date.append(np.datetime64(date.strftime(flightinfo["date"], "%Y-%m-%d")))
 
-    return circle_times, flight_date, platform_name
+    return circle_times, flight_date, platform_name, segment_id
 
 
 def dim_ready_ds(ds_lv3=get_level3_dataset()):
@@ -79,7 +89,7 @@ def get_circles(
 
     all_sondes = dim_ready_ds(ds_lv3)
 
-    circle_times, flight_date, platform_name = get_circle_times_from_yaml(
+    circle_times, flight_date, platform_name, segment_id = get_circle_times_from_yaml(
         yaml_directory
     )
 
@@ -97,6 +107,7 @@ def get_circles(
                     )
                 )
             )
+            circles[-1]["segment_id"] = segment_id[i][j]
 
     return circles
 
