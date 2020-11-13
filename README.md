@@ -1,5 +1,10 @@
 # JOANNE - The EUREC<sup>4</sup>A Dropsonde Dataset
 
+<br>
+
+![JOANNE Logo](joanne/extra/JOANNE_LOGO.png)
+
+
 <div style="text-align: justify">
 
   ![version](https://img.shields.io/github/v/tag/Geet-George/JOANNE?color=teal&label=LATEST%20VERSION&style=for-the-badge)
