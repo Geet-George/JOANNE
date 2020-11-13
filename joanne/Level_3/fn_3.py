@@ -406,14 +406,13 @@ def compute_wdir_from_u_and_v(u, v):
         w_spd : magnitude of wind speed in m/s
     """
 
-    if v > 0:
-        w_dir = (180 / np.pi) * np.arctan(v / u) + 180
-    elif u < 0 & v < 0:
-        w_dir = (180 / np.pi) * np.arctan(v / u) + 0
-    elif u > 0 & v < 0:
-        w_dir = (180 / np.pi) * np.arctan(v / u) + 360
+    w_dir = 90 - np.arctan2(-v, -u) * (180 / np.pi)
 
-    wspd = np.sqrt(u ** 2 + v ** 2)
+    mask = w_dir <= 0
+    if np.any(mask):
+        w_dir[mask] += 360
+
+    w_spd = np.sqrt(u ** 2 + v ** 2)
 
     return w_dir, w_spd
 
@@ -432,11 +431,11 @@ def substitute_wdir_for_interpolated_dataset(dataset):
     Function to remove interoplated values of wdir in the original dataset and 
     replace with new values of wdir computed from u and v
     """
+
     w_dir, w_spd = compute_wdir_from_u_and_v(dataset.u, dataset.v)
 
     dataset["w_dir"] = (dataset.p.dims, w_dir)
     dataset["w_spd"] = (dataset.p.dims, w_spd)
-    # dataset["rh"] = (dataset.p.dims, rh * 100)
 
     return dataset
 
@@ -721,6 +720,10 @@ def interpolate_for_level_3(
         interpolated_dataset
     )
 
+    interpolated_dataset = substitute_wdir_for_interpolated_dataset(
+        interpolated_dataset
+    )
+
     # interpolated_dataset = add_cloud_flag(interpolated_dataset)
     # interpolated_dataset = adding_static_stability_to_dataset(interpolated_dataset)
 
@@ -801,7 +804,13 @@ def lv3_structure_from_lv2(
 
             interp_list[id_].to_netcdf(save_directory + file_name)
 
-    dataset = concatenate_soundings(interp_list)
+    concat_list = []
+    for i in interp_list:
+
+        if "ta" in i.var():
+            concat_list.append(i)
+
+    dataset = concatenate_soundings(concat_list)
 
     return dataset
 
