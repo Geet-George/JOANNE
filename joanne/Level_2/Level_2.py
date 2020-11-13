@@ -86,7 +86,12 @@ for Platform in ["HALO", "P3"]:
 
         if status_ds.FLAG[i] == "GOOD":  # or status_ds.FLAG[i] == "UGLY":
 
-            ht_indices = ~np.isnan(sonde_ds[i].alt)
+            # ht_indices = ~np.isnan(sonde_ds[i].alt)
+            ht_indices = (
+                ~np.isnan(sonde_ds[i].alt)
+                & ~np.isnan(sonde_ds[i].lat)
+                & ~np.isnan(sonde_ds[i].lon)
+            )
             # retrieving non-NaN indices of geopotential height (sonde_ds[i].alt)
             # only time values at these indices will be used in Level-2 trajectory data;
             # this means that only alternate u,v values are included in the Level-2 data
@@ -113,6 +118,8 @@ for Platform in ["HALO", "P3"]:
             ###--------- Unit Conversions --------###
 
             variables["rh"] = np.float32(sonde_ds[i]["rh"][ht_indices].values / 100)
+            variables["lat"] = np.float32(sonde_ds[i]["lat"][ht_indices].values)
+            variables["lon"] = np.float32(sonde_ds[i]["lon"][ht_indices].values)
             variables["p"] = np.float32(sonde_ds[i]["pres"][ht_indices].values * 100)
             variables["ta"] = np.float32(
                 sonde_ds[i]["tdry"][ht_indices].values + 273.15
