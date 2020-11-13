@@ -39,7 +39,7 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
                 (c["start"], c["end"])
                 for c in flightinfo["segments"]
                 if "circle" in c["kinds"]
-                if "TTFS circle without any sondes" not in c["irregularities"]
+                if len(c["dropsondes"]["GOOD"]) >= 6
             ]
         )
 
