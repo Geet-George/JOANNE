@@ -42,8 +42,8 @@ list_of_vars = [
     "dqdx",
     "dqdy",
     "ta",
-    "dTdx",
-    "dTdy",
+    "dtadx",
+    "dtady",
     "p",
     "dpdx",
     "dpdy",
@@ -54,7 +54,7 @@ list_of_vars = [
     "W",
     "omega",
     "h_adv_q",
-    "h_adv_T",
+    "h_adv_ta",
     "h_adv_p",
     "h_adv_u",
     "h_adv_v",
@@ -106,7 +106,7 @@ nc_attrs = {
         "units": "hPa",
         "coordinates": "launch_time longitude latitude height",
     },
-    "T": {
+    "ta": {
         "standard_name": "air_temperature",
         "long_name": "Dry Bulb Temperature",
         "units": "degree_Celsius",
@@ -181,7 +181,7 @@ nc_attrs = {
         "flag_meanings": "cloud no_cloud",
         "valid_range": "0, 1",
     },
-    "Platform": {
+    "platform": {
         "standard_name": "platform",
         "long_name": "platform of the flown circle",
         "coordinates": "circle",
@@ -295,18 +295,18 @@ nc_attrs = {
         "units": "m-1",
         "coordinates": "circle height",
     },
-    "T": {
+    "ta": {
         "standard_name": "temperature",
         "long_name": "intercept value from regressed temperature in circle",
         "units": "degree_Celsius",
         "coordinates": "circle height",
     },
-    "dTdx": {
+    "dtadx": {
         "long_name": "zonal gradient of temperature",
         "units": "degree_Celsius m-1",
         "coordinates": "circle height",
     },
-    "dTdy": {
+    "dtady": {
         "long_name": "meridional gradient of temperature",
         "units": "degree_Celsius m-1",
         "coordinates": "circle height",
@@ -369,7 +369,7 @@ nc_attrs = {
         "units": "kg kg-1 s-1",
         "coordinates": "circle height",
     },
-    "h_adv_T": {
+    "h_adv_ta": {
         "standard_name": "T_advection",
         "long_name": "horizontal advection of temperature",
         "units": "degree_Celsius s-1",
@@ -415,7 +415,7 @@ nc_dims = {
     "static_stability": ["circle", "sounding", "alt"],
     "low_height_flag": ["circle", "sounding"],
     "cloud_flag": ["circle", "sounding", "alt"],
-    "Platform": ["circle"],
+    "platform": ["circle"],
     "flight_height": ["circle"],
     "flight_lat": ["circle", "sounding"],
     "flight_lon": ["circle", "sounding"],
@@ -435,9 +435,9 @@ nc_dims = {
     "q": ["circle", "alt"],
     "dqdx": ["circle", "alt"],
     "dqdy": ["circle", "alt"],
-    "T": ["circle", "alt"],
-    "dTdx": ["circle", "alt"],
-    "dTdy": ["circle", "alt"],
+    "ta": ["circle", "alt"],
+    "dtadx": ["circle", "alt"],
+    "dtady": ["circle", "alt"],
     "p": ["circle", "alt"],
     "dpdx": ["circle", "alt"],
     "dpdy": ["circle", "alt"],
@@ -448,7 +448,7 @@ nc_dims = {
     "W": ["circle", "alt"],
     "omega": ["circle", "alt"],
     "h_adv_q": ["circle", "alt"],
-    "h_adv_T": ["circle", "alt"],
+    "h_adv_ta": ["circle", "alt"],
     "h_adv_p": ["circle", "alt"],
     "h_adv_u": ["circle", "alt"],
     "h_adv_v": ["circle", "alt"],

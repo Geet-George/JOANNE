@@ -18,7 +18,7 @@ reload(prep)
 reload(rf)
 reload(dicts)
 # %%
-circles = prep.get_circles()
+circles = prep.get_circles()  # platform="P3")
 prep.get_xy_coords_for_circles(circles)
 
 # %%
@@ -28,7 +28,7 @@ list_of_parameters = [
     "u",
     "v",
     "q",
-    "T",
+    "ta",
     "p",
 ]
 
@@ -47,10 +47,10 @@ lv4_dataset = xr.concat(circles, dim="circle")
 nc_data = {}
 
 for var in dicts.list_of_vars:
-    if var != "Platform":
+    if var != "platform":
         nc_data[var] = np.float32(lv4_dataset[var].values)
 
-    if var == "Platform":
+    if var == "platform":
         nc_data[var] = lv4_dataset[var].values
 
     if var == "launch_time":
@@ -58,13 +58,11 @@ for var in dicts.list_of_vars:
 
 # %%
 
-height = lv4_dataset.height.values
+alt = lv4_dataset.alt.values
 sounding = lv4_dataset.sounding.values
 circle = lv4_dataset.circle.values
 
-to_save_ds = xr.Dataset(
-    coords={"height": height, "sounding": sounding, "circle": circle}
-)
+to_save_ds = xr.Dataset(coords={"alt": alt, "sounding": sounding, "circle": circle})
 
 for var in dicts.list_of_vars:
     prep.create_variable(
@@ -75,15 +73,13 @@ file_name = (
     "EUREC4A_JOANNE_Dropsonde-RD41_" + "Level_4_v" + str(joanne.__version__) + ".nc"
 )
 
-save_directory = (
-    "/Users/geet/Documents/JOANNE/Data/Level_4/Test_data/"  # Test_data/" #Level_3/"
-)
+save_directory = "/Users/geet/Documents/JOANNE/Data/Level_4/"  # Test_data/" #Level_3/"
 
 comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max)
 
 encoding = {}
 
-encoding = {var: comp for var in to_save_ds.data_vars if var not in ["Platform"]}
+encoding = {var: comp for var in to_save_ds.data_vars if var not in ["platform"]}
 
 for key in dicts.nc_global_attrs.keys():
     to_save_ds.attrs[key] = dicts.nc_global_attrs[key]
