@@ -35,6 +35,7 @@ list_of_vars = [
     "dudx",
     "dudy",
     "sondes_regressed",
+    "segment_id",
     "v",
     "dvdx",
     "dvdy",
@@ -193,6 +194,11 @@ nc_attrs = {
         "units": "m",
         "coordinates": "circle",
     },
+    "segment_id": {
+        "description": "unique segment ID in the format PLATFORM_FLIGHT-ID_cCIRCLE-NUMBER-FOR-THE-FLIGHT",
+        "long_name": "segment (circle) identifier",
+        "cf_role": "trajectory_id",
+    },
     "flight_lat": {
         "standard_name": "latitude",
         "long_name": "north latitude of the aircraft when the dropsonde was launched",
@@ -223,10 +229,11 @@ nc_attrs = {
         "units": "m",
         "coordinates": "circle",
     },
-    "circle_time": {  # CORRECT THE UNIT HERE
+    "circle_time": {
         "standard_name": "circle_time",
         "long_name": "mean time of circle",
-        "units": "UTC",
+        "units": "seconds since 1970-01-01 00:00:00 UTC",
+        "calendar": "gregorian",
         "coordinates": "circle",
     },
     "dx": {
@@ -258,7 +265,6 @@ nc_attrs = {
         "coordinates": "circle height",
     },
     "sondes_regressed": {
-        # "standard_name": "longitudinal gradient of eastward wind",
         "long_name": "number of sondes regressed",
         "units": "",
         "coordinates": "circle height",
@@ -398,6 +404,7 @@ nc_attrs = {
 nc_dims = {
     "sounding": ["sounding"],
     "circle": ["circle"],
+    "segment_id": ["circle"],
     "launch_time": ["circle", "sounding"],
     "alt": ["alt"],
     "latitude": ["circle", "sounding", "alt"],

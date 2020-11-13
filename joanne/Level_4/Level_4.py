@@ -18,7 +18,7 @@ reload(prep)
 reload(rf)
 reload(dicts)
 # %%
-circles = prep.get_circles()  # platform="P3")
+circles = prep.get_circles()
 prep.get_xy_coords_for_circles(circles)
 
 # %%
@@ -47,13 +47,13 @@ lv4_dataset = xr.concat(circles, dim="circle")
 nc_data = {}
 
 for var in dicts.list_of_vars:
-    if var != "platform":
+    if (var != "platform") and (var != "segment_id"):
         nc_data[var] = np.float32(lv4_dataset[var].values)
 
-    if var == "platform":
+    if (var == "platform") or (var == "segment_id"):
         nc_data[var] = lv4_dataset[var].values
 
-    if var == "launch_time":
+    if (var == "launch_time") or (var == "circle_time"):
         nc_data[var] = np.float32(lv4_dataset[var].astype("float").values / 1e9)
 
 # %%
@@ -79,7 +79,7 @@ comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float3
 
 encoding = {}
 
-encoding = {var: comp for var in to_save_ds.data_vars if var not in ["platform"]}
+encoding = {var: comp for var in to_save_ds.data_vars if var not in ["platform","segment_id"]}
 
 for key in dicts.nc_global_attrs.keys():
     to_save_ds.attrs[key] = dicts.nc_global_attrs[key]
