@@ -8,6 +8,8 @@ from metpy.units import units
 import os.path
 import joanne
 
+# %%
+
 
 def run_regression(circle, parameter):
 
@@ -77,7 +79,7 @@ def run_regression(circle, parameter):
 
 def regress_for_all_parameters(circle, list_of_parameters):
 
-    save_directory = "Interim_files/"
+    save_directory = "/Users/geet/Documents/JOANNE/Data/Level_4/Interim_files/"
 
     file_name = (
         "EUREC4A_JOANNE_Dropsonde-RD41_"
@@ -192,7 +194,7 @@ def get_density_vertical_velocity_and_omega(circles):
     return print("Finished estimating density, W and omega ...")
 
 
-def get_advection(circles, list_of_parameters=["u", "v", "q", "T", "p"]):
+def get_advection(circles, list_of_parameters=["u", "v", "q", "ta", "p"]):
 
     for id_, circle in enumerate(circles):
         adv_dicts = {}
@@ -215,6 +217,6 @@ def get_circle_products(circles, list_of_parameters):
 
     get_density_vertical_velocity_and_omega(circles)
 
-    # get_advection(circles)
+    get_advection(circles)
 
     return print(f"All circle products retrieved!")
