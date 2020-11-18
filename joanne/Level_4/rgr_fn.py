@@ -119,9 +119,9 @@ def regress_for_all_circles(circles, list_of_parameters):
     # c = [None] * len(circles)
 
     map_iterators = map(
-        regress_for_all_parameters,
+        lambda circle: regress_for_all_parameters(circle, list_of_parameters),
         circles,
-        [list_of_parameters for _ in range(len(circles))],
+        # [list_of_parameters for _ in range(len(circles))],
     )
 
     for id_, i in enumerate(map_iterators):
