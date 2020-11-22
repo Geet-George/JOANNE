@@ -16,7 +16,7 @@ import circle_fit as cf
 yaml_directory = "/Users/geet/Documents/JOANNE/joanne/flight_segments/"
 lv3_directory = "/Users/geet/Documents/JOANNE/Data/Level_3/"
 
-lv3_filename = "EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v0.8.1+0.g60c3587.dirty.nc"
+lv3_filename = "EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v0.8.1+7.g5188ec4.nc"
 
 
 def get_level3_dataset(lv3_directory=lv3_directory, lv3_filename=lv3_filename):
@@ -24,7 +24,7 @@ def get_level3_dataset(lv3_directory=lv3_directory, lv3_filename=lv3_filename):
 
 
 def get_circle_times_from_yaml(yaml_directory=yaml_directory):
-    allyamlfiles = sorted(glob.glob(yaml_directory + "*P3*.yaml"))
+    allyamlfiles = sorted(glob.glob(yaml_directory + "*.yaml"))
 
     circle_times = []
     flight_date = []
@@ -112,18 +112,18 @@ def get_circles(
     return circles
 
 
-def reswap_launchtime_sounding(circles):
+def reswap_launchtime_sounding(circle):
 
-    swapped_circles = []
+    # swapped_circles = []
 
-    for circle in circles:
-        circle["sounding"] = (
-            ["launch_time"],
-            np.arange(1, len(circle.launch_time) + 1, 1),
-        )
-        swapped_circles.append(circle.swap_dims({"launch_time": "sounding"}))
+    # for circle in circles:
+    circle["sounding"] = (
+        ["launch_time"],
+        np.arange(1, len(circle.launch_time) + 1, 1),
+    )
+    circle = circle.swap_dims({"launch_time": "sounding"})
 
-    return swapped_circles
+    return circle
 
 
 # %%
