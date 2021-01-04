@@ -278,7 +278,7 @@ def get_advection(circles, list_of_parameters=["u", "v", "q", "ta", "p"]):
     return print("Finished estimating advection terms ...")
 
 
-def get_circle_products(circles, list_of_parameters):
+def get_circle_products(circles):
 
     # for id_,circle in enumerate(circles) :
 
@@ -290,4 +290,7 @@ def get_circle_products(circles, list_of_parameters):
 
     # get_advection(circles)
 
-    return print(f"All circle products retrieved!")
+    print(f"All circle products retrieved!")
+
+    return circles
+
