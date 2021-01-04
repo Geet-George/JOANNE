@@ -1,0 +1,36 @@
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.1\linewidth} p{0.1\linewidth} p{0.3\linewidth} p{0.2\linewidth} p{0.1\linewidth}}
+\hline
+OBJECT & NAME & DESCRIPTION & UNITS & DIMENSION \\ \hline \hline
+Dimensions & sounding & Sonde number &  & sounding \\ \hline 
+ & circle & Circle number &  & circle \\ \hline 
+ & alt & Geopotential Height & m & alt \\ \hline 
+Coordinates & flight_height & mean height of the aircraft during the circle & m & circle \\ \hline 
+ & circle_x & mean zonal distance from zero longitude of all regressed sondes in circle & m & circle \\ \hline 
+ & circle_y & mean meridional distance from zero latitude of all regressed sondes in circle & m & circle \\ \hline 
+ & circle_radius & mean radius of circle & m & circle \\ \hline 
+ & circle_time & mean time of circle & seconds since 1970-01-01 00:00:00 UTC & circle \\ \hline 
+Variables & platform & platform of the flown circle &  & circle \\ \hline 
+ & u & intercept value from regressed eastward wind in circle & m s-1 & circle, alt \\ \hline 
+ & dudx & zonal gradient of eastward wind & s-1 & circle, alt \\ \hline 
+ & dudy & meridional gradient of eastward wind & s-1 & circle, alt \\ \hline 
+ & segment_id & segment (circle) identifier &  & circle \\ \hline 
+ & v & intercept value from regressed northward wind in circle & m s-1 & circle, alt \\ \hline 
+ & dvdx & zonal gradient of northward wind & s-1 & circle, alt \\ \hline 
+ & dvdy & meridional gradient of northward wind & s-1 & circle, alt \\ \hline 
+ & q & intercept value from regressed specific humidity in circle & kg kg-1 & circle, alt \\ \hline 
+ & dqdx & zonal gradient of specific humidity & m-1 & circle, alt \\ \hline 
+ & dqdy & meridional gradient of specific humidity & m-1 & circle, alt \\ \hline 
+ & ta & intercept value from regressed temperature in circle & degree_Celsius & circle, alt \\ \hline 
+ & dtadx & zonal gradient of temperature & degree_Celsius m-1 & circle, alt \\ \hline 
+ & dtady & meridional gradient of temperature & degree_Celsius m-1 & circle, alt \\ \hline 
+ & p & intercept value from regressed pressure in circle & hPa & circle, alt \\ \hline 
+ & dpdx & zonal gradient of pressure & hPa m-1 & circle, alt \\ \hline 
+ & dpdy & meridional gradient of pressure & hPa m-1 & circle, alt \\ \hline 
+ & D & horizontal mass divergence & s-1 & circle, alt \\ \hline 
+ & vor & horizontal mass vorticity & s-1 & circle, alt \\ \hline 
+ & W & large-scale atmospheric vertical velocity & m s-1 & circle, alt \\ \hline 
+ & omega & large-scale atmospheric pressure velocity & hPa h-1 & circle, alt \\ \hline 
+\end{tabular}
+\end{table}
