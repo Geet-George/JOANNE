@@ -198,6 +198,7 @@ nc_attrs = {
         "description": "unique segment ID in the format PLATFORM_FLIGHT-ID_cCIRCLE-NUMBER-FOR-THE-FLIGHT",
         "long_name": "segment (circle) identifier",
         "cf_role": "trajectory_id",
+        "units": "",
     },
     "flight_lat": {
         "standard_name": "latitude",
