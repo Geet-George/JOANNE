@@ -27,7 +27,7 @@ list_of_vars = [
     "flight_lon",
     "sonde_id",
     "N_ptu",
-    "N_gps"
+    "N_gps",
 ]
 
 nc_attrs = {
@@ -41,6 +41,7 @@ nc_attrs = {
         "description": "unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
         "long_name": "sonde identifier",
         "cf_role": "trajectory_id",
+        "units": "",
     },
     "launch_time": {
         "standard_name": "time",
@@ -175,13 +176,13 @@ nc_attrs = {
         "coordinates": "launch_time",
     },
     "N_ptu": {
-        "description": "number of observations used to derive level 3 PTU-data",
+        "long_name": "number of observations used to derive level 3 PTU-data",
         "units": "",
         "coordinates": "launch_time lon lat alt",
         "standard_name": "number_of_observations",
     },
     "N_gps": {
-        "description": "number of observations used to derive level 3 GPS-data",
+        "long_name": "number of observations used to derive level 3 GPS-data",
         "units": "",
         "coordinates": "launch_time lon lat alt",
         "standard_name": "number_of_observations",
