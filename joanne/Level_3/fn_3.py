@@ -6,21 +6,21 @@ import subprocess
 import warnings
 from importlib import reload
 
+import joanne
 import matplotlib.pyplot as plt
 import metpy.calc as mpcalc
 import metpy.interpolate as mpinterp
 import numpy as np
+import pandas as pd
 import requests
 import xarray as xr
 from eurec4a_snd.interpolate import postprocessing as pp
+from joanne.Level_3 import dicts
 from metpy import constants as mpconsts
 
 # from metpy.future import precipitable_water
 from metpy.units import units
 from tqdm import tqdm
-
-import joanne
-from joanne.Level_3 import dicts
 
 reload(dicts)
 
@@ -141,10 +141,13 @@ def interp_along_height(
             labels=interpolation_grid,
             restore_coord_dims=True,
         ).mean()
-        # for some reason, the groupby does not bin lat,lon since they are coordinates
-
+        # for some reason, the groupby does not bin lat,lon and time since they are coordinates
+        dataset["time"] = (
+            ["alt"],
+            dataset.time.values.astype(float),
+        )
         # adding them as extra variables
-        for coords in ["lat", "lon"]:
+        for coords in ["lat", "lon", "time"]:
             new_interpolated_ds[coords] = (
                 dataset[coords]
                 .groupby_bins(
@@ -161,6 +164,16 @@ def interp_along_height(
         new_interpolated_ds = new_interpolated_ds.interpolate_na(
             "alt", max_gap=max_gap_fill, use_coordinate=True
         )
+
+        new_interpolated_ds["time"] = (
+            ["alt"],
+            pd.DatetimeIndex(new_interpolated_ds.time.values),
+        )
+        new_interpolated_ds.encoding["time"] = {
+            "units": "seconds since 2020-01-01",
+            "dtype": "float",
+        }
+        new_interpolated_ds = new_interpolated_ds.rename({"time": "interpolated_time"})
 
     return new_interpolated_ds
 
@@ -619,9 +632,7 @@ def add_platform_details_as_var(dataset):
                   with no dimension attached to it
     """
 
-    dataset["launch_time"] = (
-        np.datetime64(dataset.attrs["launch-time-(UTC)"]).astype("float") / 1e9
-    )
+    dataset["launch_time"] = np.datetime64(dataset.attrs["launch-time-(UTC)"])
     dataset["platform"] = dataset.attrs["platform_id"]
     dataset["flight_height"] = dataset.attrs["Geopotential-Altitude-(m)"]
     dataset["flight_lat"] = dataset.attrs["Latitude-(deg)"]
