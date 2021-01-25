@@ -243,7 +243,7 @@ def get_density_vertical_velocity_and_omega(circle):
                     np.where(nan_ids[1] == m)[0], np.where(nan_ids[0] == cir)[0]
                 )
                 w_vel[nan_ids[0][ids_for_nan_ids], nan_ids[1][ids_for_nan_ids]] = np.nan
-                print(ids_for_nan_ids, cir, m)
+                # print(ids_for_nan_ids, cir, m)
             else:
                 w_vel[cir, m] = w_vel[cir, last] - circle.D.isel(circle=cir).isel(
                     alt=m
