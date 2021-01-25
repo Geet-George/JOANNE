@@ -33,7 +33,7 @@ def string_table_row(var):
     units = dicts.nc_attrs[var]["units"]
     dims_list = dicts.nc_dims[var]
     dims = ", ".join(dims_list)
-    str_trow = f"|`{var}`|{desc}|{units}|{dims}|\n"
+    str_trow = f" & {var} & {desc} & {units} & {dims} \\\ \\hline \n"
 
     return str_trow
 
@@ -44,20 +44,28 @@ def rows_for_objects(Object):
     for i in var_name:
         if i in eval(Object):
             if id_ == 0:
-                file.write(f"|**{Object}**" + string_table_row(i))
+                file.write(f"{Object}" + string_table_row(i))
                 id_ += 1
             else:
-                file.write("|" + string_table_row(i))
+                file.write(string_table_row(i))
                 id_ += 1
 
 
-file = open(f"{directory}file_structure_v{joanne.__version__}.txt", "w",)
+file = open(f"{directory}latex_table_Level_4_v{joanne.__version__}.txt", "w",)
 
-file.write("|**OBJECT**|**NAME**|**DESCRIPTION**|**UNITS**|**DIMENSION**|\n")
-file.write(f"|---|---|---|---|---|\n")
+file.write("\\begin{table}[H]\n")
+file.write("\\centering\n")
+file.write(
+    "\\begin{tabular}{p{0.1\\linewidth} p{0.1\\linewidth} p{0.3\\linewidth} p{0.2\\linewidth} p{0.1\\linewidth}}\n"
+)
+file.write("\\hline\n")
+file.write("OBJECT & NAME & DESCRIPTION & UNITS & DIMENSION \\\ \\hline \\hline\n")
 
 for Object in ["Dimensions", "Coordinates", "Variables"]:
     rows_for_objects(Object)
+
+file.write("\\end{tabular}\n")
+file.write("\\end{table}")
 
 file.close()
 # %%

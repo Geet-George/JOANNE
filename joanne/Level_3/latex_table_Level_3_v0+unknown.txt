@@ -1,0 +1,30 @@
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.1\linewidth} p{0.1\linewidth} p{0.3\linewidth} p{0.2\linewidth} p{0.1\linewidth}}
+\hline
+OBJECT & NAME & DESCRIPTION & UNITS & DIMENSION \\ \hline \hline
+Dimensions & sounding & Sonde number &  & sounding \\ \hline 
+Coordinates & launch_time & Time of dropsonde launch & seconds since 1970-01-01 00:00:00 UTC & sounding \\ \hline 
+ & lat & Latitude & degrees_north & sounding, alt \\ \hline 
+ & lon & Longitude & degrees_east & sounding, alt \\ \hline 
+Variables & alt & Geopotential Height & m & alt \\ \hline 
+ & p & Atmospheric Pressure & Pa & sounding, alt \\ \hline 
+ & ta & Dry Bulb Temperature & K & sounding, alt \\ \hline 
+ & rh & Relative Humidity &  & sounding, alt \\ \hline 
+ & wspd & Wind Speed & m s-1 & sounding, alt \\ \hline 
+ & wdir & Wind Direction & degrees & sounding, alt \\ \hline 
+ & u & u-component of the wind & m s-1 & sounding, alt \\ \hline 
+ & v & v-component of the wind & m s-1 & sounding, alt \\ \hline 
+ & theta & Potential Temperature & K & sounding, alt \\ \hline 
+ & q & Specific humidity & kg kg-1 & sounding, alt \\ \hline 
+ & PW & integrated water vapour in the measured column & kg m-2 & sounding \\ \hline 
+ & low_height_flag & flag to indicate if flight height at launch was low &  & sounding \\ \hline 
+ & platform & platform from which the sounding was made &  & sounding \\ \hline 
+ & flight_height & height of the aircraft when the dropsonde was launched & m & sounding \\ \hline 
+ & flight_lat & north latitude of the aircraft when the dropsonde was launched & degrees_north & sounding \\ \hline 
+ & flight_lon & east longitude of the aircraft when the dropsonde was launched & degrees_east & sounding \\ \hline 
+ & sonde_id & sonde identifier &  & sounding \\ \hline 
+ & N_ptu & number of observations used to derive level 3 PTU-data &  & sounding, alt \\ \hline 
+ & N_gps & number of observations used to derive level 3 GPS-data &  & sounding, alt \\ \hline 
+\end{tabular}
+\end{table}

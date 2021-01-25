@@ -27,7 +27,9 @@ warnings.filterwarnings(
 # %%
 ###------ Platform Name ------###
 
-for Platform  in ["P3",'HALO'] :
+for Platform in ["P3", "HALO"]:
+
+    print(f"{Platform} running now...")
 
     directory = "/Users/geet/Documents/JOANNE/Data/Level_1/" + Platform + "/"
     # directory where all sonde files are present
@@ -41,7 +43,8 @@ for Platform  in ["P3",'HALO'] :
     status_ds = f2.get_status_ds_for_platform(Platform)
 
     file = open(
-        f"{logs_directory}no_launch_detect_logs_{Platform}_v{joanne.__version__}.txt", "a",
+        f"{logs_directory}no_launch_detect_logs_{Platform}_v{joanne.__version__}.txt",
+        "a",
     )
 
     status_dict = {}
@@ -60,12 +63,16 @@ for Platform  in ["P3",'HALO'] :
                 )
 
     file.write("----------------------------------------------\n")
-    file.write(f"As per the ind_FLAG tests,\n{status_dict['GOOD_ind']} are good sondes,\n")
+    file.write(
+        f"As per the ind_FLAG tests,\n{status_dict['GOOD_ind']} are good sondes,\n"
+    )
     file.write(
         f"{status_dict['BAD_ind']} are bad sondes\nand {status_dict['UGLY_ind']} are ugly sondes.\n"
     )
     file.write("----------------------------------------------\n")
-    file.write(f"As per the srf_FLAG tests,\n{status_dict['GOOD_srf']} are good sondes,\n")
+    file.write(
+        f"As per the srf_FLAG tests,\n{status_dict['GOOD_srf']} are good sondes,\n"
+    )
     file.write(
         f"{status_dict['BAD_srf']} are bad sondes\nand {status_dict['UGLY_srf']} are ugly sondes.\n"
     )

@@ -1,10 +1,12 @@
 import datetime
 import subprocess
 import joanne
+import numpy as np
 
 list_of_vars = [
     "sounding",
     "launch_time",
+    "interpolated_time",
     "alt",
     "lat",
     "lon",
@@ -17,7 +19,7 @@ list_of_vars = [
     "v",
     "theta",
     "q",
-    "PW",
+    # "PW",
     # "static_stability",
     "low_height_flag",
     # "cloud_flag",
@@ -27,7 +29,9 @@ list_of_vars = [
     "flight_lon",
     "sonde_id",
     "N_ptu",
-    "N_gps"
+    "N_gps",
+    "m_ptu",
+    "m_gps",
 ]
 
 nc_attrs = {
@@ -39,14 +43,15 @@ nc_attrs = {
     },
     "sonde_id": {
         "description": "unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
-        "long_name": "sonde identifier",
+        "long_name": "Sonde identifier",
         "cf_role": "trajectory_id",
+        "units": "",
     },
     "launch_time": {
         "standard_name": "time",
         "long_name": "Time of dropsonde launch",
-        "units": "seconds since 1970-01-01 00:00:00 UTC",
-        "calendar": "gregorian",
+        # "units": "seconds since 1970-01-01 00:00:00 UTC",
+        # "calendar": "gregorian",
         "axis": "T",
     },
     "alt": {
@@ -175,16 +180,33 @@ nc_attrs = {
         "coordinates": "launch_time",
     },
     "N_ptu": {
-        "description": "number of observations used to derive level 3 PTU-data",
+        "long_name": "number of observations used to derive level 3 PTU-data",
         "units": "",
         "coordinates": "launch_time lon lat alt",
         "standard_name": "number_of_observations",
     },
     "N_gps": {
-        "description": "number of observations used to derive level 3 GPS-data",
+        "long_name": "number of observations used to derive level 3 GPS-data",
         "units": "",
         "coordinates": "launch_time lon lat alt",
         "standard_name": "number_of_observations",
+    },
+    "m_ptu": {
+        "long_name": "bin_method",
+        "description": "method used to derive Level-3 PTU-data",
+        "flag_values": np.array([0, 1, 2], dtype=int),
+        "flag_meanings": "no_data interpolation averaging",
+    },
+    "m_gps": {
+        "long_name": "bin_method",
+        "description": "method used to derive Level-3 GPS-data",
+        "flag_values": np.array([0, 1, 2], dtype=int),
+        "flag_meanings": "no_data interpolation averaging",
+    },
+    "interpolated_time": {
+        "long_name": "interpolated time",
+        "description": "value of time (originally independent dimension) linearly interpolated to altitude grid",
+        "coordinates": "launch_time lon lat alt",
     },
 }
 
@@ -214,6 +236,9 @@ nc_dims = {
     "flight_lon": ["sounding"],
     "N_ptu": ["sounding", "alt"],
     "N_gps": ["sounding", "alt"],
+    "m_ptu": ["sounding", "alt"],
+    "m_gps": ["sounding", "alt"],
+    "interpolated_time": ["sounding", "alt"],
 }
 
 nc_global_attrs = {

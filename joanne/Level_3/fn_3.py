@@ -6,22 +6,26 @@ import subprocess
 import warnings
 from importlib import reload
 
+import joanne
 import matplotlib.pyplot as plt
 import metpy.calc as mpcalc
 import metpy.interpolate as mpinterp
 import numpy as np
+import pandas as pd
 import requests
 import xarray as xr
 from eurec4a_snd.interpolate import postprocessing as pp
+from joanne.Level_3 import dicts
 from metpy import constants as mpconsts
-from metpy.future import precipitable_water
+
+# from metpy.future import precipitable_water
 from metpy.units import units
 from tqdm import tqdm
 
-import joanne
-from joanne.Level_3 import dicts
-
 reload(dicts)
+
+warnings.filterwarnings("ignore", message="Mean of empty slice")
+
 #  %%
 
 ### Interpolation values (Thanks to Hauke Schulz, MPIM (eurec4a_snd))
@@ -96,11 +100,13 @@ def strictly_increasing(L):
     return all(x < y for x, y in zip(L, L[1:]))
 
 
-def interp_along_height(dataset, height_limit=10000, vertical_spacing=10, max_gap=50):
+def interp_along_height(
+    dataset, height_limit=10000, vertical_spacing=10, max_gap=50, method="bin"
+):
     """
     Input :
     
-        dataset : Dataset with variables along "height' dimension
+        dataset : Dataset with variables along 'alt' dimension
         height_limit : altitude up to which interpolation is to be carried out;
         default = 10 km
         vertical_spacing : vertical spacing to which values are to be interpolated;
@@ -114,16 +120,60 @@ def interp_along_height(dataset, height_limit=10000, vertical_spacing=10, max_ga
         interpolated at given vertical_spacing up to given height_limit
 
 
-    Function to interpolate all values along the height dimension of a netCDF dataset
+    Function to interpolate all values along the alt dimension of a netCDF dataset
     to a specified vertical spacing (10 m default) upto a given height level (10 km default)
-    Given dataset must have data variables along the height dimension
+    Given dataset must have data variables along the alt dimension
     """
-    new_index = np.arange(0, height_limit + vertical_spacing, vertical_spacing)
 
-    new_interpolated_ds = dataset.interp(alt=interpolation_grid)
-    new_interpolated_ds = new_interpolated_ds.interpolate_na(
-        "alt", max_gap=max_gap, use_coordinate=True
-    )
+    if method == "linear_interpolate":
+
+        new_index = np.arange(0, height_limit + vertical_spacing, vertical_spacing)
+
+        new_interpolated_ds = dataset.interp(alt=interpolation_grid)
+        # new_interpolated_ds = new_interpolated_ds.interpolate_na(
+        #     "alt", max_gap=max_gap, use_coordinate=True
+        # )
+    elif method == "bin":
+
+        new_interpolated_ds = dataset.groupby_bins(
+            "alt",
+            interpolation_bins,
+            labels=interpolation_grid,
+            restore_coord_dims=True,
+        ).mean()
+        # for some reason, the groupby does not bin lat,lon and time since they are coordinates
+        dataset["time"] = (
+            ["alt"],
+            dataset.time.values.astype(float),
+        )
+        # adding them as extra variables
+        for coords in ["lat", "lon", "time"]:
+            new_interpolated_ds[coords] = (
+                dataset[coords]
+                .groupby_bins(
+                    "alt",
+                    interpolation_bins,
+                    labels=interpolation_grid,
+                    restore_coord_dims=False,
+                )
+                .mean()
+            )
+        new_interpolated_ds = new_interpolated_ds.transpose()
+        new_interpolated_ds = new_interpolated_ds.rename({"alt_bins": "alt"})
+
+        new_interpolated_ds = new_interpolated_ds.interpolate_na(
+            "alt", max_gap=max_gap_fill, use_coordinate=True
+        )
+
+        new_interpolated_ds["time"] = (
+            ["alt"],
+            pd.DatetimeIndex(new_interpolated_ds.time.values),
+        )
+        new_interpolated_ds.encoding["time"] = {
+            "units": "seconds since 2020-01-01",
+            "dtype": "float",
+        }
+        new_interpolated_ds = new_interpolated_ds.rename({"time": "interpolated_time"})
 
     return new_interpolated_ds
 
@@ -304,32 +354,32 @@ def adding_q_and_theta_to_dataset(dataset):
     return dataset
 
 
-def adding_precipitable_water_to_dataset(dataset, altitude_limit=None):
-    """
-    Input :
-        dataset : xarray dataset
+# def adding_precipitable_water_to_dataset(dataset, altitude_limit=None):
+#     """
+#     Input :
+#         dataset : xarray dataset
 
-    Output :
-        dataset : xarray dataset
-                  Original dataset with added variable of precipitable_water
+#     Output :
+#         dataset : xarray dataset
+#                   Original dataset with added variable of precipitable_water
 
-    Function to add variable 'precipitable_water' to given dataset, with no dimension,
-    using MetPy functions :
+#     Function to add variable 'precipitable_water' to given dataset, with no dimension,
+#     using MetPy functions :
 
-    (i) mpcalc.precipitable_water()
-    (ii) mpcalc.dewpoint_from_relative_humidity()
-    """
-    dp = mpcalc.dewpoint_from_relative_humidity(
-        (dataset.ta.values - 273.15) * units.degC, dataset.rh.values
-    ).magnitude
+#     (i) mpcalc.precipitable_water()
+#     (ii) mpcalc.dewpoint_from_relative_humidity()
+#     """
+#     dp = mpcalc.dewpoint_from_relative_humidity(
+#         (dataset.ta.values - 273.15) * units.degC, dataset.rh.values
+#     ).magnitude
 
-    pw = precipitable_water(
-        dataset.p.values * units.Pa, dp * units.degC, top=altitude_limit
-    ).magnitude
+#     pw = precipitable_water(
+#         dataset.p.values * units.Pa, dp * units.degC, top=altitude_limit
+#     ).magnitude
 
-    dataset["PW"] = pw
+#     dataset["PW"] = pw
 
-    return dataset
+#     return dataset
 
 
 # def adding_static_stability_to_dataset(dataset, method="gradient"):
@@ -582,9 +632,7 @@ def add_platform_details_as_var(dataset):
                   with no dimension attached to it
     """
 
-    dataset["launch_time"] = (
-        np.datetime64(dataset.attrs["launch-time-(UTC)"]).astype("float") / 1e9
-    )
+    dataset["launch_time"] = np.datetime64(dataset.attrs["launch-time-(UTC)"])
     dataset["platform"] = dataset.attrs["platform_id"]
     dataset["flight_height"] = dataset.attrs["Geopotential-Altitude-(m)"]
     dataset["flight_lat"] = dataset.attrs["Latitude-(deg)"]
@@ -614,17 +662,17 @@ def ready_to_interpolate(file_path):
 
     Function that takes in the path to Level-2 NC file and makes it ready for interpolation,
     by swapping dimension from 'obs' to 'height', and adding 'specific_humidity',
-    'potential_temperature','wind_components','precipitable_water',
+    'potential_temperature','wind_components',
     and platform details variables to the dataset.                                
     """
 
     dataset_to_interpolate = xr.open_dataset(file_path).swap_dims({"time": "alt"})
     dataset_to_interpolate = adding_q_and_theta_to_dataset(dataset_to_interpolate)
     dataset_to_interpolate = add_wind_components_to_dataset(dataset_to_interpolate)
-    dataset_to_interpolate = add_platform_details_as_var(dataset_to_interpolate)
-    dataset_to_interpolate = adding_precipitable_water_to_dataset(
-        dataset_to_interpolate
-    )
+
+    # dataset_to_interpolate = adding_precipitable_water_to_dataset(
+    # dataset_to_interpolate
+    # )
 
     return dataset_to_interpolate
 
@@ -671,6 +719,25 @@ def get_N_and_m_values(interp_dataset, original_dataset, bin_length=10):
         coords={"alt": interp_dataset.alt.values},
     )
 
+    m_ptu = interp_dataset["N_ptu"].values.astype(int)
+    m_gps = interp_dataset["N_gps"].values.astype(int)
+
+    m_ptu[(m_ptu == np.isnan)] = 0
+    m_ptu[(m_ptu == 1)] = 1
+    m_ptu[(m_ptu > 1)] = 2
+
+    m_gps[(m_gps == np.isnan)] = 0
+    m_gps[(m_gps == 1)] = 1
+    m_gps[(m_gps > 1)] = 2
+
+    interp_dataset["m_ptu"] = xr.DataArray(
+        m_ptu, dims=["alt"], coords={"alt": interp_dataset.alt.values},
+    )
+
+    interp_dataset["m_gps"] = xr.DataArray(
+        m_gps, dims=["alt"], coords={"alt": interp_dataset.alt.values},
+    )
+
     return interp_dataset
 
 
@@ -678,7 +745,7 @@ def interpolate_for_level_3(
     file_path_OR_dataset,
     height_limit=10000,
     vertical_spacing=10,
-    pressure_log_interp=True,
+    pressure_log_interp=False,
 ):
 
     """
@@ -724,6 +791,19 @@ def interpolate_for_level_3(
         interpolated_dataset
     )
 
+    dataset = add_platform_details_as_var(dataset)
+
+    for var in [
+        "platform",
+        "flight_height",
+        "flight_lat",
+        "flight_lon",
+        "launch_time",
+        "low_height_flag",
+        "sonde_id",
+    ]:
+        interpolated_dataset[var] = dataset[var]
+
     # interpolated_dataset = add_cloud_flag(interpolated_dataset)
     # interpolated_dataset = adding_static_stability_to_dataset(interpolated_dataset)
 
@@ -754,7 +834,7 @@ def lv3_structure_from_lv2(
     directory_OR_list_of_files,
     height_limit=10000,
     vertical_spacing=10,
-    pressure_log_interp=True,
+    pressure_log_interp=False,
 ):
     """
     Input :

@@ -31,6 +31,7 @@ joanne.egg*/
 joanne/Level_2/ds_list.nc
 joanne/Level_2/list_for_flight_segmentation.py
 **/P3_circles.nc
+**/all_cir_v0.8.1*.nc
 
 # YAML files
 **/*.yaml

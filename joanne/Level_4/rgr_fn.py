@@ -112,6 +112,8 @@ def run_regression(circle, parameter):
 
             mean_parameter[k] = regr.intercept_
             m_parameter[k], c_parameter[k] = regr.coef_
+        else:
+            Ns[k] = 0
 
     # if "sondes_regressed" not in circle:
     #     circle["sondes_regressed"] = (["alt"], Ns)
