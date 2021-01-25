@@ -7,7 +7,7 @@ import numpy as np
 from datetime import date
 import datetime
 from pylab import cos
-
+import joanne
 from joanne.Level_4 import dicts
 import circle_fit as cf
 
@@ -17,8 +17,12 @@ yaml_directory = "/Users/geet/Documents/JOANNE/joanne/flight_segments/"
 lv3_directory = "/Users/geet/Documents/JOANNE/Data/Level_3/"
 
 lv3_filename = sorted(
-    glob.glob(lv3_directory + f"EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v{joanne.__version__[1:3].nc")
+    glob.glob(
+        lv3_directory
+        + f"EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v{joanne.__version__[:3]}*.nc"
+    )
 )[-1]
+
 
 def get_level3_dataset(lv3_directory=lv3_directory, lv3_filename=lv3_filename):
     return xr.open_dataset(lv3_filename)
