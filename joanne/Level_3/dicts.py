@@ -1,10 +1,12 @@
 import datetime
 import subprocess
 import joanne
+import numpy as np
 
 list_of_vars = [
     "sounding",
     "launch_time",
+    # "interpolated_time",
     "alt",
     "lat",
     "lon",
@@ -28,6 +30,8 @@ list_of_vars = [
     "sonde_id",
     "N_ptu",
     "N_gps",
+    "m_ptu",
+    "m_gps",
 ]
 
 nc_attrs = {
@@ -187,6 +191,18 @@ nc_attrs = {
         "coordinates": "launch_time lon lat alt",
         "standard_name": "number_of_observations",
     },
+    "m_ptu": {
+        "long_name": "bin_method",
+        "description": "method used to derive Level-3 PTU-data",
+        "flag_values": np.array([0, 1, 2], dtype=int),
+        "flag_meanings": "no_data interpolation averaging",
+    },
+    "m_gps": {
+        "long_name": "bin_method",
+        "description": "method used to derive Level-3 GPS-data",
+        "flag_values": np.array([0, 1, 2], dtype=int),
+        "flag_meanings": "no_data interpolation averaging",
+    },
 }
 
 nc_dims = {
@@ -215,6 +231,8 @@ nc_dims = {
     "flight_lon": ["sounding"],
     "N_ptu": ["sounding", "alt"],
     "N_gps": ["sounding", "alt"],
+    "m_ptu": ["sounding", "alt"],
+    "m_gps": ["sounding", "alt"],
 }
 
 nc_global_attrs = {

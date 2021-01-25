@@ -23,6 +23,9 @@ import joanne
 from joanne.Level_3 import dicts
 
 reload(dicts)
+
+warnings.filterwarnings("ignore", message="Mean of empty slice")
+
 #  %%
 
 ### Interpolation values (Thanks to Hauke Schulz, MPIM (eurec4a_snd))
@@ -97,11 +100,13 @@ def strictly_increasing(L):
     return all(x < y for x, y in zip(L, L[1:]))
 
 
-def interp_along_height(dataset, height_limit=10000, vertical_spacing=10, max_gap=50):
+def interp_along_height(
+    dataset, height_limit=10000, vertical_spacing=10, max_gap=50, method="bin"
+):
     """
     Input :
     
-        dataset : Dataset with variables along "height' dimension
+        dataset : Dataset with variables along 'alt' dimension
         height_limit : altitude up to which interpolation is to be carried out;
         default = 10 km
         vertical_spacing : vertical spacing to which values are to be interpolated;
@@ -115,16 +120,47 @@ def interp_along_height(dataset, height_limit=10000, vertical_spacing=10, max_ga
         interpolated at given vertical_spacing up to given height_limit
 
 
-    Function to interpolate all values along the height dimension of a netCDF dataset
+    Function to interpolate all values along the alt dimension of a netCDF dataset
     to a specified vertical spacing (10 m default) upto a given height level (10 km default)
-    Given dataset must have data variables along the height dimension
+    Given dataset must have data variables along the alt dimension
     """
-    new_index = np.arange(0, height_limit + vertical_spacing, vertical_spacing)
 
-    new_interpolated_ds = dataset.interp(alt=interpolation_grid)
-    new_interpolated_ds = new_interpolated_ds.interpolate_na(
-        "alt", max_gap=max_gap, use_coordinate=True
-    )
+    if method == "linear_interpolate":
+
+        new_index = np.arange(0, height_limit + vertical_spacing, vertical_spacing)
+
+        new_interpolated_ds = dataset.interp(alt=interpolation_grid)
+        # new_interpolated_ds = new_interpolated_ds.interpolate_na(
+        #     "alt", max_gap=max_gap, use_coordinate=True
+        # )
+    elif method == "bin":
+
+        new_interpolated_ds = dataset.groupby_bins(
+            "alt",
+            interpolation_bins,
+            labels=interpolation_grid,
+            restore_coord_dims=True,
+        ).mean()
+        # for some reason, the groupby does not bin lat,lon since they are coordinates
+
+        # adding them as extra variables
+        for coords in ["lat", "lon"]:
+            new_interpolated_ds[coords] = (
+                dataset[coords]
+                .groupby_bins(
+                    "alt",
+                    interpolation_bins,
+                    labels=interpolation_grid,
+                    restore_coord_dims=False,
+                )
+                .mean()
+            )
+        new_interpolated_ds = new_interpolated_ds.transpose()
+        new_interpolated_ds = new_interpolated_ds.rename({"alt_bins": "alt"})
+
+        new_interpolated_ds = new_interpolated_ds.interpolate_na(
+            "alt", max_gap=max_gap_fill, use_coordinate=True
+        )
 
     return new_interpolated_ds
 
@@ -622,7 +658,7 @@ def ready_to_interpolate(file_path):
     dataset_to_interpolate = xr.open_dataset(file_path).swap_dims({"time": "alt"})
     dataset_to_interpolate = adding_q_and_theta_to_dataset(dataset_to_interpolate)
     dataset_to_interpolate = add_wind_components_to_dataset(dataset_to_interpolate)
-    dataset_to_interpolate = add_platform_details_as_var(dataset_to_interpolate)
+
     # dataset_to_interpolate = adding_precipitable_water_to_dataset(
     # dataset_to_interpolate
     # )
@@ -672,6 +708,25 @@ def get_N_and_m_values(interp_dataset, original_dataset, bin_length=10):
         coords={"alt": interp_dataset.alt.values},
     )
 
+    m_ptu = interp_dataset["N_ptu"].values.astype(int)
+    m_gps = interp_dataset["N_gps"].values.astype(int)
+
+    m_ptu[(m_ptu == np.isnan)] = 0
+    m_ptu[(m_ptu == 1)] = 1
+    m_ptu[(m_ptu > 1)] = 2
+
+    m_gps[(m_gps == np.isnan)] = 0
+    m_gps[(m_gps == 1)] = 1
+    m_gps[(m_gps > 1)] = 2
+
+    interp_dataset["m_ptu"] = xr.DataArray(
+        m_ptu, dims=["alt"], coords={"alt": interp_dataset.alt.values},
+    )
+
+    interp_dataset["m_gps"] = xr.DataArray(
+        m_gps, dims=["alt"], coords={"alt": interp_dataset.alt.values},
+    )
+
     return interp_dataset
 
 
@@ -679,7 +734,7 @@ def interpolate_for_level_3(
     file_path_OR_dataset,
     height_limit=10000,
     vertical_spacing=10,
-    pressure_log_interp=True,
+    pressure_log_interp=False,
 ):
 
     """
@@ -725,6 +780,19 @@ def interpolate_for_level_3(
         interpolated_dataset
     )
 
+    dataset = add_platform_details_as_var(dataset)
+
+    for var in [
+        "platform",
+        "flight_height",
+        "flight_lat",
+        "flight_lon",
+        "launch_time",
+        "low_height_flag",
+        "sonde_id",
+    ]:
+        interpolated_dataset[var] = dataset[var]
+
     # interpolated_dataset = add_cloud_flag(interpolated_dataset)
     # interpolated_dataset = adding_static_stability_to_dataset(interpolated_dataset)
 
@@ -755,7 +823,7 @@ def lv3_structure_from_lv2(
     directory_OR_list_of_files,
     height_limit=10000,
     vertical_spacing=10,
-    pressure_log_interp=True,
+    pressure_log_interp=False,
 ):
     """
     Input :
