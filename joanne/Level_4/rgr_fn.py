@@ -8,6 +8,57 @@ from metpy.units import units
 import os.path
 import joanne
 
+# %% FIT2D function
+
+
+def fit2d(x, y, u):
+    """
+    estimate a 2D linear model to calculate u-values from x-y coordinates
+
+    :param x: x coordinates of data points. shape: (...,M)
+    :param y: y coordinates of data points. shape: (...,M)
+    :param u: data values. shape: (...,M)
+
+    all points along the M dimension are expected to belong to the same model
+    all other dimensions are for different models
+
+    :returns: intercept, dudx, dudy. all shapes: (...)
+    """
+    # to fix nans, do a copy
+    u = np.array(u, copy=True)
+    # a does not need to be copied as this creates a copy already
+    a = np.stack([np.ones_like(x), x, y], axis=-1)
+
+    # for handling missing values, both u and a are set to 0, that way
+    # these items don't influence the fit
+    invalid = np.isnan(u) | np.isnan(x) | np.isnan(y)
+    under_constraint = np.sum(~invalid, axis=-1) < 6
+    u[invalid] = 0
+    a[invalid] = 0
+
+    a_inv = np.linalg.pinv(a)
+
+    intercept, dudx, dudy = np.einsum("...rm,...m->r...", a_inv, u)
+
+    intercept[under_constraint] = np.nan
+    dudx[under_constraint] = np.nan
+    dudy[under_constraint] = np.nan
+
+    return intercept, dudx, dudy
+
+
+def fit2d_xr(x, y, u, sample_dim):
+
+    return xr.apply_ufunc(
+        fit2d,
+        x,
+        y,
+        u,
+        input_core_dims=[[sample_dim], [sample_dim], [sample_dim]],
+        output_core_dims=[(), (), ()],
+    )
+
+
 # %%
 
 
@@ -121,9 +172,9 @@ def regress_for_all_circles(circles, list_of_parameters):
     # c = [None] * len(circles)
 
     map_iterators = map(
-        regress_for_all_parameters,
+        lambda circle: regress_for_all_parameters(circle, list_of_parameters),
         circles,
-        [list_of_parameters for _ in range(len(circles))],
+        # [list_of_parameters for _ in range(len(circles))],
     )
 
     for id_, i in enumerate(map_iterators):
@@ -135,63 +186,83 @@ def regress_for_all_circles(circles, list_of_parameters):
     return circles
 
 
-def get_div_and_vor(circles):
+def get_div_and_vor(circle):
 
-    for circle in circles:
+    D = circle.dudx + circle.dvdy
+    vor = circle.dvdx - circle.dudy
 
-        D = circle.dudx.values + circle.dvdy.values
-
-        vor = circle.dvdx.values - circle.dudy.values
-
-        circle["D"] = (["alt"], D)
-        circle["vor"] = (["alt"], vor)
+    circle["D"] = (["circle", "alt"], D)
+    circle["vor"] = (["circle", "alt"], vor)
 
     return print("Finished estimating divergence and vorticity for all circles....")
 
 
-def get_density_vertical_velocity_and_omega(circles):
+def get_density_vertical_velocity_and_omega(circle):
 
-    for circle in circles:
-        den_m = [None] * len(circle.launch_time)
+    # for circle in circles:
+    den_m = [None] * len(circle.launch_time)
 
-        for sounding in range(len(circle.launch_time)):
-            mr = mpcalc.mixing_ratio_from_specific_humidity(
-                circle.isel(launch_time=sounding).q.values
-            )
-            den_m[sounding] = mpcalc.density(
-                circle.isel(launch_time=sounding).p.values * units.Pa,
-                circle.isel(launch_time=sounding).ta.values * units.kelvin,
-                mr,
-            ).magnitude
+    for sounding in range(len(circle.launch_time)):
+        mr = mpcalc.mixing_ratio_from_specific_humidity(
+            circle.isel(launch_time=sounding).q.values
+        )
+        den_m[sounding] = mpcalc.density(
+            circle.isel(launch_time=sounding).p.values * units.Pa,
+            circle.isel(launch_time=sounding).ta.values * units.kelvin,
+            mr,
+        ).magnitude
 
-        circle["density"] = (["launch_time", "alt"], den_m)
-        circle["mean_density"] = (["alt"], np.nanmean(den_m, axis=0))
+    circle["density"] = (["launch_time", "circle", "alt"], den_m)
+    circle["mean_density"] = (["circle", "alt"], np.nanmean(den_m, axis=0))
 
-        D = circle.D.values
-        mean_den = circle.mean_density
+    D = circle.D.values
+    mean_den = circle.mean_density
 
-        nan_ids = np.where(np.isnan(D) == True)[0]
+    nan_ids = np.where(np.isnan(D) == True)  # [0]
 
-        w_vel = np.full(len(circle.alt), np.nan)
-        p_vel = np.full(len(circle.alt), np.nan)
+    w_vel = np.full([len(circle["circle"]), len(circle.alt)], np.nan)
+    p_vel = np.full([len(circle["circle"]), len(circle.alt)], np.nan)
 
-        w_vel[0] = 0
+    w_vel[:, 0] = 0
+    # last = 0
+
+    for cir in range(len(circle["circle"])):
         last = 0
-
         for m in range(1, len(circle.alt)):
 
-            if m in nan_ids:
-                w_vel[m] = np.nan
+            if (
+                len(
+                    np.intersect1d(
+                        np.where(nan_ids[1] == m)[0], np.where(nan_ids[0] == cir)[0]
+                    )
+                )
+                > 0
+            ):
+
+                ids_for_nan_ids = np.intersect1d(
+                    np.where(nan_ids[1] == m)[0], np.where(nan_ids[0] == cir)[0]
+                )
+                w_vel[nan_ids[0][ids_for_nan_ids], nan_ids[1][ids_for_nan_ids]] = np.nan
+                print(ids_for_nan_ids, cir, m)
             else:
-                w_vel[m] = w_vel[last] - D[m] * 10 * (m - last)
+                w_vel[cir, m] = w_vel[cir, last] - circle.D.isel(circle=cir).isel(
+                    alt=m
+                ).values * 10 * (m - last)
                 last = m
 
         for n in range(1, len(circle.alt)):
 
-            p_vel[n] = -mean_den[n] * 9.81 * w_vel[n] * 60 * 60 / 100
+            p_vel[cir, n] = (
+                -circle.mean_density.isel(circle=cir).isel(alt=n)
+                * 9.81
+                * w_vel[cir, n]
+                * 60
+                * 60
+                / 100
+            )
 
-        circle["W"] = (["alt"], w_vel)
-        circle["omega"] = (["alt"], p_vel)
+    circle["W"] = (["circle", "alt"], w_vel)
+    circle["omega"] = (["circle", "alt"], p_vel)
 
     return print("Finished estimating density, W and omega ...")
 
@@ -209,16 +280,19 @@ def get_advection(circles, list_of_parameters=["u", "v", "q", "ta", "p"]):
     return print("Finished estimating advection terms ...")
 
 
-def get_circle_products(circles, list_of_parameters):
+def get_circle_products(circles):
 
     # for id_,circle in enumerate(circles) :
 
-    circles = regress_for_all_circles(circles, list_of_parameters)
+    # circles = regress_for_all_circles(circles, list_of_parameters)
 
     get_div_and_vor(circles)
 
     get_density_vertical_velocity_and_omega(circles)
 
-    get_advection(circles)
+    # get_advection(circles)
 
-    return print(f"All circle products retrieved!")
+    print(f"All circle products retrieved!")
+
+    return circles
+

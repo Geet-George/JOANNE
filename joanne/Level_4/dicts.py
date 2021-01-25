@@ -4,7 +4,7 @@ import joanne
 list_of_vars = [
     "sounding",
     "circle",
-    "launch_time",
+    # "launch_time",
     "alt",
     # "latitude",
     # "longitude",
@@ -34,7 +34,7 @@ list_of_vars = [
     "u",
     "dudx",
     "dudy",
-    "sondes_regressed",
+    # "sondes_regressed",
     "segment_id",
     "v",
     "dvdx",
@@ -54,11 +54,11 @@ list_of_vars = [
     # "mean_density",
     "W",
     "omega",
-    "h_adv_q",
-    "h_adv_ta",
-    "h_adv_p",
-    "h_adv_u",
-    "h_adv_v",
+    # "h_adv_q",
+    # "h_adv_ta",
+    # "h_adv_p",
+    # "h_adv_u",
+    # "h_adv_v",
 ]
 
 nc_attrs = {
@@ -198,6 +198,7 @@ nc_attrs = {
         "description": "unique segment ID in the format PLATFORM_FLIGHT-ID_cCIRCLE-NUMBER-FOR-THE-FLIGHT",
         "long_name": "segment (circle) identifier",
         "cf_role": "trajectory_id",
+        "units": "",
     },
     "flight_lat": {
         "standard_name": "latitude",
@@ -450,7 +451,7 @@ nc_dims = {
     "dpdy": ["circle", "alt"],
     "D": ["circle", "alt"],
     "vor": ["circle", "alt"],
-    "density": ["circle", "sounding", "alt"],
+    "density": ["sounding", "circle", "alt"],
     "mean_density": ["circle", "alt"],
     "W": ["circle", "alt"],
     "omega": ["circle", "alt"],

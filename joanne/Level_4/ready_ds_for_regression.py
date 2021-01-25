@@ -17,9 +17,8 @@ yaml_directory = "/Users/geet/Documents/JOANNE/joanne/flight_segments/"
 lv3_directory = "/Users/geet/Documents/JOANNE/Data/Level_3/"
 
 lv3_filename = sorted(
-    glob.glob(lv3_directory + "EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v*.nc")
+    glob.glob(lv3_directory + f"EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v{joanne.__version__[1:3].nc")
 )[-1]
-
 
 def get_level3_dataset(lv3_directory=lv3_directory, lv3_filename=lv3_filename):
     return xr.open_dataset(lv3_filename)
@@ -114,18 +113,18 @@ def get_circles(
     return circles
 
 
-def reswap_launchtime_sounding(circles):
+def reswap_launchtime_sounding(circle):
 
-    swapped_circles = []
+    # swapped_circles = []
 
-    for circle in circles:
-        circle["sounding"] = (
-            ["launch_time"],
-            np.arange(1, len(circle.launch_time) + 1, 1),
-        )
-        swapped_circles.append(circle.swap_dims({"launch_time": "sounding"}))
+    # for circle in circles:
+    circle["sounding"] = (
+        ["launch_time"],
+        np.arange(1, len(circle.launch_time) + 1, 1),
+    )
+    circle = circle.swap_dims({"launch_time": "sounding"})
 
-    return swapped_circles
+    return circle
 
 
 # %%
