@@ -37,9 +37,14 @@ for Platform in ["HALO", "P3"]:
         sonde_paths,
     ) = f2.get_all_sondes_list(Platform)
 
-    status_ds = xr.open_dataset(
-        f"{logs_directory}Status_of_sondes_{Platform}_v0.7.0+2.g4a878b3.dirty.nc"
+    # look for status file with same major and minor version-bit
+    # (patch number and modifiers can be different)
+
+    status_filename = glob.glob(
+        f"{logs_directory}Status_of_sondes_{Platform}_v{joanne.__version__[:3]}*.nc"
     )
+
+    status_ds = xr.open_dataset(status_filename[0])
 
     launch_time = [None] * len(sonde_ds)
 
@@ -107,7 +112,7 @@ for Platform in ["HALO", "P3"]:
             height = np.float32(sonde_ds[i].alt[ht_indices].values)
             # Variable array: geopotential height
 
-            time = sonde_ds[i].time[ht_indices].astype("float").values / 1e9
+            time = sonde_ds[i].time[ht_indices].values  # .astype("float").values / 1e9
             # Variable array: time
 
             variables = {}
@@ -167,6 +172,7 @@ for Platform in ["HALO", "P3"]:
             )
 
             encoding = {var: comp for var in to_save_ds.data_vars if var != "sonde_id"}
+            encoding["time"] = {"units": "seconds since 2020-01-01", "dtype": "float"}
 
             nc_global_attrs = dicts.get_global_attrs(
                 Platform, file_time[i], sonde_ds[i]

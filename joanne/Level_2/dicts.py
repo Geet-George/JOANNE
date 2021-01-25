@@ -14,8 +14,8 @@ nc_meta = {
     "time": {
         "standard_name": "time",
         "long_name": "Time of recorded measurement",
-        "units": "seconds since 1970-01-01 00:00:00 UTC",
-        "calendar": "gregorian",
+        # "units": "seconds since 1970-01-01 00:00:00 UTC",
+        # "calendar": "gregorian",
         "axis": "T",
     },
     "alt": {
