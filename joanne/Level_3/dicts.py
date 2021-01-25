@@ -6,7 +6,7 @@ import numpy as np
 list_of_vars = [
     "sounding",
     "launch_time",
-    # "interpolated_time",
+    "interpolated_time",
     "alt",
     "lat",
     "lon",
@@ -43,15 +43,15 @@ nc_attrs = {
     },
     "sonde_id": {
         "description": "unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
-        "long_name": "sonde identifier",
+        "long_name": "Sonde identifier",
         "cf_role": "trajectory_id",
         "units": "",
     },
     "launch_time": {
         "standard_name": "time",
         "long_name": "Time of dropsonde launch",
-        "units": "seconds since 1970-01-01 00:00:00 UTC",
-        "calendar": "gregorian",
+        # "units": "seconds since 1970-01-01 00:00:00 UTC",
+        # "calendar": "gregorian",
         "axis": "T",
     },
     "alt": {
@@ -203,6 +203,11 @@ nc_attrs = {
         "flag_values": np.array([0, 1, 2], dtype=int),
         "flag_meanings": "no_data interpolation averaging",
     },
+    "interpolated_time": {
+        "long_name": "interpolated time",
+        "description": "value of time (originally independent dimension) linearly interpolated to altitude grid",
+        "coordinates": "launch_time lon lat alt",
+    },
 }
 
 nc_dims = {
@@ -233,6 +238,7 @@ nc_dims = {
     "N_gps": ["sounding", "alt"],
     "m_ptu": ["sounding", "alt"],
     "m_gps": ["sounding", "alt"],
+    "interpolated_time": ["sounding", "alt"],
 }
 
 nc_global_attrs = {
