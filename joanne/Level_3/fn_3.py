@@ -708,6 +708,25 @@ def get_N_and_m_values(interp_dataset, original_dataset, bin_length=10):
         coords={"alt": interp_dataset.alt.values},
     )
 
+    m_ptu = interp_dataset["N_ptu"].values.astype(int)
+    m_gps = interp_dataset["N_gps"].values.astype(int)
+
+    m_ptu[(m_ptu == np.isnan)] = 0
+    m_ptu[(m_ptu == 1)] = 1
+    m_ptu[(m_ptu > 1)] = 2
+
+    m_gps[(m_gps == np.isnan)] = 0
+    m_gps[(m_gps == 1)] = 1
+    m_gps[(m_gps > 1)] = 2
+
+    interp_dataset["m_ptu"] = xr.DataArray(
+        m_ptu, dims=["alt"], coords={"alt": interp_dataset.alt.values},
+    )
+
+    interp_dataset["m_gps"] = xr.DataArray(
+        m_gps, dims=["alt"], coords={"alt": interp_dataset.alt.values},
+    )
+
     return interp_dataset
 
 
