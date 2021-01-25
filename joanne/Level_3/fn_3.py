@@ -14,7 +14,8 @@ import requests
 import xarray as xr
 from eurec4a_snd.interpolate import postprocessing as pp
 from metpy import constants as mpconsts
-from metpy.future import precipitable_water
+
+# from metpy.future import precipitable_water
 from metpy.units import units
 from tqdm import tqdm
 
@@ -304,32 +305,32 @@ def adding_q_and_theta_to_dataset(dataset):
     return dataset
 
 
-def adding_precipitable_water_to_dataset(dataset, altitude_limit=None):
-    """
-    Input :
-        dataset : xarray dataset
+# def adding_precipitable_water_to_dataset(dataset, altitude_limit=None):
+#     """
+#     Input :
+#         dataset : xarray dataset
 
-    Output :
-        dataset : xarray dataset
-                  Original dataset with added variable of precipitable_water
+#     Output :
+#         dataset : xarray dataset
+#                   Original dataset with added variable of precipitable_water
 
-    Function to add variable 'precipitable_water' to given dataset, with no dimension,
-    using MetPy functions :
+#     Function to add variable 'precipitable_water' to given dataset, with no dimension,
+#     using MetPy functions :
 
-    (i) mpcalc.precipitable_water()
-    (ii) mpcalc.dewpoint_from_relative_humidity()
-    """
-    dp = mpcalc.dewpoint_from_relative_humidity(
-        (dataset.ta.values - 273.15) * units.degC, dataset.rh.values
-    ).magnitude
+#     (i) mpcalc.precipitable_water()
+#     (ii) mpcalc.dewpoint_from_relative_humidity()
+#     """
+#     dp = mpcalc.dewpoint_from_relative_humidity(
+#         (dataset.ta.values - 273.15) * units.degC, dataset.rh.values
+#     ).magnitude
 
-    pw = precipitable_water(
-        dataset.p.values * units.Pa, dp * units.degC, top=altitude_limit
-    ).magnitude
+#     pw = precipitable_water(
+#         dataset.p.values * units.Pa, dp * units.degC, top=altitude_limit
+#     ).magnitude
 
-    dataset["PW"] = pw
+#     dataset["PW"] = pw
 
-    return dataset
+#     return dataset
 
 
 # def adding_static_stability_to_dataset(dataset, method="gradient"):
@@ -614,7 +615,7 @@ def ready_to_interpolate(file_path):
 
     Function that takes in the path to Level-2 NC file and makes it ready for interpolation,
     by swapping dimension from 'obs' to 'height', and adding 'specific_humidity',
-    'potential_temperature','wind_components','precipitable_water',
+    'potential_temperature','wind_components',
     and platform details variables to the dataset.                                
     """
 
@@ -622,9 +623,9 @@ def ready_to_interpolate(file_path):
     dataset_to_interpolate = adding_q_and_theta_to_dataset(dataset_to_interpolate)
     dataset_to_interpolate = add_wind_components_to_dataset(dataset_to_interpolate)
     dataset_to_interpolate = add_platform_details_as_var(dataset_to_interpolate)
-    dataset_to_interpolate = adding_precipitable_water_to_dataset(
-        dataset_to_interpolate
-    )
+    # dataset_to_interpolate = adding_precipitable_water_to_dataset(
+    # dataset_to_interpolate
+    # )
 
     return dataset_to_interpolate
 

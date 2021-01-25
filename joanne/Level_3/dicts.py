@@ -17,7 +17,7 @@ list_of_vars = [
     "v",
     "theta",
     "q",
-    "PW",
+    # "PW",
     # "static_stability",
     "low_height_flag",
     # "cloud_flag",
