@@ -16,15 +16,17 @@ import circle_fit as cf
 yaml_directory = "/Users/geet/Documents/JOANNE/joanne/flight_segments/"
 lv3_directory = "/Users/geet/Documents/JOANNE/Data/Level_3/"
 
-lv3_filename = "EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v0.8.1+0.g60c3587.dirty.nc"
+lv3_filename = sorted(
+    glob.glob(lv3_directory + "EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v*.nc")
+)[-1]
 
 
 def get_level3_dataset(lv3_directory=lv3_directory, lv3_filename=lv3_filename):
-    return xr.open_dataset(lv3_directory + lv3_filename)
+    return xr.open_dataset(lv3_filename)
 
 
 def get_circle_times_from_yaml(yaml_directory=yaml_directory):
-    allyamlfiles = sorted(glob.glob(yaml_directory + "*P3*.yaml"))
+    allyamlfiles = sorted(glob.glob(yaml_directory + "*.yaml"))
 
     circle_times = []
     flight_date = []
@@ -148,9 +150,10 @@ def get_xy_coords_for_circles(circles):
                     list(zip(x_coor.values[:, j], y_coor.values[:, j]))
                 )
 
-        circle_x = np.mean(c_xc)
-        circle_y = np.mean(c_yc)
-        circle_radius = np.mean(c_r)
+        circle_y = np.nanmean(c_yc) / (110.54 * 1000)
+        circle_x = np.nanmean(c_xc) / (111.320 * cos(np.radians(circle_y)) * 1000)
+
+        circle_diameter = np.nanmean(c_r) * 2
 
         xc = [None] * len(x_coor.T)
         yc = [None] * len(y_coor.T)
@@ -164,9 +167,9 @@ def get_xy_coords_for_circles(circles):
         circles[i]["platform"] = circles[i].platform.values[0]
         circles[i]["flight_height"] = circles[i].flight_height.mean().values
         circles[i]["circle_time"] = circles[i].launch_time.mean().values
-        circles[i]["circle_x"] = np.nanmean(c_xc)
-        circles[i]["circle_y"] = np.nanmean(c_yc)
-        circles[i]["circle_radius"] = np.nanmean(c_r)
+        circles[i]["circle_lon"] = circle_x
+        circles[i]["circle_lat"] = circle_y
+        circles[i]["circle_diameter"] = circle_diameter
         circles[i]["dx"] = (["launch_time", "alt"], delta_x)
         circles[i]["dy"] = (["launch_time", "alt"], delta_y)
 
