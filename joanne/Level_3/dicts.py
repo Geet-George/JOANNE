@@ -3,11 +3,28 @@ import subprocess
 import joanne
 import numpy as np
 
+dim_attrs = {
+    "alt": {
+        "standard_name": "geopotential_height",
+        "long_name": "Geopotential Height",
+        "description": "Height obtained by integrating upwards the atmospheric thickness estimated from the hypsometric equation",
+        "units": "m",
+        "axis": "Z",
+        "positive": "up",
+    },
+    "sounding": {
+        "standard_name": "sounding",
+        "long_name": "Sonde number",
+        "units": "",
+        "axis": "T",
+    },
+}
+
 list_of_vars = [
-    "sounding",
+    # "sounding",
     "launch_time",
     "interpolated_time",
-    "alt",
+    # "alt",
     "lat",
     "lon",
     "p",
