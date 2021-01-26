@@ -158,6 +158,7 @@ for Platform in ["HALO", "P3"]:
                 + str(Platform)
                 + "_Dropsonde-RD41_"
                 + file_time_str[i]
+                + "Level_2"
                 + "_v"
                 + str(joanne.__version__)
                 + ".nc"
