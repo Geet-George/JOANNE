@@ -1,4 +1,4 @@
-# Module to store functions for regression
+# %% Module to store functions for regression
 
 from sklearn import linear_model
 import numpy as np
