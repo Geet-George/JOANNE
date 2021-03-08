@@ -160,8 +160,8 @@ nc_attrs = {
     },
     "low_height_flag": {
         "long_name": "flag to indicate if flight height at launch was low",
-        "flag_values": "1, 0",
-        "flag_meanings": "flight height below 4 km flight height at or above 4 km",
+        "flag_values": np.array([0, 1], dtype=int),
+        "flag_meanings": "flight_height_at_or_above_4_km flight_height_below_4_km",
         "units": "",
         "valid_range": "0, 1",
     },
