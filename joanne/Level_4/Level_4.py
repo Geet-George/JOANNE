@@ -38,10 +38,6 @@ for par in tqdm(["u", "v", "q", "ta", "p"]):
         all_cir.dx, all_cir.dy, all_cir[par], "launch_time"
     )
 
-    # all_cir[mean_var_name] = (["circle", "alt"], intercept)
-    # all_cir[var_dx_name] = (["circle", "alt"], dpardx)
-    # all_cir[var_dy_name] = (["circle", "alt"], dpardy)
-
 lv4_dataset = rf.get_circle_products(all_cir)
 
 lv4_dataset = prep.reswap_launchtime_sounding(lv4_dataset)
