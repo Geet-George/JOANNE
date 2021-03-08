@@ -155,19 +155,19 @@ nc_attrs = {
         "units": "degree",
         "coordinates": "launch_time longitude latitude height",
     },
-    "precipitable_water": {
-        "standard_name": "precipitable_water",
-        "long_name": "integrated water vapour in the measured column",
-        "units": "kg m-2",
-        "coordinates": "launch_time",
-    },
-    "static_stability": {
-        "standard_name": "static_stability",
-        "long_name": "static stability",
-        "description": "gradient of potential temperature along the pressure grid",
-        "units": " K hPa-1",
-        "coordinates": "launch_time longitude latitude height",
-    },
+    # "precipitable_water": {
+    #     "standard_name": "precipitable_water",
+    #     "long_name": "integrated water vapour in the measured column",
+    #     "units": "kg m-2",
+    #     "coordinates": "launch_time",
+    # },
+    # "static_stability": {
+    #     "standard_name": "static_stability",
+    #     "long_name": "static stability",
+    #     "description": "gradient of potential temperature along the pressure grid",
+    #     "units": " K hPa-1",
+    #     "coordinates": "launch_time longitude latitude height",
+    # },
     "low_height_flag": {
         "long_name": "flag to indicate if flight height at launch was low",
         "flag_values": "1, 0",
