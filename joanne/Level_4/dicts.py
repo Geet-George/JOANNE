@@ -93,13 +93,13 @@ nc_attrs = {
         "standard_name": "latitude",
         "long_name": "North Latitude",
         "units": "degree_north",
-        "axis": "X",
+        "axis": "Y",
     },
     "longitude": {
         "standard_name": "longitude",
         "long_name": "East Longitude",
         "units": "degree_east",
-        "axis": "Y",
+        "axis": "X",
     },
     "p": {
         "standard_name": "air_pressure",
