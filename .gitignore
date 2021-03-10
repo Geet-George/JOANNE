@@ -35,3 +35,6 @@ joanne/Level_2/list_for_flight_segmentation.py
 
 # YAML files
 **/*.yaml
+
+# Manuscript files
+Manuscript/
