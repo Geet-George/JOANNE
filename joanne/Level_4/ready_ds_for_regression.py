@@ -32,6 +32,7 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
     allyamlfiles = sorted(glob.glob(yaml_directory + "*.yaml"))
 
     circle_times = []
+    sonde_ids = []
     flight_date = []
     platform_name = []
     segment_id = []
@@ -43,6 +44,15 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
         circle_times.append(
             [
                 (c["start"], c["end"])
+                for c in flightinfo["segments"]
+                if "circle" in c["kinds"]
+                if len(c["dropsondes"]["GOOD"]) >= 6
+            ]
+        )
+
+        sonde_ids.append(
+            [
+                c["dropsondes"]["GOOD"]
                 for c in flightinfo["segments"]
                 if "circle" in c["kinds"]
                 if len(c["dropsondes"]["GOOD"]) >= 6
@@ -67,7 +77,7 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
 
         flight_date.append(np.datetime64(date.strftime(flightinfo["date"], "%Y-%m-%d")))
 
-    return circle_times, flight_date, platform_name, segment_id
+    return sonde_ids, circle_times, flight_date, platform_name, segment_id
 
 
 def dim_ready_ds(ds_lv3=get_level3_dataset()):
@@ -94,24 +104,33 @@ def get_circles(
 
     all_sondes = dim_ready_ds(ds_lv3)
 
-    circle_times, flight_date, platform_name, segment_id = get_circle_times_from_yaml(
-        yaml_directory
-    )
+    (
+        sonde_ids,
+        circle_times,
+        flight_date,
+        platform_name,
+        segment_id,
+    ) = get_circle_times_from_yaml(yaml_directory)
 
     circles = []
 
+    ds_fn = all_sondes.swap_dims({"launch_time": "sonde_id"})
+    # temporarily swapped ds for this function
+    # when appended to circles, the dims are reswapped to launch_time
+
     for i in range(len(flight_date)):
         for j in range(len(circle_times[i])):
+
             circles.append(
-                all_sondes.where(
-                    all_sondes.platform == platform_name[i], drop=True
-                ).sel(
-                    launch_time=slice(
-                        circle_times[i][j][0] - datetime.timedelta(minutes=2),
-                        circle_times[i][j][1] + datetime.timedelta(minutes=2),
-                    )
-                )
+                ds_fn.sel(sonde_id=sonde_ids[i][0])
+                .where(ds_fn.platform == platform_name[i], drop=True,)
+                .swap_dims({"sonde_id": "launch_time"})  # .sel(
+                # launch_time=slice(
+                #     circle_times[i][j][0] - datetime.timedelta(minutes=2),
+                #     circle_times[i][j][1] + datetime.timedelta(minutes=2),
+                # )
             )
+            # )
             circles[-1]["segment_id"] = segment_id[i][j]
 
     return circles
@@ -140,8 +159,8 @@ def get_xy_coords_for_circles(circles):
 
         x_coor = circles[i]["lon"] * 111.320 * cos(np.radians(circles[i]["lat"])) * 1000
         y_coor = circles[i]["lat"] * 110.54 * 1000
-
         # converting from lat, lon to coordinates in metre from (0,0).
+
         c_xc = np.full(np.size(x_coor, 1), np.nan)
         c_yc = np.full(np.size(x_coor, 1), np.nan)
         c_r = np.full(np.size(x_coor, 1), np.nan)
