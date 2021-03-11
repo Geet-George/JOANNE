@@ -2,7 +2,7 @@
 
 # Level 2
 
-![version](https://img.shields.io/github/v/release/Geet-George/JOANNE?color=teal&include_prereleases&label=Latest%20JOANNE%20VERSION&style=for-the-badge)
+![version](https://img.shields.io/github/v/tag/Geet-George/JOANNE?color=teal&include_prereleases&label=Latest%20JOANNE%20VERSION&style=for-the-badge)
 
 Total size : **~85 MB** <br>
 Total files : **~1069 files** <br>
