@@ -122,15 +122,11 @@ def get_circles(
         for j in range(len(circle_times[i])):
 
             circles.append(
-                ds_fn.sel(sonde_id=sonde_ids[i][0])
-                .where(ds_fn.platform == platform_name[i], drop=True,)
-                .swap_dims({"sonde_id": "launch_time"})  # .sel(
-                # launch_time=slice(
-                #     circle_times[i][j][0] - datetime.timedelta(minutes=2),
-                #     circle_times[i][j][1] + datetime.timedelta(minutes=2),
-                # )
+                ds_fn.sel(sonde_id=sonde_ids[i][0]).swap_dims(
+                    {"sonde_id": "launch_time"}
+                )
             )
-            # )
+
             circles[-1]["segment_id"] = segment_id[i][j]
 
     return circles
