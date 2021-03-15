@@ -22,10 +22,9 @@ reload(dicts)
 circles = prep.get_circles()
 prep.get_xy_coords_for_circles(circles)
 
-all_cir = xr.concat(circles, dim="circle")
+# %%
 
-### TEMPORARY FILE TO GET PREPPED XY COORDINATES OF CIRCLES ###
-# all_cir = xr.open_dataset("all_cir_v0.8.1+7.g5.nc")
+all_cir = xr.concat(circles, dim="circle")
 
 # %%
 for par in tqdm(["u", "v", "q", "ta", "p"]):
@@ -34,32 +33,16 @@ for par in tqdm(["u", "v", "q", "ta", "p"]):
     var_dx_name = "d" + par + "dx"
     var_dy_name = "d" + par + "dy"
 
-    all_cir[mean_var_name], all_cir[var_dx_name], all_cir[var_dy_name] = rf.fit2d_xr(
-        all_cir.dx, all_cir.dy, all_cir[par], "launch_time"
-    )
+    (
+        all_cir[mean_var_name],
+        all_cir[var_dx_name],
+        all_cir[var_dy_name],
+        all_cir[par + "_sounding"],
+    ) = rf.fit2d_xr(all_cir.dx, all_cir.dy, all_cir[par], "launch_time")
 
 lv4_dataset = rf.get_circle_products(all_cir)
 
 lv4_dataset = prep.reswap_launchtime_sounding(lv4_dataset)
-
-# %%
-# start = time.perf_counter()
-
-# list_of_parameters = [
-#     "u",
-#     "v",
-#     "q",
-#     "ta",
-#     "p",
-# ]
-
-# rf.get_circle_products(circles, list_of_parameters)
-
-# circles = prep.reswap_launchtime_sounding(circles)
-
-# finish = time.perf_counter()
-
-# print(f"Finished in {round(finish - start,2)} seconds ...")
 
 # %%
 
