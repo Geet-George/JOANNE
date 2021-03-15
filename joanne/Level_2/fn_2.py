@@ -710,6 +710,11 @@ def get_status_ds_for_platform(Platform):
     # Retrieving all non NaN index sums in to a list for all sondes
     list_nc = list(map(get_total_non_nan_indices, sonde_ds))
 
+    launch_time = [None] * len(sonde_ds)
+
+    for i in range(len(sonde_ds)):
+        launch_time[i] = min(asonde_ds[i].time.values)
+
     (
         list_of_variables,
         s_time,
@@ -743,6 +748,7 @@ def get_status_ds_for_platform(Platform):
     status_ds, ind_FLAG = get_the_ind_FLAG_to_statusds(status_ds, ind_flag_vars)
     status_ds, srf_FLAG = get_the_srf_FLAG_to_statusds(status_ds, srf_flag_vars)
     status_ds = get_the_FLAG(status_ds, ind_FLAG, srf_FLAG)
+    status_ds["launch_time"] = (["time"], pd.DatetimeIndex(launch_time))
 
     status_ds.to_netcdf(
         f"{logs_directory}Status_of_sondes_{Platform}_v{joanne.__version__}.nc"
