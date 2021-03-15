@@ -24,6 +24,7 @@ def fit2d(x, y, u):
 
     :returns: intercept, dudx, dudy. all shapes: (...)
     """
+    u_ = u
     # to fix nans, do a copy
     u = np.array(u, copy=True)
     # a does not need to be copied as this creates a copy already
@@ -44,7 +45,7 @@ def fit2d(x, y, u):
     dudx[under_constraint] = np.nan
     dudy[under_constraint] = np.nan
 
-    return intercept, dudx, dudy
+    return intercept, dudx, dudy, u_
 
 
 def fit2d_xr(x, y, u, sample_dim):
@@ -55,7 +56,7 @@ def fit2d_xr(x, y, u, sample_dim):
         y,
         u,
         input_core_dims=[[sample_dim], [sample_dim], [sample_dim]],
-        output_core_dims=[(), (), ()],
+        output_core_dims=[(), (), (), [sample_dim]],
     )
 
 
@@ -204,11 +205,11 @@ def get_density_vertical_velocity_and_omega(circle):
 
     for sounding in range(len(circle.launch_time)):
         mr = mpcalc.mixing_ratio_from_specific_humidity(
-            circle.isel(launch_time=sounding).q.values
+            circle.isel(launch_time=sounding).q_sounding.values
         )
         den_m[sounding] = mpcalc.density(
-            circle.isel(launch_time=sounding).p.values * units.Pa,
-            circle.isel(launch_time=sounding).ta.values * units.kelvin,
+            circle.isel(launch_time=sounding).p_sounding.values * units.Pa,
+            circle.isel(launch_time=sounding).ta_sounding.values * units.kelvin,
             mr,
         ).magnitude
 
@@ -226,7 +227,7 @@ def get_density_vertical_velocity_and_omega(circle):
     w_vel[:, 0] = 0
     # last = 0
 
-    for cir in range(len(circle["circle"])):
+    for cir in tqdm(range(len(circle["circle"]))):
         last = 0
         for m in range(1, len(circle.alt)):
 
@@ -243,7 +244,7 @@ def get_density_vertical_velocity_and_omega(circle):
                     np.where(nan_ids[1] == m)[0], np.where(nan_ids[0] == cir)[0]
                 )
                 w_vel[nan_ids[0][ids_for_nan_ids], nan_ids[1][ids_for_nan_ids]] = np.nan
-                # print(ids_for_nan_ids, cir, m)
+
             else:
                 w_vel[cir, m] = w_vel[cir, last] - circle.D.isel(circle=cir).isel(
                     alt=m
