@@ -55,11 +55,11 @@ for Platform in ["P3", "HALO"]:
 
             if x != "FLAG":
                 status_dict[f"{y}_{x}"] = len(
-                    status_ds.where(status_ds[f"{x}_FLAG"] == y, drop=True).time
+                    status_ds.where(status_ds[f"{x}_FLAG"] == y, drop=True).launch_time
                 )
             else:
                 status_dict[f"{y}_{x}"] = len(
-                    status_ds.where(status_ds[x] == y, drop=True).time
+                    status_ds.where(status_ds[x] == y, drop=True).launch_time
                 )
 
     file.write("----------------------------------------------\n")
@@ -77,7 +77,7 @@ for Platform in ["P3", "HALO"]:
         f"{status_dict['BAD_srf']} are bad sondes\nand {status_dict['UGLY_srf']} are ugly sondes.\n"
     )
     file.write("----------------------------------------------\n")
-    file.write(f"There are a total of {len(status_ds.time)} sondes\n")
+    file.write(f"There are a total of {len(status_ds.launch_time)} sondes\n")
     file.write(f"out of which {status_dict['GOOD_FLAG']} are good sondes,\n")
     file.write(
         f"{status_dict['BAD_FLAG']} are bad sondes\nand {status_dict['UGLY_FLAG']} are ugly sondes that can be salvaged with some effort.\n"

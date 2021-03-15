@@ -713,7 +713,7 @@ def get_status_ds_for_platform(Platform):
     launch_time = [None] * len(sonde_ds)
 
     for i in range(len(sonde_ds)):
-        launch_time[i] = min(asonde_ds[i].time.values)
+        launch_time[i] = min(sonde_ds[i].time.values)
 
     (
         list_of_variables,
@@ -749,12 +749,17 @@ def get_status_ds_for_platform(Platform):
     status_ds, srf_FLAG = get_the_srf_FLAG_to_statusds(status_ds, srf_flag_vars)
     status_ds = get_the_FLAG(status_ds, ind_FLAG, srf_FLAG)
     status_ds["launch_time"] = (["time"], pd.DatetimeIndex(launch_time))
+    to_save_ds = (
+        status_ds.swap_dims({"time": "launch_time"})
+        .reset_coords("time", drop=True)
+        .sortby("launch_time")
+    )
 
-    status_ds.to_netcdf(
+    to_save_ds.to_netcdf(
         f"{logs_directory}Status_of_sondes_{Platform}_v{joanne.__version__}.nc"
     )
 
-    return status_ds
+    return to_save_ds
 
 
 # %%
