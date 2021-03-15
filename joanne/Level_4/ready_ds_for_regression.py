@@ -120,12 +120,12 @@ def get_circles(
 
     for i in range(len(flight_date)):
         for j in range(len(circle_times[i])):
-
-            circles.append(
-                ds_fn.sel(sonde_id=sonde_ids[i][0]).swap_dims(
-                    {"sonde_id": "launch_time"}
+            if len(sonde_ids[i]) != 0:
+                circles.append(
+                    ds_fn.sel(sonde_id=sonde_ids[i][j]).swap_dims(
+                        {"sonde_id": "launch_time"}
+                    )
                 )
-            )
 
             circles[-1]["segment_id"] = segment_id[i][j]
 
