@@ -85,8 +85,8 @@ list_of_flight_attrs = [
     "Latitude (deg)",
     "MSL Altitude (m)",
     "Geopotential Altitude (m)",
-    "Software Notes",
-    "Format Notes",
+    # "Software Notes",
+    # "Format Notes",
 ]
 
 
