@@ -35,7 +35,7 @@ for var in dicts.list_of_vars:
         nc_data[var] = lv3_dataset[var].values
 # %%
 
-obs = np.arange(0, len(lv3_dataset.alt) * 10, 10)
+obs = np.arange(0, len(lv3_dataset.alt) * 10, 10, dtype="short")
 sonde_id = lv3_dataset.sonde_id.values
 
 to_save_ds = xr.Dataset(coords={"alt": obs, "sonde_id": sonde_id})
