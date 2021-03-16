@@ -1,8 +1,9 @@
 # Mac files
 .DS_Store
 
-# All dropsonde data (too storage-heavy for Git)
+# Data directories (too storage-heavy for Git)
 Data/
+flight_segments/
 
 # build and dist
 build/
@@ -10,7 +11,6 @@ dist/
 
 # Virtual environment directory
 joanne_env/
-flight_segments/
 
 # Test folders
 test_setup/
@@ -28,13 +28,10 @@ JOANNE.code-workspace
 joanne.egg*/
 
 # extra files (detours)
-joanne/Level_2/ds_list.nc
-joanne/Level_2/list_for_flight_segmentation.py
-**/P3_circles.nc
-**/all_cir_v0.8.1*.nc
 
 # YAML files
 **/*.yaml
+!joanne/Level_2/sondes.yaml
 
 # Manuscript files
 Manuscript/

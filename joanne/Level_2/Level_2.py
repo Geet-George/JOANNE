@@ -12,6 +12,7 @@ import seaborn as sb
 import xarray as xr
 from seaborn import distplot
 from tqdm import tqdm
+from packaging import version
 
 import joanne
 from joanne.Level_2 import fn_2 as f2
@@ -41,36 +42,15 @@ for Platform in ["HALO", "P3"]:
     # (patch number and modifiers can be different)
 
     status_filename = glob.glob(
-        f"{logs_directory}Status_of_sondes_{Platform}_v{joanne.__version__[:9]}*.nc"
+        f"{logs_directory}Status_of_sondes_{Platform}_v{joanne.__version__[:3]}*.nc"
     )
 
-    status_ds = xr.open_dataset(status_filename[0])
+    vers = [None] * len(status_filename)
 
-    # launch_time = [None] * len(sonde_ds)
+    for n, i in enumerate(status_filename):
+        vers[n] = version.parse(i)
 
-    # for i in range(len(sonde_ds)):
-    #     launch_time[i] = min(sonde_ds[i].time.values)
-
-    # sonde_id = [None] * len(launch_time)
-    # platform = [None] * len(launch_time)
-    # flight_id = [None] * len(launch_time)
-
-    # months = list(pd.DatetimeIndex(launch_time).month.astype(str).str.zfill(2))
-    # days = list(pd.DatetimeIndex(launch_time).day.astype(str).str.zfill(2))
-
-    # flight_id = [months[x] + days[x] for x in range(len(months))]
-
-    # for i in range(len(flight_id)):
-    #     if i == 0:
-    #         cntr = 1
-
-    #     elif flight_id[i] == flight_id[i - 1]:
-    #         cntr += 1
-    #     elif flight_id[i] != flight_id[i - 1]:
-    #         cntr = 1
-
-    #     sonde_id[i] = Platform + "-" + flight_id[i] + "_s" + str(cntr).zfill(2)
-    # # platform[i] = "HALO"
+    status_ds = xr.open_dataset(str(max(vers)))
 
     a_filepaths = []
 
@@ -164,10 +144,10 @@ for Platform in ["HALO", "P3"]:
             # file name
             file_name = (
                 "EUREC4A_JOANNE_"
-                + str(Platform)
+                # + str(Platform)
                 + "_Dropsonde-RD41_"
-                + file_time_str[i]
-                + "Level_2"
+                + str(sonde_id)
+                + "_Level_2"
                 + "_v"
                 + str(joanne.__version__)
                 + ".nc"
