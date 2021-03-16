@@ -695,6 +695,39 @@ def create_variable(ds, vname, data, **kwargs):
     return vname
 
 
+def add_sonde_id_to_status_ds(Platform, to_save_ds):
+
+    sonde_id = [None] * len(to_save_ds.launch_time)
+    platform = [None] * len(to_save_ds.launch_time)
+    flight_id = [None] * len(to_save_ds.launch_time)
+
+    months = list(
+        pd.DatetimeIndex(to_save_ds.launch_time.values).month.astype(str).str.zfill(2)
+    )
+    days = list(
+        pd.DatetimeIndex(to_save_ds.launch_time.values).day.astype(str).str.zfill(2)
+    )
+
+    flight_id = [months[x] + days[x] for x in range(len(months))]
+
+    for i in range(len(flight_id)):
+        if i == 0:
+            cntr = 1
+
+        elif flight_id[i] == flight_id[i - 1]:
+            cntr += 1
+        elif flight_id[i] != flight_id[i - 1]:
+            cntr = 1
+
+        sonde_id[i] = Platform + "-" + flight_id[i] + "_s" + str(cntr).zfill(2)
+        platform[i] = Platform
+
+    to_save_ds["sonde_id"] = (["launch_time"], sonde_id)
+    to_save_ds["platform"] = (["launch_time"], platform)
+
+    return to_save_ds
+
+
 def get_status_ds_for_platform(Platform):
 
     (
@@ -713,7 +746,7 @@ def get_status_ds_for_platform(Platform):
     launch_time = [None] * len(sonde_ds)
 
     for i in range(len(sonde_ds)):
-        launch_time[i] = min(sonde_ds[i].time.values)
+        launch_time[i] = sonde_ds[i].launch_time.values
 
     (
         list_of_variables,
@@ -754,6 +787,9 @@ def get_status_ds_for_platform(Platform):
         .reset_coords("time", drop=True)
         .sortby("launch_time")
     )
+    # VERY IMPORTANT THAT THE launch_time SORTING PRECEDES CALLING THE FUNCTION add_sonde_id_to_status_ds
+
+    to_save_ds = add_sonde_id_to_status_ds(Platform, to_save_ds)
 
     to_save_ds.to_netcdf(
         f"{logs_directory}Status_of_sondes_{Platform}_v{joanne.__version__}.nc"

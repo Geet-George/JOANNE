@@ -41,36 +41,36 @@ for Platform in ["HALO", "P3"]:
     # (patch number and modifiers can be different)
 
     status_filename = glob.glob(
-        f"{logs_directory}Status_of_sondes_{Platform}_v{joanne.__version__[:3]}*.nc"
+        f"{logs_directory}Status_of_sondes_{Platform}_v{joanne.__version__[:9]}*.nc"
     )
 
     status_ds = xr.open_dataset(status_filename[0])
 
-    launch_time = [None] * len(sonde_ds)
+    # launch_time = [None] * len(sonde_ds)
 
-    for i in range(len(sonde_ds)):
-        launch_time[i] = min(sonde_ds[i].time.values)
+    # for i in range(len(sonde_ds)):
+    #     launch_time[i] = min(sonde_ds[i].time.values)
 
-    sonde_id = [None] * len(launch_time)
-    platform = [None] * len(launch_time)
-    flight_id = [None] * len(launch_time)
+    # sonde_id = [None] * len(launch_time)
+    # platform = [None] * len(launch_time)
+    # flight_id = [None] * len(launch_time)
 
-    months = list(pd.DatetimeIndex(launch_time).month.astype(str).str.zfill(2))
-    days = list(pd.DatetimeIndex(launch_time).day.astype(str).str.zfill(2))
+    # months = list(pd.DatetimeIndex(launch_time).month.astype(str).str.zfill(2))
+    # days = list(pd.DatetimeIndex(launch_time).day.astype(str).str.zfill(2))
 
-    flight_id = [months[x] + days[x] for x in range(len(months))]
+    # flight_id = [months[x] + days[x] for x in range(len(months))]
 
-    for i in range(len(flight_id)):
-        if i == 0:
-            cntr = 1
+    # for i in range(len(flight_id)):
+    #     if i == 0:
+    #         cntr = 1
 
-        elif flight_id[i] == flight_id[i - 1]:
-            cntr += 1
-        elif flight_id[i] != flight_id[i - 1]:
-            cntr = 1
+    #     elif flight_id[i] == flight_id[i - 1]:
+    #         cntr += 1
+    #     elif flight_id[i] != flight_id[i - 1]:
+    #         cntr = 1
 
-        sonde_id[i] = Platform + "-" + flight_id[i] + "_s" + str(cntr).zfill(2)
-    # platform[i] = "HALO"
+    #     sonde_id[i] = Platform + "-" + flight_id[i] + "_s" + str(cntr).zfill(2)
+    # # platform[i] = "HALO"
 
     a_filepaths = []
 
@@ -89,7 +89,14 @@ for Platform in ["HALO", "P3"]:
 
     for i in tqdm(range(len(sonde_ds))):
 
-        if status_ds.FLAG[i] == "GOOD":  # or status_ds.FLAG[i] == "UGLY":
+        if (
+            status_ds.sel(
+                launch_time=sonde_ds[i].launch_time.values,
+                # method="nearest",
+                # tolerance="1s",
+            ).FLAG
+            == "GOOD"
+        ):
 
             # ht_indices = ~np.isnan(sonde_ds[i].alt)
             ht_indices = (
@@ -129,7 +136,6 @@ for Platform in ["HALO", "P3"]:
             variables["ta"] = np.float32(
                 sonde_ds[i]["tdry"][ht_indices].values + 273.15
             )
-            # variables["sonde_id"] = sonde_id[i]
 
             for var1, var2 in zip(varname_L1, varname_L2):
                 if var2 not in variables.keys():
@@ -143,16 +149,19 @@ for Platform in ["HALO", "P3"]:
                 # v = var
                 f2.create_variable(to_save_ds, var, variables[var])
 
+            ### ---------- adding the sonde_id var to the dataset --------- #####
+            sonde_id = status_ds.sel(
+                launch_time=sonde_ds[i].launch_time.values
+            ).sonde_id.values
             attrs = {
                 "descripion": "unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
                 "long_name": "sonde identifier",
                 "cf_role": "trajectory_id",
             }
-            sonde_id_var = xr.Variable([], sonde_id[i], attrs=attrs)
+            sonde_id_var = xr.Variable([], sonde_id, attrs=attrs)
             to_save_ds["sonde_id"] = sonde_id_var
 
-            # to_save_ds["sonde_id"] = ([],sonde_id[i],attrs={"descripion":"unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT"})#,"long_name": "sonde identifier","cf_role": "trajectory_id",})
-
+            # file name
             file_name = (
                 "EUREC4A_JOANNE_"
                 + str(Platform)
