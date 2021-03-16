@@ -11,6 +11,7 @@ dim_attrs = {
         "units": "m",
         "axis": "Z",
         "positive": "up",
+        "bounds": "alt_bnds",
     },
     "sonde_id": {
         "description": "unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
