@@ -823,6 +823,7 @@ def concatenate_soundings(list_of_interpolated_dataset):
                                making 'height' a variable
     """
     concatenated_dataset = xr.concat(list_of_interpolated_dataset, dim="sounding")
+    concatenated_dataset = concatenated_dataset.swap_dims({"sounding": "sonde_id"})
     # concatenated_dataset = concatenated_dataset.drop(
     #     "time"
     # )  # .swap_dims({"height": "obs"})
@@ -863,7 +864,7 @@ def lv3_structure_from_lv2(
 
         file_name = (
             "EUREC4A_JOANNE_Dropsonde-RD41_"
-            + str(file_path[file_path.find("2020") : file_path.find("2020") + 15])
+            + str(file_path[file_path.find("RD41_") + 3 : file_path.find("RD41_") + 19])
             + "Level_3_v"
             + str(joanne.__version__)
             + ".nc"
