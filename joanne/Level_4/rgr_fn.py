@@ -228,7 +228,7 @@ def get_vertical_velocity(circle):
     w_vel[:, 0] = 0
     # last = 0
 
-    for cir in tqdm(range(len(circle["circle"]))):
+    for cir in range(len(circle["circle"])):
         last = 0
         for m in range(1, len(circle.alt)):
 
@@ -270,6 +270,52 @@ def get_vertical_velocity(circle):
     return print("Finished estimating W ...")
 
 
+def add_std_err_terms(all_cir):
+
+    dx_mean = all_cir.dx.mean(dim="launch_time")
+    dy_mean = all_cir.dy.mean(dim="launch_time")
+
+    dx_denominator = np.sqrt(((all_cir.dx - dx_mean) ** 2).sum(dim="launch_time"))
+    dy_denominator = np.sqrt(((all_cir.dy - dy_mean) ** 2).sum(dim="launch_time"))
+
+    for par in tqdm(["u", "v", "p", "q", "ta"]):
+
+        par_err = all_cir[par + "_sounding"] - (
+            all_cir[par]
+            + (all_cir["d" + par + "dx"] * all_cir.dx)
+            + (all_cir["d" + par + "dy"] * all_cir.dy)
+        )
+
+        par_sq_sum = np.nansum((par_err ** 2), axis=2)
+        par_n = (~np.isnan(par_err)).sum(axis=2)
+
+        par_numerator = np.sqrt(par_sq_sum / (par_n - 3))
+
+        se_dpardx = par_numerator / dx_denominator
+        se_dpardy = par_numerator / dy_denominator
+
+        var_name_dx = "se_d" + par + "dx"
+        var_name_dy = "se_d" + par + "dy"
+
+        all_cir[var_name_dx] = (["circle", "alt"], se_dpardx)
+        all_cir[var_name_dy] = (["circle", "alt"], se_dpardy)
+
+    se_div = np.sqrt((all_cir.se_dudx) ** 2 + (all_cir.se_dvdy) ** 2)
+    se_vor = np.sqrt((all_cir.se_dudy) ** 2 + (all_cir.se_dvdx) ** 2)
+
+    all_cir["se_D"] = se_div
+    all_cir["se_vor"] = se_vor
+
+    se_W = np.nancumsum(
+        np.sqrt((np.sqrt(all_cir.se_D ** 2 / all_cir.D ** 2) * all_cir.D) ** 2), axis=1,
+    )
+    all_cir["se_W"] = (["circle", "alt"], se_W)
+
+    all_cir_with_std_err = all_cir
+
+    return all_cir_with_std_err
+
+
 def get_advection(circles, list_of_parameters=["u", "v", "q", "ta", "p"]):
 
     for id_, circle in enumerate(circles):
@@ -293,9 +339,9 @@ def get_circle_products(circles):
 
     get_vertical_velocity(circles)
 
-    # get_advection(circles)
+    circle_with_std_err = add_std_err_terms(circles)
 
     print(f"All circle products retrieved!")
 
-    return circles
+    return circle_with_std_err
 
