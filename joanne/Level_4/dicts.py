@@ -53,7 +53,7 @@ list_of_vars = [
     # "density",
     # "mean_density",
     "W",
-    "omega",
+    # "omega",
     # "h_adv_q",
     # "h_adv_ta",
     # "h_adv_p",
