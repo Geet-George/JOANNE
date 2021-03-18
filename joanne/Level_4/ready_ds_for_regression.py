@@ -100,9 +100,7 @@ def get_circles(
     yaml_directory=yaml_directory,
 ):
 
-    ds_lv3 = get_level3_dataset(lv3_directory, lv3_filename)
-
-    all_sondes = dim_ready_ds(ds_lv3)
+    ds_fn = get_level3_dataset(lv3_directory, lv3_filename)
 
     (
         sonde_ids,
@@ -114,18 +112,21 @@ def get_circles(
 
     circles = []
 
-    ds_fn = all_sondes.swap_dims({"launch_time": "sonde_id"})
-    # temporarily swapped ds for this function
-    # when appended to circles, the dims are reswapped to launch_time
-
     for i in range(len(flight_date)):
         for j in range(len(circle_times[i])):
             if len(sonde_ids[i]) != 0:
+                sel_ids = [m for m in sonde_ids[i][j] if m in ds_fn.sonde_id]
                 circles.append(
-                    ds_fn.sel(sonde_id=sonde_ids[i][j]).swap_dims(
-                        {"sonde_id": "launch_time"}
-                    )
+                    ds_fn.sel(sonde_id=sel_ids).swap_dims({"sonde_id": "launch_time"})
                 )
+                # temporary fix till FPS and JOANNE files are in sync
+                # once issue of sync is corrected, uncomment below part and delete above part from sel_ids till here
+
+                # circles.append(
+                #     ds_fn.sel(sonde_id=sonde_ids[i][j]).swap_dims(
+                #         {"sonde_id": "launch_time"}
+                #     )
+                # )
 
             circles[-1]["segment_id"] = segment_id[i][j]
 
