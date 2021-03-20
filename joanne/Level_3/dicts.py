@@ -68,7 +68,7 @@ nc_attrs = {
     "launch_time": {
         "standard_name": "time",
         "long_name": "Time of dropsonde launch",
-        # "units": "seconds since 1970-01-01 00:00:00 UTC",
+        # "units": "seconds since 2020-01-01 00:00:00 UTC",
         # "calendar": "gregorian",
         "axis": "T",
     },
@@ -214,17 +214,20 @@ nc_attrs = {
         "description": "method used to derive Level-3 PTU-data",
         "flag_values": np.array([0, 1, 2], dtype=int),
         "flag_meanings": "no_data interpolation averaging",
+        "units": "",
     },
     "m_gps": {
         "long_name": "bin_method",
         "description": "method used to derive Level-3 GPS-data",
         "flag_values": np.array([0, 1, 2], dtype=int),
         "flag_meanings": "no_data interpolation averaging",
+        "units": "",
     },
     "interpolated_time": {
         "long_name": "interpolated time",
         "description": "value of time (originally independent dimension) linearly interpolated to altitude grid",
         "coordinates": "launch_time lon lat alt",
+        # "units": "seconds since 2020-01-01 00:00:00 UTC",
     },
 }
 

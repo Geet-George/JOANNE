@@ -1,5 +1,5 @@
 # %%
-from joanne.Level_3 import dicts
+from joanne.Level_2 import dicts
 import joanne
 
 from importlib import reload
@@ -9,7 +9,7 @@ reload(dicts)
 # %%
 dicts.list_of_vars
 
-directory = "/Users/geet/Documents/JOANNE/joanne/Level_3/"
+directory = "/Users/geet/Documents/JOANNE/joanne/Level_2/"
 
 var_name = dicts.list_of_vars
 
@@ -22,10 +22,10 @@ Variables = [
 
 def string_table_row(var):
 
-    desc = dicts.nc_attrs[var]["long_name"]
-    units = dicts.nc_attrs[var]["units"]
-    dims_list = dicts.nc_dims[var]
-    dims = ", ".join(dims_list)
+    desc = dicts.nc_meta[var]["long_name"]
+    units = dicts.nc_meta[var]["units"]
+    # dims_list = dicts.nc_dims[var]
+    dims = "time"
     str_trow = f" & {var} & {desc} & {units} & {dims} \\\ \\hline \n"
 
     return str_trow
@@ -44,7 +44,7 @@ def rows_for_objects(Object):
                 id_ += 1
 
 
-file = open(f"{directory}latex_table_Level_3_v{joanne.__version__}.txt", "w",)
+file = open(f"{directory}latex_table_Level_2_v{joanne.__version__}.txt", "w",)
 
 file.write("\\begin{table}[H]\n")
 file.write("\\centering\n")
@@ -57,11 +57,12 @@ file.write("OBJECT & NAME & DESCRIPTION & UNITS & DIMENSION \\\ \\hline \\hline\
 for Object in ["Dimensions", "Coordinates", "Variables"]:
     rows_for_objects(Object)
 
+file.write("& sonde_id & unique sonde identifier & & \\ \\hline\n")
 file.write("\\end{tabular}\n")
 file.write(
-    "\caption{Table shows the structure for the Level-3 product, outlining the dimensions, coordinates, variables and their corresponding descriptions, units and dimensions.}\n"
+    "\caption{Table shows the structure for the Level-2 product, outlining the dimensions, coordinates, variables and their corresponding descriptions, units and dimensions.}\n"
 )
-file.write("\label{l3}\n")
+file.write("\label{l2}\n")
 
 file.write("\\end{table}")
 

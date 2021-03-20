@@ -14,7 +14,7 @@ nc_meta = {
     "time": {
         "standard_name": "time",
         "long_name": "Time of recorded measurement",
-        # "units": "seconds since 1970-01-01 00:00:00 UTC",
+        # "units": "seconds since 2020-01-01 00:00:00 UTC",
         # "calendar": "gregorian",
         "axis": "T",
     },
@@ -27,25 +27,25 @@ nc_meta = {
     },
     "lat": {
         "standard_name": "latitude",
-        "long_name": "Latitude",
+        "long_name": "latitude",
         "units": "degrees_north",
         "axis": "Y",
     },
     "lon": {
         "standard_name": "longitude",
-        "long_name": "Longitude",
+        "long_name": "longitude",
         "units": "degrees_east",
         "axis": "X",
     },
     "p": {
         "standard_name": "air_pressure",
-        "long_name": "Atmospheric Pressure",
+        "long_name": "atmospheric pressure",
         "units": "Pa",
         "coordinates": "time lon lat alt",
     },
     "ta": {
         "standard_name": "air_temperature",
-        "long_name": "Dry Bulb Temperature",
+        "long_name": "air temperature",
         "units": "K",
         "coordinates": "time lon lat alt",
     },

@@ -23,13 +23,18 @@ Coordinates = [
     "circle_time",
 ]
 Variables = [
-    var for var in var_name if (var not in Dimensions) & (var not in Coordinates)
+    var
+    for var in var_name
+    if (var not in Dimensions) & (var not in Coordinates) & (var[0:3] != "se_")
 ]
 
 
 def string_table_row(var):
 
-    desc = dicts.nc_attrs[var]["long_name"]
+    if "long_name" in dicts.nc_attrs[var]:
+        desc = dicts.nc_attrs[var]["long_name"]
+    else:
+        desc = dicts.nc_attrs[var]["standard_name"]
     units = dicts.nc_attrs[var]["units"]
     dims_list = dicts.nc_dims[var]
     dims = ", ".join(dims_list)
@@ -56,15 +61,21 @@ file = open(f"{directory}latex_table_Level_4_v{joanne.__version__}.txt", "w",)
 file.write("\\begin{table}[H]\n")
 file.write("\\centering\n")
 file.write(
-    "\\begin{tabular}{p{0.1\\linewidth} p{0.1\\linewidth} p{0.3\\linewidth} p{0.2\\linewidth} p{0.1\\linewidth}}\n"
+    "\\begin{tabular}{p{0.08\\linewidth} p{0.11\\linewidth} p{0.3\\linewidth} p{0.2\\linewidth} p{0.1\\linewidth}}\n"
 )
 file.write("\\hline\n")
-file.write("OBJECT & NAME & DESCRIPTION & UNITS & DIMENSION \\\ \\hline \\hline\n")
+file.write("OBJECT & NAME & DESCRIPTION & UNITS & DIMENSION \\\ \\hline\n")
 
 for Object in ["Dimensions", "Coordinates", "Variables"]:
     rows_for_objects(Object)
 
 file.write("\\end{tabular}\n")
+
+file.write(
+    "\caption{Table shows the structure for the Level-4 product, outlining the dimensions, coordinates, variables and their corresponding descriptions, units and dimensions. The ancillary variables giving standard error of the regression estimates are not shown in the table.}\n"
+)
+file.write("\label{l4}\n")
+
 file.write("\\end{table}")
 
 file.close()
