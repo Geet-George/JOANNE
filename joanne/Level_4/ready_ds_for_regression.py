@@ -115,20 +115,14 @@ def get_circles(
     for i in range(len(flight_date)):
         for j in range(len(circle_times[i])):
             if len(sonde_ids[i]) != 0:
-                sel_ids = [m for m in sonde_ids[i][j] if m in ds_fn.sonde_id]
                 circles.append(
-                    ds_fn.sel(sonde_id=sel_ids).swap_dims({"sonde_id": "launch_time"})
+                    ds_fn.sel(sonde_id=sonde_ids[i][j]).swap_dims(
+                        {"sonde_id": "launch_time"}
+                    )
                 )
-                # temporary fix till FPS and JOANNE files are in sync
-                # once issue of sync is corrected, uncomment below part and delete above part from sel_ids till here
-
-                # circles.append(
-                #     ds_fn.sel(sonde_id=sonde_ids[i][j]).swap_dims(
-                #         {"sonde_id": "launch_time"}
-                #     )
-                # )
 
             circles[-1]["segment_id"] = segment_id[i][j]
+            # circles[-1]["sonde_id"] = (["sounding"], sonde_ids[i][j])
 
     return circles
 
