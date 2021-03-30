@@ -115,9 +115,7 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=True
                 f = open(file_path, "r")
 
         except Exception:
-            print(
-                f"{a_files[id_]} : This file does not exist, at least not in the given directory"
-            )
+            print(f"{a_files[id_]} : File not found")
             continue
 
         else:
