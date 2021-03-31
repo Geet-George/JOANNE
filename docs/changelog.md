@@ -2,8 +2,12 @@
 
 ## **VERSIONS WITH v0.10**
 
-### version-in-process
+### version-in-progress
 
+###  v0.10.2
+
+- `sonde_id` added to the Level-4 product along `sounding` dimension. Additionally, throughout Level-4 processing, the `launch_time` dimension of ~900 length is replaced by the padded `sounding` dimension of length 13. *[[commit](https://github.com/Geet-George/JOANNE/commit/223f11b3962a57de8b3cf4d71013ab66a121a513)]*
+- Remove temporary fix introduced in *[v0.10.1-ebaaa81](https://github.com/Geet-George/JOANNE/commit/ebaaa818d61c7138e1087d5c7c0847093e1dab9b)*, and select sondes for circles based on GOOD sonde_ids from flight phase segments from FPS YAML files. *[[commit](https://github.com/Geet-George/JOANNE/commit/d173dffaa0fdfd691024297587abe56f28e1eb97)]*
 - Scripts added to create $\LaTeX$ tables out of the xarray data structure for Levels 2, 3 and 4 *[[commit](https://github.com/Geet-George/JOANNE/commit/d9c960114f67a38047b753ca7d6506a02f7d75d0)]*
 - Variables of standard errors added as ancillary variables to Level-4 *[[commit](https://github.com/Geet-George/JOANNE/commit/f7be804f929fe92def8573f75343ddcad9613736)]*
 - Functions now included that will add standard error estimates of the regression variables to Level-4 dataset *[[commit](https://github.com/Geet-George/JOANNE/commit/6637e3fd5839f06900fde6ecddfd00a0f64d7022)]*
@@ -40,9 +44,9 @@ For changes in and before this version, refer to comments on tags in the [JOANNE
 
 ## Abbreviations
 
-|Abbreviation|Full form / Description|
-|:---:|:---:|
-|FPS|[Flight phase segmentation files](https://github.com/eurec4a/flight-phase-separation)|
-|$W$| meso-scale vertical velocity |
-|$\omega$| meso-scale pressure velocity |
+| Abbreviation |                                Full form / Description                                |
+| :----------: | :-----------------------------------------------------------------------------------: |
+|     FPS      | [Flight phase segmentation files](https://github.com/eurec4a/flight-phase-separation) |
+|     $W$      |                             meso-scale vertical velocity                              |
+|   $\omega$   |                             meso-scale pressure velocity                              |
 
