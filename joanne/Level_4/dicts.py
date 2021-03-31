@@ -36,6 +36,7 @@ list_of_vars = [
     "dudy",
     # "sondes_regressed",
     "segment_id",
+    "sonde_id",
     "v",
     "dvdx",
     "dvdy",
@@ -93,6 +94,11 @@ nc_attrs = {
         "units": "seconds since 1970-01-01 00:00:00 UTC",
         "calendar": "gregorian",
         "axis": "T",
+    },
+    "sonde_id": {
+        "description": "unique sonde ID in the format PLATFORM-FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
+        "long_name": "Sonde identifier",
+        "units": "",
     },
     "alt": {
         "standard_name": "geopotential_height",
@@ -246,8 +252,8 @@ nc_attrs = {
     "circle_time": {
         "standard_name": "circle_time",
         "long_name": "mean time of circle",
-        "units": "seconds since 1970-01-01 00:00:00 UTC",
-        "calendar": "gregorian",
+        # "units": "seconds since 1970-01-01 00:00:00 UTC",
+        # "calendar": "gregorian",
         "coordinates": "circle",
     },
     "dx": {
@@ -446,6 +452,7 @@ nc_dims = {
     "circle": ["circle"],
     "segment_id": ["circle"],
     "launch_time": ["circle", "sounding"],
+    "sonde_id": ["circle", "sounding"],
     "alt": ["alt"],
     "latitude": ["circle", "sounding", "alt"],
     "longitude": ["circle", "sounding", "alt"],

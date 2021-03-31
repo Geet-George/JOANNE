@@ -115,14 +115,21 @@ def get_circles(
     for i in range(len(flight_date)):
         for j in range(len(circle_times[i])):
             if len(sonde_ids[i]) != 0:
-                circles.append(
-                    ds_fn.sel(sonde_id=sonde_ids[i][j]).swap_dims(
-                        {"sonde_id": "launch_time"}
-                    )
-                )
+                circles.append(ds_fn.sel(sonde_id=sonde_ids[i][j]))
+                # .swap_dims(
+                # {"sonde_id": "launch_time"}
+                # )
+                # )
 
             circles[-1]["segment_id"] = segment_id[i][j]
-            # circles[-1]["sonde_id"] = (["sounding"], sonde_ids[i][j])
+
+            circles[-1] = circles[-1].pad(
+                sonde_id=(0, 13 - int(len(circles[-1].sonde_id))), mode="constant"
+            )
+
+            circles[-1]["sounding"] = (["sonde_id"], np.arange(0, 13, 1, dtype="int"))
+
+            circles[-1] = circles[-1].swap_dims({"sonde_id": "sounding"})
 
     return circles
 
@@ -180,11 +187,15 @@ def get_xy_coords_for_circles(circles):
         circles[i]["platform"] = circles[i].platform.values[0]
         circles[i]["flight_height"] = circles[i].flight_height.mean().values
         circles[i]["circle_time"] = circles[i].launch_time.mean().values
+        circles[i].encoding["circle_time"] = {
+            "units": "seconds since 2020-01-01",
+            "dtype": "datetime64[ns]",
+        }
         circles[i]["circle_lon"] = circle_x
         circles[i]["circle_lat"] = circle_y
         circles[i]["circle_diameter"] = circle_diameter
-        circles[i]["dx"] = (["launch_time", "alt"], delta_x)
-        circles[i]["dy"] = (["launch_time", "alt"], delta_y)
+        circles[i]["dx"] = (["sounding", "alt"], delta_x)
+        circles[i]["dy"] = (["sounding", "alt"], delta_y)
 
     return print("Circles ready for regression")
 

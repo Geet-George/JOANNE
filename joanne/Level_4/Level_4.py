@@ -38,23 +38,24 @@ for par in tqdm(["u", "v", "q", "ta", "p"]):
         all_cir[var_dx_name],
         all_cir[var_dy_name],
         all_cir[par + "_sounding"],
-    ) = rf.fit2d_xr(all_cir.dx, all_cir.dy, all_cir[par], "launch_time")
+    ) = rf.fit2d_xr(all_cir.dx, all_cir.dy, all_cir[par], ["sounding"], ["sounding"],)
 
 lv4_dataset = rf.get_circle_products(all_cir)
 
-lv4_dataset = prep.reswap_launchtime_sounding(lv4_dataset)
+# lv4_dataset = prep.reswap_launchtime_sounding(lv4_dataset)
 
 # %%
 
-# lv4_dataset = xr.concat(circles, dim="circle")
+lv4_dataset = lv4_dataset.drop("sounding")
+# important to remove launch_time as dim and duplicate sounding variable
 
 nc_data = {}
 
 for var in dicts.list_of_vars:
-    if (var != "platform") and (var != "segment_id"):
+    if var not in ["platform", "segment_id", "sonde_id"]:
         nc_data[var] = np.float32(lv4_dataset[var].values)
 
-    if (var == "platform") or (var == "segment_id"):
+    if var in ["platform", "segment_id", "sonde_id"]:
         nc_data[var] = lv4_dataset[var].values
 
     if (var == "launch_time") or (var == "circle_time"):
@@ -84,7 +85,14 @@ comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float3
 encoding = {}
 
 encoding = {
-    var: comp for var in to_save_ds.data_vars if var not in ["platform", "segment_id"]
+    var: comp
+    for var in to_save_ds.data_vars
+    if var not in ["platform", "segment_id", "sonde_id", "circle_time"]
+}
+# encoding["circle_time"] = {"units": "seconds since 2020-01-01"}
+to_save_ds.encoding["circle_time"] = {
+    "units": "seconds since 2020-01-01",
+    "dtype": "datetime64[ns]",
 }
 
 for key in dicts.nc_global_attrs.keys():

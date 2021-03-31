@@ -49,15 +49,16 @@ def fit2d(x, y, u):
     return intercept, dudx, dudy, u_
 
 
-def fit2d_xr(x, y, u, sample_dim):
+def fit2d_xr(x, y, u, input_core_dims, output_core_dims):
+    # input and output dims must be a list
 
     return xr.apply_ufunc(
         fit2d,
         x,
         y,
         u,
-        input_core_dims=[[sample_dim], [sample_dim], [sample_dim]],
-        output_core_dims=[(), (), (), [sample_dim]],
+        input_core_dims=[input_core_dims, input_core_dims, input_core_dims],
+        output_core_dims=[(), (), (), output_core_dims],
     )
 
 
@@ -272,11 +273,11 @@ def get_vertical_velocity(circle):
 
 def add_std_err_terms(all_cir):
 
-    dx_mean = all_cir.dx.mean(dim="launch_time")
-    dy_mean = all_cir.dy.mean(dim="launch_time")
+    dx_mean = all_cir.dx.mean(dim="sounding")
+    dy_mean = all_cir.dy.mean(dim="sounding")
 
-    dx_denominator = np.sqrt(((all_cir.dx - dx_mean) ** 2).sum(dim="launch_time"))
-    dy_denominator = np.sqrt(((all_cir.dy - dy_mean) ** 2).sum(dim="launch_time"))
+    dx_denominator = np.sqrt(((all_cir.dx - dx_mean) ** 2).sum(dim="sounding"))
+    dy_denominator = np.sqrt(((all_cir.dy - dy_mean) ** 2).sum(dim="sounding"))
 
     for par in tqdm(["u", "v", "p", "q", "ta"]):
 
