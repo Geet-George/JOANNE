@@ -41,26 +41,33 @@ for par in tqdm(["u", "v", "q", "ta", "p"]):
     ) = rf.fit2d_xr(all_cir.dx, all_cir.dy, all_cir[par], ["sounding"], ["sounding"],)
 
 lv4_dataset = rf.get_circle_products(all_cir)
-
-# lv4_dataset = prep.reswap_launchtime_sounding(lv4_dataset)
-
 # %%
 
 lv4_dataset = lv4_dataset.drop("sounding")
 # important to remove launch_time as dim and duplicate sounding variable
 
+# %%
+# nc_data = {}
+
+# for var in dicts.list_of_vars:
+#     if var not in ["platform", "segment_id", "sonde_id", "circle_time"]:
+#         nc_data[var] = np.float32(lv4_dataset[var].values)
+
+#     elif var in ["platform", "segment_id", "sonde_id"]:
+#         nc_data[var] = lv4_dataset[var].values
+
+#     elif var == "circle_time":
+#         nc_data[var] = lv4_dataset[var].values.astype(float) / 1e9
+
+#     else:
+#         nc_data[var] = lv4_dataset[var].values
 nc_data = {}
 
 for var in dicts.list_of_vars:
-    if var not in ["platform", "segment_id", "sonde_id"]:
+    if lv4_dataset[var].values.dtype == "float64":
         nc_data[var] = np.float32(lv4_dataset[var].values)
-
-    if var in ["platform", "segment_id", "sonde_id"]:
+    else:
         nc_data[var] = lv4_dataset[var].values
-
-    if (var == "launch_time") or (var == "circle_time"):
-        nc_data[var] = np.float32(lv4_dataset[var].astype("float").values / 1e9)
-
 # %%
 
 alt = lv4_dataset.alt.values
@@ -78,7 +85,7 @@ file_name = (
     "EUREC4A_JOANNE_Dropsonde-RD41_" + "Level_4_v" + str(joanne.__version__) + ".nc"
 )
 
-save_directory = "/Users/geet/Documents/JOANNE/Data/Level_4/"  # Test_data/" #Level_3/"
+save_directory = "/Users/geet/Documents/JOANNE/Data/Level_4/"
 
 comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float32").max)
 
@@ -87,13 +94,15 @@ encoding = {}
 encoding = {
     var: comp
     for var in to_save_ds.data_vars
-    if var not in ["platform", "segment_id", "sonde_id", "circle_time"]
+    if var not in ["platform", "segment_id", "sonde_id"]
 }
-# encoding["circle_time"] = {"units": "seconds since 2020-01-01"}
-to_save_ds.encoding["circle_time"] = {
-    "units": "seconds since 2020-01-01",
-    "dtype": "datetime64[ns]",
-}
+
+encoding["circle_time"] = {"units": "seconds since 2020-01-01"}
+
+# to_save_ds.encoding["circle_time"] = {
+#     "units": "seconds since 2020-01-01",
+# "dtype" :'datetime64'
+# }
 
 for key in dicts.nc_global_attrs.keys():
     to_save_ds.attrs[key] = dicts.nc_global_attrs[key]

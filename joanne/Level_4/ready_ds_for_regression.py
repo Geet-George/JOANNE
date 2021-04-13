@@ -167,7 +167,11 @@ def get_xy_coords_for_circles(circles):
             a = ~np.isnan(x_coor.values[:, j])
             if a.sum() > 4:
                 c_xc[j], c_yc[j], c_r[j], _ = cf.least_squares_circle(
-                    list(zip(x_coor.values[:, j], y_coor.values[:, j]))
+                    [
+                        (k, l)
+                        for k, l in zip(x_coor.values[:, j], y_coor.values[:, j])
+                        if ~np.isnan(k)
+                    ]
                 )
 
         circle_y = np.nanmean(c_yc) / (110.54 * 1000)
@@ -186,11 +190,13 @@ def get_xy_coords_for_circles(circles):
 
         circles[i]["platform"] = circles[i].platform.values[0]
         circles[i]["flight_height"] = circles[i].flight_height.mean().values
-        circles[i]["circle_time"] = circles[i].launch_time.mean().values
-        circles[i].encoding["circle_time"] = {
-            "units": "seconds since 2020-01-01",
-            "dtype": "datetime64[ns]",
-        }
+        circles[i]["circle_time"] = (
+            circles[i].launch_time.mean().values.astype("datetime64")
+        )
+        # circles[i].encoding["circle_time"] = {
+        #     "units": "seconds since 2020-01-01",
+        #     "dtype": "datetime64[ns]",
+        # }
         circles[i]["circle_lon"] = circle_x
         circles[i]["circle_lat"] = circle_y
         circles[i]["circle_diameter"] = circle_diameter
