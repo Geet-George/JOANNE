@@ -14,7 +14,7 @@ dim_attrs = {
         "bounds": "alt_bnds",
     },
     "sonde_id": {
-        "description": "unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
+        "description": "unique sonde ID in the format PLATFORM-FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
         "long_name": "Sonde identifier",
         "cf_role": "trajectory_id",
         "units": "",
