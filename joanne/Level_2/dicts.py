@@ -13,14 +13,14 @@ list_of_vars = ["alt", "time", "wspd", "wdir", "ta", "p", "rh", "lat", "lon"]
 nc_meta = {
     "time": {
         "standard_name": "time",
-        "long_name": "Time of recorded measurement",
+        "long_name": "time of recorded measurement",
         # "units": "seconds since 2020-01-01 00:00:00 UTC",
         # "calendar": "gregorian",
         "axis": "T",
     },
     "alt": {
         "standard_name": "geopotential_height",
-        "long_name": "Geopotential Height",  # obtained by integrating upwards the atmospheric thickness estimated using the hypsometric equation",
+        "long_name": "geopotential Height",  # obtained by integrating upwards the atmospheric thickness estimated using the hypsometric equation",
         "units": "m",
         "axis": "Z",
         "positive": "up",
@@ -28,13 +28,13 @@ nc_meta = {
     "lat": {
         "standard_name": "latitude",
         "long_name": "latitude",
-        "units": "degrees_north",
+        "units": "degree_north",
         "axis": "Y",
     },
     "lon": {
         "standard_name": "longitude",
         "long_name": "longitude",
-        "units": "degrees_east",
+        "units": "degree_east",
         "axis": "X",
     },
     "p": {
@@ -51,19 +51,19 @@ nc_meta = {
     },
     "rh": {
         "standard_name": "relative_humidity",
-        "long_name": "Relative Humidity",
+        "long_name": "relative humidity",
         "units": "",
         "coordinates": "time lon lat alt",
     },
     "wspd": {
         "standard_name": "wind_speed",
-        "long_name": "Wind Speed",
+        "long_name": "wind speed",
         "units": "m s-1",
         "coordinates": "time lon lat alt",
     },
     "wdir": {
         "standard_name": "wind_from_direction",
-        "long_name": "Wind Direction",
+        "long_name": "wind direction",
         "units": "degrees",
         "coordinates": "time lon lat alt",
     },
