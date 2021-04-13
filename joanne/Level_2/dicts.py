@@ -20,7 +20,7 @@ nc_meta = {
     },
     "alt": {
         "standard_name": "geopotential_height",
-        "long_name": "geopotential Height",  # obtained by integrating upwards the atmospheric thickness estimated using the hypsometric equation",
+        "long_name": "geopotential height",  # obtained by integrating upwards the atmospheric thickness estimated using the hypsometric equation",
         "units": "m",
         "axis": "Z",
         "positive": "up",
@@ -108,13 +108,25 @@ def get_flight_attrs(a_filepath, list_of_flight_attrs=list_of_flight_attrs):
                 break
 
         if attr == "True Air Speed (m/s)":
-            attr = "True-Air-Speed-(ms-1)"
+            attr = "true_air_speed_(ms-1)"
         elif attr == "Ground Speed (m/s)":
-            attr = "Ground-Speed-(ms-1)"
+            attr = "ground_speed_(ms-1)"
         elif attr == "Software Notes":
-            attr = "AVAPS-Software-Notes"
+            attr = "AVAPS_software_notes"
         elif attr == "Format Notes":
-            attr = "AVAPS-Format-Notes"
+            attr = "AVAPS_format_notes"
+        elif attr == "True Heading (deg)":
+            attr = "true_heading_(deg)"
+        elif attr == "Ground Track (deg)":
+            attr = "ground_track_(deg)"
+        elif attr == "Longitude (deg)":
+            attr = "aircraft_longitude_(deg_E)"
+        elif attr == "Latitude (deg)":
+            attr = "aircraft_latitude_(deg_N)"
+        elif attr == "MSL Altitude (m)":
+            attr = "aircraft_msl_altitude_(m)"
+        elif attr == "Geopotential Altitude (m)":
+            attr = "aircraft_geopotential_altitude_(m)"    
 
         attr = attr.replace(" ", "-")
 
@@ -133,25 +145,26 @@ def get_global_attrs(Platform, file_time, sonde_ds):
 
     nc_global_attrs = {
         "title": "EUREC4A JOANNE Level-2",
-        "Conventions": "CF-1.8",
+        "history": "created with JOANNE (https://github.com/Geet-George/JOANNE/)"
+        "conventions": "CF-1.8",
         "campaign_id": "EUREC4A",
         "project_id": "JOANNE",
         "platform_id": Platform,
         "instrument_id": "Vaisala RD-41",
         "product_id": "Level-2",
-        "AVAPS-Software-version": "Version 4.1.2",
-        "ASPEN-version": sonde_ds.AspenVersion,
-        "JOANNE-version": joanne.__version__,
-        "launch-date": str(pd.to_datetime(file_time).date()),
-        "launch-time-(UTC)": str(sonde_ds.launch_time.values),
-        "sonde-serial-ID": sonde_ds.SondeId,
+        "AVAPS_Software_version": "Version 4.1.2",
+        "ASPEN_version": sonde_ds.AspenVersion,
+        "JOANNE_version": joanne.__version__,
+        "launch_date": str(pd.to_datetime(file_time).date()),
+        "launch_time_(UTC)": str(sonde_ds.launch_time.values),
+        "sonde_serial_ID": sonde_ds.SondeId,
         # "sounding_id": sonde_id,
-        "processing-time": sonde_ds.ProcessingTime,
+        "processing_time": sonde_ds.ProcessingTime,
         # "Mission-PI": "Mission PI",
         "author": "Geet George",
         "author_email": "geet.george@mpimet.mpg.de",
         "featureType": "trajectory",
-        "Creation-Time": str(datetime.datetime.utcnow()) + " UTC",
+        "creation_time": str(datetime.datetime.utcnow()) + " UTC",
     }
 
     return nc_global_attrs
