@@ -134,7 +134,7 @@ for Platform in ["HALO", "P3"]:
                 launch_time=sonde_ds[i].launch_time.values
             ).sonde_id.values
             attrs = {
-                "descripion": "unique sonde ID in the format PLATFORM_FLIGHT-ID_sSONDE-NUMBER-FOR-THE-FLIGHT",
+                "descripion": "unique sonde ID",
                 "long_name": "sonde identifier",
                 "cf_role": "trajectory_id",
             }
@@ -143,7 +143,7 @@ for Platform in ["HALO", "P3"]:
 
             # file name
             file_name = (
-                "EUREC4A_JOANNE_"
+                "EUREC4A_JOANNE"
                 # + str(Platform)
                 + "_Dropsonde-RD41_"
                 + str(sonde_id)
