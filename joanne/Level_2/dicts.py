@@ -126,7 +126,7 @@ def get_flight_attrs(a_filepath, list_of_flight_attrs=list_of_flight_attrs):
         elif attr == "MSL Altitude (m)":
             attr = "aircraft_msl_altitude_(m)"
         elif attr == "Geopotential Altitude (m)":
-            attr = "aircraft_geopotential_altitude_(m)"    
+            attr = "aircraft_geopotential_altitude_(m)"
 
         attr = attr.replace(" ", "-")
 
@@ -145,7 +145,7 @@ def get_global_attrs(Platform, file_time, sonde_ds):
 
     nc_global_attrs = {
         "title": "EUREC4A JOANNE Level-2",
-        "history": "created with JOANNE (https://github.com/Geet-George/JOANNE/)"
+        "history": "created with JOANNE (https://github.com/Geet-George/JOANNE/)",
         "conventions": "CF-1.8",
         "campaign_id": "EUREC4A",
         "project_id": "JOANNE",

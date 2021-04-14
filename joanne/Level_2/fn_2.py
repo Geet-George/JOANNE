@@ -695,6 +695,8 @@ def create_variable(ds, vname, data, **kwargs):
 
 def add_sonde_id_to_status_ds(Platform, sonde_ds, to_save_ds):
 
+    # The file D20200209_120525QC is not present in the PQC files, which was used originally to create the sonde_ids. Therefore, since the shift to the QC files (instead of PQC), the sonde_id for this additional file is artificially changed to the last sequence number in this flight, i.e. 73
+
     min_time = [None] * len(sonde_ds)
 
     for i in range(len(sonde_ds)):
@@ -710,15 +712,21 @@ def add_sonde_id_to_status_ds(Platform, sonde_ds, to_save_ds):
     flight_id = [months[x] + days[x] for x in range(len(months))]
 
     for i in range(len(flight_id)):
-        if i == 0:
-            cntr = 1
 
-        elif flight_id[i] == flight_id[i - 1]:
-            cntr += 1
-        elif flight_id[i] != flight_id[i - 1]:
-            cntr = 1
+        if sonde_ds[i].launch_time == np.datetime64("2020-02-09T12:05:25.000000000"):
+            sonde_id[i] = Platform + "-" + flight_id[i] + "_s73"
 
-        sonde_id[i] = Platform + "-" + flight_id[i] + "_s" + str(cntr).zfill(2)
+        else:
+
+            if i == 0:
+                cntr = 1
+
+            elif flight_id[i] == flight_id[i - 1]:
+                cntr += 1
+            elif flight_id[i] != flight_id[i - 1]:
+                cntr = 1
+
+            sonde_id[i] = Platform + "-" + flight_id[i] + "_s" + str(cntr).zfill(2)
 
     to_save_ds["sonde_id"] = (["time"], sonde_id)
     to_save_ds["platform"] = (["time"], platform)

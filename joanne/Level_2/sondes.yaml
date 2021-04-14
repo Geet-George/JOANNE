@@ -3905,191 +3905,191 @@
 - flag: BAD
   launch_time: 2020-02-09 12:05:25
   platform: HALO
-  sonde_id: HALO-0209_s27
+  sonde_id: HALO-0209_s73
 - flag: GOOD
   launch_time: 2020-02-09 12:07:32
   platform: HALO
-  sonde_id: HALO-0209_s28
+  sonde_id: HALO-0209_s27
 - flag: GOOD
   launch_time: 2020-02-09 12:12:08
   platform: HALO
-  sonde_id: HALO-0209_s29
+  sonde_id: HALO-0209_s28
 - flag: GOOD
   launch_time: 2020-02-09 12:17:32
   platform: HALO
-  sonde_id: HALO-0209_s30
+  sonde_id: HALO-0209_s29
 - flag: GOOD
   launch_time: 2020-02-09 12:29:11
   platform: HALO
-  sonde_id: HALO-0209_s31
+  sonde_id: HALO-0209_s30
 - flag: GOOD
   launch_time: 2020-02-09 12:35:18
   platform: HALO
-  sonde_id: HALO-0209_s32
+  sonde_id: HALO-0209_s31
 - flag: GOOD
   launch_time: 2020-02-09 12:40:56
   platform: HALO
-  sonde_id: HALO-0209_s33
+  sonde_id: HALO-0209_s32
 - flag: GOOD
   launch_time: 2020-02-09 12:46:02
   platform: HALO
-  sonde_id: HALO-0209_s34
+  sonde_id: HALO-0209_s33
 - flag: GOOD
   launch_time: 2020-02-09 12:50:13
   platform: HALO
-  sonde_id: HALO-0209_s35
+  sonde_id: HALO-0209_s34
 - flag: GOOD
   launch_time: 2020-02-09 12:54:04
   platform: HALO
-  sonde_id: HALO-0209_s36
+  sonde_id: HALO-0209_s35
 - flag: GOOD
   launch_time: 2020-02-09 13:13:05
   platform: HALO
-  sonde_id: HALO-0209_s37
+  sonde_id: HALO-0209_s36
 - flag: BAD
   launch_time: 2020-02-09 14:06:19
   platform: HALO
-  sonde_id: HALO-0209_s38
+  sonde_id: HALO-0209_s37
 - flag: GOOD
   launch_time: 2020-02-09 13:56:19
   platform: HALO
-  sonde_id: HALO-0209_s39
+  sonde_id: HALO-0209_s38
 - flag: GOOD
   launch_time: 2020-02-09 14:00:53
   platform: HALO
-  sonde_id: HALO-0209_s40
+  sonde_id: HALO-0209_s39
 - flag: GOOD
   launch_time: 2020-02-09 14:11:55
   platform: HALO
-  sonde_id: HALO-0209_s41
+  sonde_id: HALO-0209_s40
 - flag: GOOD
   launch_time: 2020-02-09 14:17:42
   platform: HALO
-  sonde_id: HALO-0209_s42
+  sonde_id: HALO-0209_s41
 - flag: GOOD
   launch_time: 2020-02-09 14:24:00
   platform: HALO
-  sonde_id: HALO-0209_s43
+  sonde_id: HALO-0209_s42
 - flag: GOOD
   launch_time: 2020-02-09 14:30:10
   platform: HALO
-  sonde_id: HALO-0209_s44
+  sonde_id: HALO-0209_s43
 - flag: GOOD
   launch_time: 2020-02-09 14:35:57
   platform: HALO
-  sonde_id: HALO-0209_s45
+  sonde_id: HALO-0209_s44
 - flag: GOOD
   launch_time: 2020-02-09 14:41:03
   platform: HALO
-  sonde_id: HALO-0209_s46
+  sonde_id: HALO-0209_s45
 - flag: GOOD
   launch_time: 2020-02-09 14:45:08
   platform: HALO
-  sonde_id: HALO-0209_s47
+  sonde_id: HALO-0209_s46
 - flag: GOOD
   launch_time: 2020-02-09 14:49:10
   platform: HALO
-  sonde_id: HALO-0209_s48
+  sonde_id: HALO-0209_s47
 - flag: GOOD
   launch_time: 2020-02-09 14:52:59
   platform: HALO
-  sonde_id: HALO-0209_s49
+  sonde_id: HALO-0209_s48
 - flag: GOOD
   launch_time: 2020-02-09 15:07:13
   platform: HALO
-  sonde_id: HALO-0209_s50
+  sonde_id: HALO-0209_s49
 - flag: GOOD
   launch_time: 2020-02-09 15:12:52
   platform: HALO
-  sonde_id: HALO-0209_s51
+  sonde_id: HALO-0209_s50
 - flag: GOOD
   launch_time: 2020-02-09 15:18:59
   platform: HALO
-  sonde_id: HALO-0209_s52
+  sonde_id: HALO-0209_s51
 - flag: GOOD
   launch_time: 2020-02-09 15:25:28
   platform: HALO
-  sonde_id: HALO-0209_s53
+  sonde_id: HALO-0209_s52
 - flag: GOOD
   launch_time: 2020-02-09 15:31:54
   platform: HALO
-  sonde_id: HALO-0209_s54
+  sonde_id: HALO-0209_s53
 - flag: GOOD
   launch_time: 2020-02-09 15:37:40
   platform: HALO
-  sonde_id: HALO-0209_s55
+  sonde_id: HALO-0209_s54
 - flag: UGLY
   launch_time: 2020-02-09 15:42:55
   platform: HALO
-  sonde_id: HALO-0209_s56
+  sonde_id: HALO-0209_s55
 - flag: GOOD
   launch_time: 2020-02-09 15:47:05
   platform: HALO
-  sonde_id: HALO-0209_s57
+  sonde_id: HALO-0209_s56
 - flag: GOOD
   launch_time: 2020-02-09 15:50:47
   platform: HALO
-  sonde_id: HALO-0209_s58
+  sonde_id: HALO-0209_s57
 - flag: GOOD
   launch_time: 2020-02-09 15:54:44
   platform: HALO
-  sonde_id: HALO-0209_s59
+  sonde_id: HALO-0209_s58
 - flag: GOOD
   launch_time: 2020-02-09 15:58:58
   platform: HALO
-  sonde_id: HALO-0209_s60
+  sonde_id: HALO-0209_s59
 - flag: GOOD
   launch_time: 2020-02-09 16:03:29
   platform: HALO
-  sonde_id: HALO-0209_s61
+  sonde_id: HALO-0209_s60
 - flag: GOOD
   launch_time: 2020-02-09 16:28:05
   platform: HALO
-  sonde_id: HALO-0209_s62
+  sonde_id: HALO-0209_s61
 - flag: GOOD
   launch_time: 2020-02-09 16:34:39
   platform: HALO
-  sonde_id: HALO-0209_s63
+  sonde_id: HALO-0209_s62
 - flag: GOOD
   launch_time: 2020-02-09 16:40:23
   platform: HALO
-  sonde_id: HALO-0209_s64
+  sonde_id: HALO-0209_s63
 - flag: GOOD
   launch_time: 2020-02-09 16:45:20
   platform: HALO
-  sonde_id: HALO-0209_s65
+  sonde_id: HALO-0209_s64
 - flag: GOOD
   launch_time: 2020-02-09 16:49:41
   platform: HALO
-  sonde_id: HALO-0209_s66
+  sonde_id: HALO-0209_s65
 - flag: GOOD
   launch_time: 2020-02-09 16:53:27
   platform: HALO
-  sonde_id: HALO-0209_s67
+  sonde_id: HALO-0209_s66
 - flag: GOOD
   launch_time: 2020-02-09 16:57:11
   platform: HALO
-  sonde_id: HALO-0209_s68
+  sonde_id: HALO-0209_s67
 - flag: GOOD
   launch_time: 2020-02-09 17:01:19
   platform: HALO
-  sonde_id: HALO-0209_s69
+  sonde_id: HALO-0209_s68
 - flag: GOOD
   launch_time: 2020-02-09 17:05:52
   platform: HALO
-  sonde_id: HALO-0209_s70
+  sonde_id: HALO-0209_s69
 - flag: GOOD
   launch_time: 2020-02-09 17:11:17
   platform: HALO
-  sonde_id: HALO-0209_s71
+  sonde_id: HALO-0209_s70
 - flag: GOOD
   launch_time: 2020-02-09 17:17:01
   platform: HALO
-  sonde_id: HALO-0209_s72
+  sonde_id: HALO-0209_s71
 - flag: UGLY
   launch_time: 2020-02-09 17:23:34
   platform: HALO
-  sonde_id: HALO-0209_s73
+  sonde_id: HALO-0209_s72
 - flag: GOOD
   launch_time: 2020-02-11 12:58:31
   platform: HALO
