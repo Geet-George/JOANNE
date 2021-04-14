@@ -721,6 +721,11 @@ def add_sonde_id_to_status_ds(Platform, sonde_ds, to_save_ds):
             if i == 0:
                 cntr = 1
 
+            elif (flight_id[i] == "0211") & (Platform == "HALO") & (cntr == 35):
+                cntr += 2
+
+            # There is a file D20200211_162240PQC present in the PQC files, which was used originally to create the sonde_ids. This is not included in the QC files. Therefore, since the shift to the QC files (instead of PQC), the sonde_id for this additional file is skipped, i.e. 36, and now the sonde sequence number jumps straight from 35 to 37.
+
             elif flight_id[i] == flight_id[i - 1]:
                 cntr += 1
             elif flight_id[i] != flight_id[i - 1]:
