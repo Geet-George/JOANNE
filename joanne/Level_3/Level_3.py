@@ -52,7 +52,7 @@ for var in dicts.list_of_vars:
 
 to_save_ds["alt_bnds"] = (
     ["alt", "nv"],
-    np.array([f3.interpolation_bins[:-1], f3.interpolation_bins[1:]]).T,
+    np.array([f3.interpolation_bins[:-1], f3.interpolation_bins[1:]]).T.astype("int32"),
 )
 to_save_ds["alt_bnds"] = to_save_ds["alt_bnds"].assign_attrs(
     {
@@ -77,7 +77,7 @@ encoding = {
     for var in to_save_ds.data_vars
     if var not in ["platform", "sonde_id", "alt_bnds"]
 }
-encoding["launch_time"] = {"units": "seconds since 2020-01-01"}
+encoding["launch_time"] = {"units": "seconds since 2020-01-01", "dtype": "int32"}
 encoding["interpolated_time"] = {"units": "seconds since 2020-01-01"}
 
 for key in dicts.nc_global_attrs.keys():

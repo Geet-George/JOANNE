@@ -632,16 +632,16 @@ def add_platform_details_as_var(dataset):
                   with no dimension attached to it
     """
 
-    dataset["launch_time"] = np.datetime64(dataset.attrs["launch-time-(UTC)"])
+    dataset["launch_time"] = np.datetime64(dataset.attrs["launch_time_(UTC)"])
     dataset["platform"] = dataset.attrs["platform_id"]
-    dataset["flight_height"] = dataset.attrs["Geopotential-Altitude-(m)"]
-    dataset["flight_lat"] = dataset.attrs["Latitude-(deg)"]
-    dataset["flight_lon"] = dataset.attrs["Longitude-(deg)"]
+    dataset["flight_height"] = dataset.attrs["aircraft_geopotential_altitude_(m)"]
+    dataset["flight_lat"] = dataset.attrs["aircraft_latitude_(deg_N)"]
+    dataset["flight_lon"] = dataset.attrs["aircraft_longitude_(deg_E)"]
 
-    if dataset.attrs["Geopotential-Altitude-(m)"] < 4000:
-        low_height_flag = 1
+    if dataset.attrs["aircraft_geopotential_altitude_(m)"] < 4000:
+        low_height_flag = np.int8(1)
     else:
-        low_height_flag = 0
+        low_height_flag = np.int8(0)
 
     dataset["low_height_flag"] = low_height_flag
 
@@ -722,13 +722,13 @@ def get_N_and_m_values(interp_dataset, original_dataset, bin_length=10):
     m_ptu = interp_dataset["N_ptu"].values.astype(int)
     m_gps = interp_dataset["N_gps"].values.astype(int)
 
-    m_ptu[(m_ptu == np.isnan)] = 0
-    m_ptu[(m_ptu == 1)] = 1
-    m_ptu[(m_ptu > 1)] = 2
+    m_ptu[(m_ptu == np.isnan)] = np.int8(0)
+    m_ptu[(m_ptu == 1)] = np.int8(1)
+    m_ptu[(m_ptu > 1)] = np.int8(2)
 
-    m_gps[(m_gps == np.isnan)] = 0
-    m_gps[(m_gps == 1)] = 1
-    m_gps[(m_gps > 1)] = 2
+    m_gps[(m_gps == np.isnan)] = np.int8(0)
+    m_gps[(m_gps == 1)] = np.int8(1)
+    m_gps[(m_gps > 1)] = np.int8(2)
 
     interp_dataset["m_ptu"] = xr.DataArray(
         m_ptu, dims=["alt"], coords={"alt": interp_dataset.alt.values},
