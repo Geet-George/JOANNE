@@ -75,10 +75,14 @@ comp = dict(zlib=True, complevel=4, fletcher32=True, _FillValue=np.finfo("float3
 encoding = {
     var: comp
     for var in to_save_ds.data_vars
-    if var not in ["platform", "sonde_id", "alt_bnds"]
+    if var not in ["platform_id", "sonde_id", "alt_bnds"]
 }
 encoding["launch_time"] = {"units": "seconds since 2020-01-01", "dtype": "int32"}
-encoding["interpolated_time"] = {"units": "seconds since 2020-01-01"}
+encoding["interpolated_time"] = {
+    "units": "seconds since 2020-01-01",
+    "dtype": "int32",
+    "_FillValue": np.iinfo("int32").max,
+}
 
 for key in dicts.nc_global_attrs.keys():
     to_save_ds.attrs[key] = dicts.nc_global_attrs[key]

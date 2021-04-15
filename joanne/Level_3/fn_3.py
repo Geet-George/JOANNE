@@ -171,7 +171,8 @@ def interp_along_height(
         )
         new_interpolated_ds.encoding["time"] = {
             "units": "seconds since 2020-01-01",
-            "dtype": "float",
+            "dtype": "int32",
+            "_FillValue": np.iinfo("int32").max,
         }
         new_interpolated_ds = new_interpolated_ds.rename({"time": "interpolated_time"})
 
@@ -633,8 +634,8 @@ def add_platform_details_as_var(dataset):
     """
 
     dataset["launch_time"] = np.datetime64(dataset.attrs["launch_time_(UTC)"])
-    dataset["platform"] = dataset.attrs["platform_id"]
-    dataset["flight_height"] = dataset.attrs["aircraft_geopotential_altitude_(m)"]
+    dataset["platform_id"] = dataset.attrs["platform_id"]
+    dataset["flight_altitude"] = dataset.attrs["aircraft_geopotential_altitude_(m)"]
     dataset["flight_lat"] = dataset.attrs["aircraft_latitude_(deg_N)"]
     dataset["flight_lon"] = dataset.attrs["aircraft_longitude_(deg_E)"]
 
@@ -732,11 +733,11 @@ def get_N_and_m_values(interp_dataset, original_dataset, bin_length=10):
 
     interp_dataset["m_ptu"] = xr.DataArray(
         m_ptu, dims=["alt"], coords={"alt": interp_dataset.alt.values},
-    )
+    ).astype("int8")
 
     interp_dataset["m_gps"] = xr.DataArray(
-        m_gps, dims=["alt"], coords={"alt": interp_dataset.alt.values},
-    )
+        m_gps, dims=["alt"], coords={"alt": interp_dataset.alt.values}
+    ).astype("int8")
 
     return interp_dataset
 
@@ -794,8 +795,8 @@ def interpolate_for_level_3(
     dataset = add_platform_details_as_var(dataset)
 
     for var in [
-        "platform",
-        "flight_height",
+        "platform_id",
+        "flight_altitude",
         "flight_lat",
         "flight_lon",
         "launch_time",
