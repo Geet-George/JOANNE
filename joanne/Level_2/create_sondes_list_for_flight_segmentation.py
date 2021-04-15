@@ -14,7 +14,10 @@ import joanne
 dic = []
 status_dir = "../../Data/Level_2/logs_and_stats/"
 
-for Platform in ["P3", "HALO"]:
+for Platform in [
+    "HALO",
+    "P3",
+]:
     # look for status file with same major and minor version-bit
     # (patch number and modifiers can be different)
 

@@ -1,1283 +1,3 @@
-- flag: GOOD
-  launch_time: 2020-01-17 14:32:48
-  platform: P3
-  sonde_id: P3-0117_s01
-- flag: GOOD
-  launch_time: 2020-01-17 14:43:37
-  platform: P3
-  sonde_id: P3-0117_s02
-- flag: GOOD
-  launch_time: 2020-01-17 14:53:42
-  platform: P3
-  sonde_id: P3-0117_s03
-- flag: GOOD
-  launch_time: 2020-01-17 15:03:50
-  platform: P3
-  sonde_id: P3-0117_s04
-- flag: GOOD
-  launch_time: 2020-01-17 15:13:53
-  platform: P3
-  sonde_id: P3-0117_s05
-- flag: GOOD
-  launch_time: 2020-01-17 15:22:24
-  platform: P3
-  sonde_id: P3-0117_s06
-- flag: UGLY
-  launch_time: 2020-01-17 15:27:00
-  platform: P3
-  sonde_id: P3-0117_s07
-- flag: GOOD
-  launch_time: 2020-01-17 15:32:25
-  platform: P3
-  sonde_id: P3-0117_s08
-- flag: GOOD
-  launch_time: 2020-01-17 15:37:53
-  platform: P3
-  sonde_id: P3-0117_s09
-- flag: GOOD
-  launch_time: 2020-01-17 15:43:02
-  platform: P3
-  sonde_id: P3-0117_s10
-- flag: GOOD
-  launch_time: 2020-01-17 15:48:07
-  platform: P3
-  sonde_id: P3-0117_s11
-- flag: GOOD
-  launch_time: 2020-01-17 15:52:39
-  platform: P3
-  sonde_id: P3-0117_s12
-- flag: UGLY
-  launch_time: 2020-01-17 15:57:04
-  platform: P3
-  sonde_id: P3-0117_s13
-- flag: GOOD
-  launch_time: 2020-01-17 16:01:49
-  platform: P3
-  sonde_id: P3-0117_s14
-- flag: GOOD
-  launch_time: 2020-01-17 16:06:50
-  platform: P3
-  sonde_id: P3-0117_s15
-- flag: GOOD
-  launch_time: 2020-01-17 16:12:14
-  platform: P3
-  sonde_id: P3-0117_s16
-- flag: UGLY
-  launch_time: 2020-01-17 16:17:43
-  platform: P3
-  sonde_id: P3-0117_s17
-- flag: GOOD
-  launch_time: 2020-01-17 16:23:15
-  platform: P3
-  sonde_id: P3-0117_s18
-- flag: UGLY
-  launch_time: 2020-01-17 17:21:00
-  platform: P3
-  sonde_id: P3-0117_s19
-- flag: UGLY
-  launch_time: 2020-01-17 17:21:47
-  platform: P3
-  sonde_id: P3-0117_s20
-- flag: GOOD
-  launch_time: 2020-01-17 17:25:19
-  platform: P3
-  sonde_id: P3-0117_s21
-- flag: GOOD
-  launch_time: 2020-01-17 17:29:23
-  platform: P3
-  sonde_id: P3-0117_s22
-- flag: UGLY
-  launch_time: 2020-01-17 17:32:00
-  platform: P3
-  sonde_id: P3-0117_s23
-- flag: GOOD
-  launch_time: 2020-01-19 13:52:07
-  platform: P3
-  sonde_id: P3-0119_s01
-- flag: GOOD
-  launch_time: 2020-01-19 13:56:09
-  platform: P3
-  sonde_id: P3-0119_s02
-- flag: GOOD
-  launch_time: 2020-01-19 13:59:14
-  platform: P3
-  sonde_id: P3-0119_s03
-- flag: GOOD
-  launch_time: 2020-01-19 14:02:18
-  platform: P3
-  sonde_id: P3-0119_s04
-- flag: GOOD
-  launch_time: 2020-01-19 14:05:20
-  platform: P3
-  sonde_id: P3-0119_s05
-- flag: GOOD
-  launch_time: 2020-01-19 14:22:27
-  platform: P3
-  sonde_id: P3-0119_s06
-- flag: UGLY
-  launch_time: 2020-01-19 14:37:02
-  platform: P3
-  sonde_id: P3-0119_s07
-- flag: GOOD
-  launch_time: 2020-01-19 14:41:05
-  platform: P3
-  sonde_id: P3-0119_s08
-- flag: GOOD
-  launch_time: 2020-01-19 14:46:17
-  platform: P3
-  sonde_id: P3-0119_s09
-- flag: GOOD
-  launch_time: 2020-01-19 14:51:24
-  platform: P3
-  sonde_id: P3-0119_s10
-- flag: GOOD
-  launch_time: 2020-01-19 14:55:53
-  platform: P3
-  sonde_id: P3-0119_s11
-- flag: GOOD
-  launch_time: 2020-01-19 15:01:02
-  platform: P3
-  sonde_id: P3-0119_s12
-- flag: UGLY
-  launch_time: 2020-01-19 15:06:06
-  platform: P3
-  sonde_id: P3-0119_s13
-- flag: GOOD
-  launch_time: 2020-01-19 15:10:12
-  platform: P3
-  sonde_id: P3-0119_s14
-- flag: GOOD
-  launch_time: 2020-01-19 15:15:18
-  platform: P3
-  sonde_id: P3-0119_s15
-- flag: GOOD
-  launch_time: 2020-01-19 15:20:17
-  platform: P3
-  sonde_id: P3-0119_s16
-- flag: GOOD
-  launch_time: 2020-01-19 15:24:45
-  platform: P3
-  sonde_id: P3-0119_s17
-- flag: UGLY
-  launch_time: 2020-01-19 15:29:55
-  platform: P3
-  sonde_id: P3-0119_s18
-- flag: UGLY
-  launch_time: 2020-01-19 16:17:29
-  platform: P3
-  sonde_id: P3-0119_s19
-- flag: GOOD
-  launch_time: 2020-01-19 17:02:44
-  platform: P3
-  sonde_id: P3-0119_s20
-- flag: UGLY
-  launch_time: 2020-01-19 17:08:39
-  platform: P3
-  sonde_id: P3-0119_s21
-- flag: GOOD
-  launch_time: 2020-01-19 17:35:29
-  platform: P3
-  sonde_id: P3-0119_s22
-- flag: GOOD
-  launch_time: 2020-01-19 17:41:48
-  platform: P3
-  sonde_id: P3-0119_s23
-- flag: GOOD
-  launch_time: 2020-01-19 18:06:03
-  platform: P3
-  sonde_id: P3-0119_s24
-- flag: GOOD
-  launch_time: 2020-01-19 18:11:26
-  platform: P3
-  sonde_id: P3-0119_s25
-- flag: GOOD
-  launch_time: 2020-01-19 18:35:19
-  platform: P3
-  sonde_id: P3-0119_s26
-- flag: GOOD
-  launch_time: 2020-01-19 18:39:44
-  platform: P3
-  sonde_id: P3-0119_s27
-- flag: GOOD
-  launch_time: 2020-01-19 19:05:11
-  platform: P3
-  sonde_id: P3-0119_s28
-- flag: GOOD
-  launch_time: 2020-01-23 13:45:10
-  platform: P3
-  sonde_id: P3-0123_s01
-- flag: UGLY
-  launch_time: 2020-01-23 13:52:40
-  platform: P3
-  sonde_id: P3-0123_s02
-- flag: GOOD
-  launch_time: 2020-01-23 13:57:11
-  platform: P3
-  sonde_id: P3-0123_s03
-- flag: GOOD
-  launch_time: 2020-01-23 14:02:21
-  platform: P3
-  sonde_id: P3-0123_s04
-- flag: GOOD
-  launch_time: 2020-01-23 14:06:34
-  platform: P3
-  sonde_id: P3-0123_s05
-- flag: GOOD
-  launch_time: 2020-01-23 14:11:12
-  platform: P3
-  sonde_id: P3-0123_s06
-- flag: GOOD
-  launch_time: 2020-01-23 14:16:07
-  platform: P3
-  sonde_id: P3-0123_s07
-- flag: GOOD
-  launch_time: 2020-01-23 14:20:52
-  platform: P3
-  sonde_id: P3-0123_s08
-- flag: GOOD
-  launch_time: 2020-01-23 14:25:02
-  platform: P3
-  sonde_id: P3-0123_s09
-- flag: GOOD
-  launch_time: 2020-01-23 14:29:30
-  platform: P3
-  sonde_id: P3-0123_s10
-- flag: GOOD
-  launch_time: 2020-01-23 14:34:29
-  platform: P3
-  sonde_id: P3-0123_s11
-- flag: GOOD
-  launch_time: 2020-01-23 14:39:25
-  platform: P3
-  sonde_id: P3-0123_s12
-- flag: UGLY
-  launch_time: 2020-01-23 14:44:10
-  platform: P3
-  sonde_id: P3-0123_s13
-- flag: GOOD
-  launch_time: 2020-01-23 14:49:42
-  platform: P3
-  sonde_id: P3-0123_s14
-- flag: GOOD
-  launch_time: 2020-01-23 14:54:49
-  platform: P3
-  sonde_id: P3-0123_s15
-- flag: GOOD
-  launch_time: 2020-01-23 15:00:01
-  platform: P3
-  sonde_id: P3-0123_s16
-- flag: GOOD
-  launch_time: 2020-01-23 16:08:20
-  platform: P3
-  sonde_id: P3-0123_s17
-- flag: GOOD
-  launch_time: 2020-01-23 16:33:40
-  platform: P3
-  sonde_id: P3-0123_s18
-- flag: GOOD
-  launch_time: 2020-01-23 16:39:06
-  platform: P3
-  sonde_id: P3-0123_s19
-- flag: GOOD
-  launch_time: 2020-01-23 17:09:36
-  platform: P3
-  sonde_id: P3-0123_s20
-- flag: GOOD
-  launch_time: 2020-01-23 17:14:47
-  platform: P3
-  sonde_id: P3-0123_s21
-- flag: UGLY
-  launch_time: 2020-01-23 17:44:41
-  platform: P3
-  sonde_id: P3-0123_s22
-- flag: GOOD
-  launch_time: 2020-01-23 17:50:33
-  platform: P3
-  sonde_id: P3-0123_s23
-- flag: UGLY
-  launch_time: 2020-01-23 18:19:25
-  platform: P3
-  sonde_id: P3-0123_s24
-- flag: GOOD
-  launch_time: 2020-01-23 18:25:16
-  platform: P3
-  sonde_id: P3-0123_s25
-- flag: GOOD
-  launch_time: 2020-01-23 18:56:42
-  platform: P3
-  sonde_id: P3-0123_s26
-- flag: GOOD
-  launch_time: 2020-01-23 19:46:36
-  platform: P3
-  sonde_id: P3-0123_s27
-- flag: GOOD
-  launch_time: 2020-01-23 19:51:12
-  platform: P3
-  sonde_id: P3-0123_s28
-- flag: UGLY
-  launch_time: 2020-01-23 19:55:40
-  platform: P3
-  sonde_id: P3-0123_s29
-- flag: GOOD
-  launch_time: 2020-01-23 20:00:18
-  platform: P3
-  sonde_id: P3-0123_s30
-- flag: GOOD
-  launch_time: 2020-01-23 20:04:53
-  platform: P3
-  sonde_id: P3-0123_s31
-- flag: UGLY
-  launch_time: 2020-01-23 20:09:43
-  platform: P3
-  sonde_id: P3-0123_s32
-- flag: GOOD
-  launch_time: 2020-01-23 20:14:45
-  platform: P3
-  sonde_id: P3-0123_s33
-- flag: GOOD
-  launch_time: 2020-01-23 20:19:55
-  platform: P3
-  sonde_id: P3-0123_s34
-- flag: GOOD
-  launch_time: 2020-01-23 20:25:08
-  platform: P3
-  sonde_id: P3-0123_s35
-- flag: GOOD
-  launch_time: 2020-01-23 20:30:30
-  platform: P3
-  sonde_id: P3-0123_s36
-- flag: GOOD
-  launch_time: 2020-01-23 20:35:35
-  platform: P3
-  sonde_id: P3-0123_s37
-- flag: UGLY
-  launch_time: 2020-01-23 20:40:39
-  platform: P3
-  sonde_id: P3-0123_s38
-- flag: GOOD
-  launch_time: 2020-01-24 18:25:39
-  platform: P3
-  sonde_id: P3-0124_s01
-- flag: GOOD
-  launch_time: 2020-01-24 18:32:04
-  platform: P3
-  sonde_id: P3-0124_s02
-- flag: GOOD
-  launch_time: 2020-01-24 18:38:01
-  platform: P3
-  sonde_id: P3-0124_s03
-- flag: GOOD
-  launch_time: 2020-01-24 18:44:02
-  platform: P3
-  sonde_id: P3-0124_s04
-- flag: UGLY
-  launch_time: 2020-01-24 18:50:10
-  platform: P3
-  sonde_id: P3-0124_s05
-- flag: GOOD
-  launch_time: 2020-01-24 18:55:59
-  platform: P3
-  sonde_id: P3-0124_s06
-- flag: GOOD
-  launch_time: 2020-01-24 19:01:49
-  platform: P3
-  sonde_id: P3-0124_s07
-- flag: GOOD
-  launch_time: 2020-01-24 19:07:35
-  platform: P3
-  sonde_id: P3-0124_s08
-- flag: GOOD
-  launch_time: 2020-01-24 19:13:54
-  platform: P3
-  sonde_id: P3-0124_s09
-- flag: GOOD
-  launch_time: 2020-01-24 19:20:06
-  platform: P3
-  sonde_id: P3-0124_s10
-- flag: GOOD
-  launch_time: 2020-01-24 19:26:31
-  platform: P3
-  sonde_id: P3-0124_s11
-- flag: GOOD
-  launch_time: 2020-01-24 19:32:27
-  platform: P3
-  sonde_id: P3-0124_s12
-- flag: GOOD
-  launch_time: 2020-01-24 19:37:09
-  platform: P3
-  sonde_id: P3-0124_s13
-- flag: GOOD
-  launch_time: 2020-01-24 19:42:33
-  platform: P3
-  sonde_id: P3-0124_s14
-- flag: GOOD
-  launch_time: 2020-01-24 19:48:19
-  platform: P3
-  sonde_id: P3-0124_s15
-- flag: GOOD
-  launch_time: 2020-01-24 19:54:04
-  platform: P3
-  sonde_id: P3-0124_s16
-- flag: UGLY
-  launch_time: 2020-01-31 16:25:10
-  platform: P3
-  sonde_id: P3-0131_s01
-- flag: UGLY
-  launch_time: 2020-01-31 16:30:04
-  platform: P3
-  sonde_id: P3-0131_s02
-- flag: GOOD
-  launch_time: 2020-01-31 16:35:15
-  platform: P3
-  sonde_id: P3-0131_s03
-- flag: GOOD
-  launch_time: 2020-01-31 16:40:10
-  platform: P3
-  sonde_id: P3-0131_s04
-- flag: GOOD
-  launch_time: 2020-01-31 16:44:55
-  platform: P3
-  sonde_id: P3-0131_s05
-- flag: GOOD
-  launch_time: 2020-01-31 16:49:32
-  platform: P3
-  sonde_id: P3-0131_s06
-- flag: UGLY
-  launch_time: 2020-01-31 16:54:09
-  platform: P3
-  sonde_id: P3-0131_s07
-- flag: UGLY
-  launch_time: 2020-01-31 16:58:39
-  platform: P3
-  sonde_id: P3-0131_s08
-- flag: GOOD
-  launch_time: 2020-01-31 17:03:37
-  platform: P3
-  sonde_id: P3-0131_s09
-- flag: GOOD
-  launch_time: 2020-01-31 17:08:08
-  platform: P3
-  sonde_id: P3-0131_s10
-- flag: GOOD
-  launch_time: 2020-01-31 17:13:49
-  platform: P3
-  sonde_id: P3-0131_s11
-- flag: BAD
-  launch_time: 2020-01-31 17:18:54
-  platform: P3
-  sonde_id: P3-0131_s12
-- flag: GOOD
-  launch_time: 2020-01-31 18:04:45
-  platform: P3
-  sonde_id: P3-0131_s13
-- flag: BAD
-  launch_time: 2020-01-31 18:18:14
-  platform: P3
-  sonde_id: P3-0131_s14
-- flag: GOOD
-  launch_time: 2020-01-31 18:23:37
-  platform: P3
-  sonde_id: P3-0131_s15
-- flag: GOOD
-  launch_time: 2020-01-31 18:57:57
-  platform: P3
-  sonde_id: P3-0131_s16
-- flag: GOOD
-  launch_time: 2020-01-31 19:23:09
-  platform: P3
-  sonde_id: P3-0131_s17
-- flag: GOOD
-  launch_time: 2020-01-31 19:30:39
-  platform: P3
-  sonde_id: P3-0131_s18
-- flag: GOOD
-  launch_time: 2020-01-31 19:35:39
-  platform: P3
-  sonde_id: P3-0131_s19
-- flag: GOOD
-  launch_time: 2020-01-31 19:42:52
-  platform: P3
-  sonde_id: P3-0131_s20
-- flag: GOOD
-  launch_time: 2020-01-31 21:16:28
-  platform: P3
-  sonde_id: P3-0131_s21
-- flag: GOOD
-  launch_time: 2020-01-31 21:20:43
-  platform: P3
-  sonde_id: P3-0131_s22
-- flag: UGLY
-  launch_time: 2020-01-31 21:25:19
-  platform: P3
-  sonde_id: P3-0131_s23
-- flag: UGLY
-  launch_time: 2020-01-31 21:29:36
-  platform: P3
-  sonde_id: P3-0131_s24
-- flag: GOOD
-  launch_time: 2020-01-31 21:32:55
-  platform: P3
-  sonde_id: P3-0131_s25
-- flag: GOOD
-  launch_time: 2020-02-03 13:41:38
-  platform: P3
-  sonde_id: P3-0203_s01
-- flag: GOOD
-  launch_time: 2020-02-03 13:49:56
-  platform: P3
-  sonde_id: P3-0203_s02
-- flag: GOOD
-  launch_time: 2020-02-03 13:57:43
-  platform: P3
-  sonde_id: P3-0203_s03
-- flag: GOOD
-  launch_time: 2020-02-03 14:05:22
-  platform: P3
-  sonde_id: P3-0203_s04
-- flag: GOOD
-  launch_time: 2020-02-03 14:13:22
-  platform: P3
-  sonde_id: P3-0203_s05
-- flag: GOOD
-  launch_time: 2020-02-03 14:18:24
-  platform: P3
-  sonde_id: P3-0203_s06
-- flag: GOOD
-  launch_time: 2020-02-03 14:23:46
-  platform: P3
-  sonde_id: P3-0203_s07
-- flag: BAD
-  launch_time: 2020-02-03 14:28:26
-  platform: P3
-  sonde_id: P3-0203_s08
-- flag: GOOD
-  launch_time: 2020-02-03 14:29:33
-  platform: P3
-  sonde_id: P3-0203_s09
-- flag: GOOD
-  launch_time: 2020-02-03 14:33:46
-  platform: P3
-  sonde_id: P3-0203_s10
-- flag: GOOD
-  launch_time: 2020-02-03 14:38:05
-  platform: P3
-  sonde_id: P3-0203_s11
-- flag: BAD
-  launch_time: 2020-02-03 14:42:45
-  platform: P3
-  sonde_id: P3-0203_s12
-- flag: GOOD
-  launch_time: 2020-02-03 14:47:28
-  platform: P3
-  sonde_id: P3-0203_s13
-- flag: GOOD
-  launch_time: 2020-02-03 14:52:11
-  platform: P3
-  sonde_id: P3-0203_s14
-- flag: GOOD
-  launch_time: 2020-02-03 14:57:04
-  platform: P3
-  sonde_id: P3-0203_s15
-- flag: GOOD
-  launch_time: 2020-02-03 15:01:55
-  platform: P3
-  sonde_id: P3-0203_s16
-- flag: GOOD
-  launch_time: 2020-02-03 15:06:44
-  platform: P3
-  sonde_id: P3-0203_s17
-- flag: GOOD
-  launch_time: 2020-02-03 15:45:47
-  platform: P3
-  sonde_id: P3-0203_s18
-- flag: UGLY
-  launch_time: 2020-02-03 16:02:26
-  platform: P3
-  sonde_id: P3-0203_s19
-- flag: UGLY
-  launch_time: 2020-02-03 16:34:13
-  platform: P3
-  sonde_id: P3-0203_s20
-- flag: GOOD
-  launch_time: 2020-02-03 17:02:51
-  platform: P3
-  sonde_id: P3-0203_s21
-- flag: UGLY
-  launch_time: 2020-02-03 17:22:45
-  platform: P3
-  sonde_id: P3-0203_s22
-- flag: GOOD
-  launch_time: 2020-02-04 13:43:24
-  platform: P3
-  sonde_id: P3-0204_s01
-- flag: GOOD
-  launch_time: 2020-02-04 13:51:22
-  platform: P3
-  sonde_id: P3-0204_s02
-- flag: GOOD
-  launch_time: 2020-02-04 13:58:43
-  platform: P3
-  sonde_id: P3-0204_s03
-- flag: GOOD
-  launch_time: 2020-02-04 14:05:41
-  platform: P3
-  sonde_id: P3-0204_s04
-- flag: GOOD
-  launch_time: 2020-02-04 14:14:52
-  platform: P3
-  sonde_id: P3-0204_s05
-- flag: GOOD
-  launch_time: 2020-02-04 14:24:45
-  platform: P3
-  sonde_id: P3-0204_s06
-- flag: GOOD
-  launch_time: 2020-02-04 14:29:32
-  platform: P3
-  sonde_id: P3-0204_s07
-- flag: GOOD
-  launch_time: 2020-02-04 14:34:44
-  platform: P3
-  sonde_id: P3-0204_s08
-- flag: GOOD
-  launch_time: 2020-02-04 14:39:03
-  platform: P3
-  sonde_id: P3-0204_s09
-- flag: GOOD
-  launch_time: 2020-02-04 14:43:09
-  platform: P3
-  sonde_id: P3-0204_s10
-- flag: GOOD
-  launch_time: 2020-02-04 14:47:54
-  platform: P3
-  sonde_id: P3-0204_s11
-- flag: GOOD
-  launch_time: 2020-02-04 14:53:34
-  platform: P3
-  sonde_id: P3-0204_s12
-- flag: GOOD
-  launch_time: 2020-02-04 14:58:02
-  platform: P3
-  sonde_id: P3-0204_s13
-- flag: UGLY
-  launch_time: 2020-02-04 15:03:41
-  platform: P3
-  sonde_id: P3-0204_s14
-- flag: GOOD
-  launch_time: 2020-02-04 15:08:53
-  platform: P3
-  sonde_id: P3-0204_s15
-- flag: GOOD
-  launch_time: 2020-02-04 15:14:13
-  platform: P3
-  sonde_id: P3-0204_s16
-- flag: GOOD
-  launch_time: 2020-02-04 15:19:28
-  platform: P3
-  sonde_id: P3-0204_s17
-- flag: GOOD
-  launch_time: 2020-02-04 15:27:55
-  platform: P3
-  sonde_id: P3-0204_s18
-- flag: BAD
-  launch_time: 2020-02-04 16:02:05
-  platform: P3
-  sonde_id: P3-0204_s19
-- flag: GOOD
-  launch_time: 2020-02-04 16:05:19
-  platform: P3
-  sonde_id: P3-0204_s20
-- flag: GOOD
-  launch_time: 2020-02-04 16:08:33
-  platform: P3
-  sonde_id: P3-0204_s21
-- flag: GOOD
-  launch_time: 2020-02-04 16:11:07
-  platform: P3
-  sonde_id: P3-0204_s22
-- flag: GOOD
-  launch_time: 2020-02-04 16:13:07
-  platform: P3
-  sonde_id: P3-0204_s23
-- flag: UGLY
-  launch_time: 2020-02-04 18:56:29
-  platform: P3
-  sonde_id: P3-0204_s24
-- flag: GOOD
-  launch_time: 2020-02-04 19:00:11
-  platform: P3
-  sonde_id: P3-0204_s25
-- flag: GOOD
-  launch_time: 2020-02-04 19:03:25
-  platform: P3
-  sonde_id: P3-0204_s26
-- flag: GOOD
-  launch_time: 2020-02-04 19:06:34
-  platform: P3
-  sonde_id: P3-0204_s27
-- flag: GOOD
-  launch_time: 2020-02-04 20:35:26
-  platform: P3
-  sonde_id: P3-0204_s28
-- flag: GOOD
-  launch_time: 2020-02-04 20:42:20
-  platform: P3
-  sonde_id: P3-0204_s29
-- flag: GOOD
-  launch_time: 2020-02-04 20:46:56
-  platform: P3
-  sonde_id: P3-0204_s30
-- flag: GOOD
-  launch_time: 2020-02-04 20:51:42
-  platform: P3
-  sonde_id: P3-0204_s31
-- flag: GOOD
-  launch_time: 2020-02-05 14:01:29
-  platform: P3
-  sonde_id: P3-0205_s01
-- flag: GOOD
-  launch_time: 2020-02-05 14:09:44
-  platform: P3
-  sonde_id: P3-0205_s02
-- flag: GOOD
-  launch_time: 2020-02-05 14:17:43
-  platform: P3
-  sonde_id: P3-0205_s03
-- flag: GOOD
-  launch_time: 2020-02-05 14:25:19
-  platform: P3
-  sonde_id: P3-0205_s04
-- flag: UGLY
-  launch_time: 2020-02-05 14:41:29
-  platform: P3
-  sonde_id: P3-0205_s05
-- flag: GOOD
-  launch_time: 2020-02-05 14:45:38
-  platform: P3
-  sonde_id: P3-0205_s06
-- flag: UGLY
-  launch_time: 2020-02-05 14:49:51
-  platform: P3
-  sonde_id: P3-0205_s07
-- flag: GOOD
-  launch_time: 2020-02-05 14:55:24
-  platform: P3
-  sonde_id: P3-0205_s08
-- flag: GOOD
-  launch_time: 2020-02-05 14:59:56
-  platform: P3
-  sonde_id: P3-0205_s09
-- flag: GOOD
-  launch_time: 2020-02-05 15:04:12
-  platform: P3
-  sonde_id: P3-0205_s10
-- flag: GOOD
-  launch_time: 2020-02-05 15:10:53
-  platform: P3
-  sonde_id: P3-0205_s11
-- flag: GOOD
-  launch_time: 2020-02-05 15:15:56
-  platform: P3
-  sonde_id: P3-0205_s12
-- flag: GOOD
-  launch_time: 2020-02-05 15:20:50
-  platform: P3
-  sonde_id: P3-0205_s13
-- flag: GOOD
-  launch_time: 2020-02-05 15:26:59
-  platform: P3
-  sonde_id: P3-0205_s14
-- flag: GOOD
-  launch_time: 2020-02-05 15:31:47
-  platform: P3
-  sonde_id: P3-0205_s15
-- flag: GOOD
-  launch_time: 2020-02-05 15:36:38
-  platform: P3
-  sonde_id: P3-0205_s16
-- flag: GOOD
-  launch_time: 2020-02-05 16:22:01
-  platform: P3
-  sonde_id: P3-0205_s17
-- flag: GOOD
-  launch_time: 2020-02-05 16:27:13
-  platform: P3
-  sonde_id: P3-0205_s18
-- flag: UGLY
-  launch_time: 2020-02-05 16:32:27
-  platform: P3
-  sonde_id: P3-0205_s19
-- flag: GOOD
-  launch_time: 2020-02-05 16:36:55
-  platform: P3
-  sonde_id: P3-0205_s20
-- flag: UGLY
-  launch_time: 2020-02-05 18:54:12
-  platform: P3
-  sonde_id: P3-0205_s21
-- flag: GOOD
-  launch_time: 2020-02-05 18:57:43
-  platform: P3
-  sonde_id: P3-0205_s22
-- flag: UGLY
-  launch_time: 2020-02-05 19:01:13
-  platform: P3
-  sonde_id: P3-0205_s23
-- flag: GOOD
-  launch_time: 2020-02-05 19:03:28
-  platform: P3
-  sonde_id: P3-0205_s24
-- flag: UGLY
-  launch_time: 2020-02-05 19:15:02
-  platform: P3
-  sonde_id: P3-0205_s25
-- flag: GOOD
-  launch_time: 2020-02-05 19:30:37
-  platform: P3
-  sonde_id: P3-0205_s26
-- flag: GOOD
-  launch_time: 2020-02-05 19:35:11
-  platform: P3
-  sonde_id: P3-0205_s27
-- flag: GOOD
-  launch_time: 2020-02-05 19:40:05
-  platform: P3
-  sonde_id: P3-0205_s28
-- flag: GOOD
-  launch_time: 2020-02-05 19:46:20
-  platform: P3
-  sonde_id: P3-0205_s29
-- flag: GOOD
-  launch_time: 2020-02-09 03:33:25
-  platform: P3
-  sonde_id: P3-0209_s01
-- flag: GOOD
-  launch_time: 2020-02-09 03:38:58
-  platform: P3
-  sonde_id: P3-0209_s02
-- flag: GOOD
-  launch_time: 2020-02-09 03:43:08
-  platform: P3
-  sonde_id: P3-0209_s03
-- flag: GOOD
-  launch_time: 2020-02-09 03:46:26
-  platform: P3
-  sonde_id: P3-0209_s04
-- flag: GOOD
-  launch_time: 2020-02-09 04:18:28
-  platform: P3
-  sonde_id: P3-0209_s05
-- flag: GOOD
-  launch_time: 2020-02-09 04:25:30
-  platform: P3
-  sonde_id: P3-0209_s06
-- flag: UGLY
-  launch_time: 2020-02-09 04:32:25
-  platform: P3
-  sonde_id: P3-0209_s07
-- flag: GOOD
-  launch_time: 2020-02-09 04:39:47
-  platform: P3
-  sonde_id: P3-0209_s08
-- flag: GOOD
-  launch_time: 2020-02-09 04:47:44
-  platform: P3
-  sonde_id: P3-0209_s09
-- flag: GOOD
-  launch_time: 2020-02-09 04:55:21
-  platform: P3
-  sonde_id: P3-0209_s10
-- flag: GOOD
-  launch_time: 2020-02-09 05:02:07
-  platform: P3
-  sonde_id: P3-0209_s11
-- flag: GOOD
-  launch_time: 2020-02-09 05:08:33
-  platform: P3
-  sonde_id: P3-0209_s12
-- flag: GOOD
-  launch_time: 2020-02-09 05:14:43
-  platform: P3
-  sonde_id: P3-0209_s13
-- flag: GOOD
-  launch_time: 2020-02-09 05:20:18
-  platform: P3
-  sonde_id: P3-0209_s14
-- flag: GOOD
-  launch_time: 2020-02-09 05:26:01
-  platform: P3
-  sonde_id: P3-0209_s15
-- flag: UGLY
-  launch_time: 2020-02-09 05:32:14
-  platform: P3
-  sonde_id: P3-0209_s16
-- flag: GOOD
-  launch_time: 2020-02-09 05:57:49
-  platform: P3
-  sonde_id: P3-0209_s17
-- flag: GOOD
-  launch_time: 2020-02-09 06:03:06
-  platform: P3
-  sonde_id: P3-0209_s18
-- flag: GOOD
-  launch_time: 2020-02-09 06:08:13
-  platform: P3
-  sonde_id: P3-0209_s19
-- flag: GOOD
-  launch_time: 2020-02-09 06:13:05
-  platform: P3
-  sonde_id: P3-0209_s20
-- flag: GOOD
-  launch_time: 2020-02-09 06:17:58
-  platform: P3
-  sonde_id: P3-0209_s21
-- flag: GOOD
-  launch_time: 2020-02-09 06:22:36
-  platform: P3
-  sonde_id: P3-0209_s22
-- flag: GOOD
-  launch_time: 2020-02-09 06:27:16
-  platform: P3
-  sonde_id: P3-0209_s23
-- flag: GOOD
-  launch_time: 2020-02-09 06:32:13
-  platform: P3
-  sonde_id: P3-0209_s24
-- flag: UGLY
-  launch_time: 2020-02-09 06:37:30
-  platform: P3
-  sonde_id: P3-0209_s25
-- flag: UGLY
-  launch_time: 2020-02-09 06:43:38
-  platform: P3
-  sonde_id: P3-0209_s26
-- flag: GOOD
-  launch_time: 2020-02-09 06:48:23
-  platform: P3
-  sonde_id: P3-0209_s27
-- flag: GOOD
-  launch_time: 2020-02-09 06:53:50
-  platform: P3
-  sonde_id: P3-0209_s28
-- flag: UGLY
-  launch_time: 2020-02-09 07:39:55
-  platform: P3
-  sonde_id: P3-0209_s29
-- flag: BAD
-  launch_time: 2020-02-09 07:50:32
-  platform: P3
-  sonde_id: P3-0209_s30
-- flag: UGLY
-  launch_time: 2020-02-09 07:54:50
-  platform: P3
-  sonde_id: P3-0209_s31
-- flag: GOOD
-  launch_time: 2020-02-09 08:00:41
-  platform: P3
-  sonde_id: P3-0209_s32
-- flag: GOOD
-  launch_time: 2020-02-10 03:32:33
-  platform: P3
-  sonde_id: P3-0210_s01
-- flag: GOOD
-  launch_time: 2020-02-10 03:37:56
-  platform: P3
-  sonde_id: P3-0210_s02
-- flag: GOOD
-  launch_time: 2020-02-10 03:44:32
-  platform: P3
-  sonde_id: P3-0210_s03
-- flag: GOOD
-  launch_time: 2020-02-10 03:49:27
-  platform: P3
-  sonde_id: P3-0210_s04
-- flag: GOOD
-  launch_time: 2020-02-10 04:18:25
-  platform: P3
-  sonde_id: P3-0210_s05
-- flag: UGLY
-  launch_time: 2020-02-10 04:24:21
-  platform: P3
-  sonde_id: P3-0210_s06
-- flag: UGLY
-  launch_time: 2020-02-10 04:31:04
-  platform: P3
-  sonde_id: P3-0210_s07
-- flag: GOOD
-  launch_time: 2020-02-10 04:37:05
-  platform: P3
-  sonde_id: P3-0210_s08
-- flag: GOOD
-  launch_time: 2020-02-10 04:43:23
-  platform: P3
-  sonde_id: P3-0210_s09
-- flag: BAD
-  launch_time: 2020-02-10 04:49:31
-  platform: P3
-  sonde_id: P3-0210_s10
-- flag: GOOD
-  launch_time: 2020-02-10 04:55:38
-  platform: P3
-  sonde_id: P3-0210_s11
-- flag: BAD
-  launch_time: 2020-02-10 05:01:14
-  platform: P3
-  sonde_id: P3-0210_s12
-- flag: UGLY
-  launch_time: 2020-02-10 05:06:48
-  platform: P3
-  sonde_id: P3-0210_s13
-- flag: GOOD
-  launch_time: 2020-02-10 05:12:16
-  platform: P3
-  sonde_id: P3-0210_s14
-- flag: GOOD
-  launch_time: 2020-02-10 05:17:48
-  platform: P3
-  sonde_id: P3-0210_s15
-- flag: GOOD
-  launch_time: 2020-02-10 05:23:44
-  platform: P3
-  sonde_id: P3-0210_s16
-- flag: GOOD
-  launch_time: 2020-02-10 05:46:43
-  platform: P3
-  sonde_id: P3-0210_s17
-- flag: GOOD
-  launch_time: 2020-02-10 05:51:30
-  platform: P3
-  sonde_id: P3-0210_s18
-- flag: GOOD
-  launch_time: 2020-02-10 05:56:42
-  platform: P3
-  sonde_id: P3-0210_s19
-- flag: GOOD
-  launch_time: 2020-02-10 06:01:39
-  platform: P3
-  sonde_id: P3-0210_s20
-- flag: GOOD
-  launch_time: 2020-02-10 06:06:18
-  platform: P3
-  sonde_id: P3-0210_s21
-- flag: GOOD
-  launch_time: 2020-02-10 06:10:57
-  platform: P3
-  sonde_id: P3-0210_s22
-- flag: GOOD
-  launch_time: 2020-02-10 06:15:44
-  platform: P3
-  sonde_id: P3-0210_s23
-- flag: GOOD
-  launch_time: 2020-02-10 06:19:41
-  platform: P3
-  sonde_id: P3-0210_s24
-- flag: BAD
-  launch_time: 2020-02-10 06:24:11
-  platform: P3
-  sonde_id: P3-0210_s25
-- flag: GOOD
-  launch_time: 2020-02-10 06:28:54
-  platform: P3
-  sonde_id: P3-0210_s26
-- flag: GOOD
-  launch_time: 2020-02-10 06:34:33
-  platform: P3
-  sonde_id: P3-0210_s27
-- flag: GOOD
-  launch_time: 2020-02-10 06:39:48
-  platform: P3
-  sonde_id: P3-0210_s28
-- flag: GOOD
-  launch_time: 2020-02-10 08:37:23
-  platform: P3
-  sonde_id: P3-0210_s29
-- flag: GOOD
-  launch_time: 2020-02-10 08:42:40
-  platform: P3
-  sonde_id: P3-0210_s30
-- flag: GOOD
-  launch_time: 2020-02-10 08:47:59
-  platform: P3
-  sonde_id: P3-0210_s31
-- flag: GOOD
-  launch_time: 2020-02-10 08:57:47
-  platform: P3
-  sonde_id: P3-0210_s32
-- flag: GOOD
-  launch_time: 2020-02-11 04:50:05
-  platform: P3
-  sonde_id: P3-0211_s01
-- flag: GOOD
-  launch_time: 2020-02-11 04:53:25
-  platform: P3
-  sonde_id: P3-0211_s02
-- flag: GOOD
-  launch_time: 2020-02-11 04:56:31
-  platform: P3
-  sonde_id: P3-0211_s03
-- flag: GOOD
-  launch_time: 2020-02-11 04:59:54
-  platform: P3
-  sonde_id: P3-0211_s04
-- flag: GOOD
-  launch_time: 2020-02-11 05:32:26
-  platform: P3
-  sonde_id: P3-0211_s05
-- flag: GOOD
-  launch_time: 2020-02-11 05:38:45
-  platform: P3
-  sonde_id: P3-0211_s06
-- flag: GOOD
-  launch_time: 2020-02-11 05:45:23
-  platform: P3
-  sonde_id: P3-0211_s07
-- flag: GOOD
-  launch_time: 2020-02-11 05:51:53
-  platform: P3
-  sonde_id: P3-0211_s08
-- flag: GOOD
-  launch_time: 2020-02-11 05:58:03
-  platform: P3
-  sonde_id: P3-0211_s09
-- flag: GOOD
-  launch_time: 2020-02-11 06:04:28
-  platform: P3
-  sonde_id: P3-0211_s10
-- flag: GOOD
-  launch_time: 2020-02-11 06:10:29
-  platform: P3
-  sonde_id: P3-0211_s11
-- flag: GOOD
-  launch_time: 2020-02-11 06:15:53
-  platform: P3
-  sonde_id: P3-0211_s12
-- flag: GOOD
-  launch_time: 2020-02-11 06:21:05
-  platform: P3
-  sonde_id: P3-0211_s13
-- flag: GOOD
-  launch_time: 2020-02-11 06:26:30
-  platform: P3
-  sonde_id: P3-0211_s14
-- flag: GOOD
-  launch_time: 2020-02-11 06:32:13
-  platform: P3
-  sonde_id: P3-0211_s15
-- flag: GOOD
-  launch_time: 2020-02-11 06:38:08
-  platform: P3
-  sonde_id: P3-0211_s16
-- flag: GOOD
-  launch_time: 2020-02-11 06:49:53
-  platform: P3
-  sonde_id: P3-0211_s17
-- flag: GOOD
-  launch_time: 2020-02-11 06:54:40
-  platform: P3
-  sonde_id: P3-0211_s18
-- flag: GOOD
-  launch_time: 2020-02-11 06:59:33
-  platform: P3
-  sonde_id: P3-0211_s19
-- flag: UGLY
-  launch_time: 2020-02-11 07:04:27
-  platform: P3
-  sonde_id: P3-0211_s20
-- flag: GOOD
-  launch_time: 2020-02-11 07:08:48
-  platform: P3
-  sonde_id: P3-0211_s21
-- flag: GOOD
-  launch_time: 2020-02-11 07:15:19
-  platform: P3
-  sonde_id: P3-0211_s22
-- flag: GOOD
-  launch_time: 2020-02-11 07:18:17
-  platform: P3
-  sonde_id: P3-0211_s23
-- flag: BAD
-  launch_time: 2020-02-11 07:27:16
-  platform: P3
-  sonde_id: P3-0211_s24
-- flag: GOOD
-  launch_time: 2020-02-11 07:22:16
-  platform: P3
-  sonde_id: P3-0211_s25
-- flag: UGLY
-  launch_time: 2020-02-11 07:28:11
-  platform: P3
-  sonde_id: P3-0211_s26
-- flag: GOOD
-  launch_time: 2020-02-11 07:32:31
-  platform: P3
-  sonde_id: P3-0211_s27
-- flag: GOOD
-  launch_time: 2020-02-11 07:37:51
-  platform: P3
-  sonde_id: P3-0211_s28
-- flag: GOOD
-  launch_time: 2020-02-11 07:43:39
-  platform: P3
-  sonde_id: P3-0211_s29
-- flag: UGLY
-  launch_time: 2020-02-11 08:25:39
-  platform: P3
-  sonde_id: P3-0211_s30
-- flag: UGLY
-  launch_time: 2020-02-11 08:24:55
-  platform: P3
-  sonde_id: P3-0211_s31
-- flag: GOOD
-  launch_time: 2020-02-11 08:39:52
-  platform: P3
-  sonde_id: P3-0211_s32
-- flag: GOOD
-  launch_time: 2020-02-11 08:44:51
-  platform: P3
-  sonde_id: P3-0211_s33
-- flag: GOOD
-  launch_time: 2020-02-11 08:51:32
-  platform: P3
-  sonde_id: P3-0211_s34
-- flag: GOOD
-  launch_time: 2020-02-11 08:55:36
-  platform: P3
-  sonde_id: P3-0211_s35
-- flag: UGLY
-  launch_time: 2020-02-11 09:00:19
-  platform: P3
-  sonde_id: P3-0211_s36
-- flag: UGLY
-  launch_time: 2020-02-11 09:04:56
-  platform: P3
-  sonde_id: P3-0211_s37
-- flag: GOOD
-  launch_time: 2020-02-11 09:12:16
-  platform: P3
-  sonde_id: P3-0211_s38
-- flag: GOOD
-  launch_time: 2020-02-11 09:17:19
-  platform: P3
-  sonde_id: P3-0211_s39
-- flag: GOOD
-  launch_time: 2020-02-11 09:22:18
-  platform: P3
-  sonde_id: P3-0211_s40
-- flag: GOOD
-  launch_time: 2020-02-11 09:27:27
-  platform: P3
-  sonde_id: P3-0211_s41
-- flag: GOOD
-  launch_time: 2020-02-11 09:34:34
-  platform: P3
-  sonde_id: P3-0211_s42
-- flag: GOOD
-  launch_time: 2020-02-11 09:43:11
-  platform: P3
-  sonde_id: P3-0211_s43
-- flag: UGLY
-  launch_time: 2020-02-11 09:48:23
-  platform: P3
-  sonde_id: P3-0211_s44
 - flag: UGLY
   launch_time: 2020-01-19 16:14:09
   platform: HALO
@@ -4858,3 +3578,1283 @@
   launch_time: 2020-02-18 16:18:02
   platform: HALO
   sonde_id: HALO-0218_s07
+- flag: GOOD
+  launch_time: 2020-01-17 14:32:48
+  platform: P3
+  sonde_id: P3-0117_s01
+- flag: GOOD
+  launch_time: 2020-01-17 14:43:37
+  platform: P3
+  sonde_id: P3-0117_s02
+- flag: GOOD
+  launch_time: 2020-01-17 14:53:42
+  platform: P3
+  sonde_id: P3-0117_s03
+- flag: GOOD
+  launch_time: 2020-01-17 15:03:50
+  platform: P3
+  sonde_id: P3-0117_s04
+- flag: GOOD
+  launch_time: 2020-01-17 15:13:53
+  platform: P3
+  sonde_id: P3-0117_s05
+- flag: GOOD
+  launch_time: 2020-01-17 15:22:24
+  platform: P3
+  sonde_id: P3-0117_s06
+- flag: UGLY
+  launch_time: 2020-01-17 15:27:00
+  platform: P3
+  sonde_id: P3-0117_s07
+- flag: GOOD
+  launch_time: 2020-01-17 15:32:25
+  platform: P3
+  sonde_id: P3-0117_s08
+- flag: GOOD
+  launch_time: 2020-01-17 15:37:53
+  platform: P3
+  sonde_id: P3-0117_s09
+- flag: GOOD
+  launch_time: 2020-01-17 15:43:02
+  platform: P3
+  sonde_id: P3-0117_s10
+- flag: GOOD
+  launch_time: 2020-01-17 15:48:07
+  platform: P3
+  sonde_id: P3-0117_s11
+- flag: GOOD
+  launch_time: 2020-01-17 15:52:39
+  platform: P3
+  sonde_id: P3-0117_s12
+- flag: UGLY
+  launch_time: 2020-01-17 15:57:04
+  platform: P3
+  sonde_id: P3-0117_s13
+- flag: GOOD
+  launch_time: 2020-01-17 16:01:49
+  platform: P3
+  sonde_id: P3-0117_s14
+- flag: GOOD
+  launch_time: 2020-01-17 16:06:50
+  platform: P3
+  sonde_id: P3-0117_s15
+- flag: GOOD
+  launch_time: 2020-01-17 16:12:14
+  platform: P3
+  sonde_id: P3-0117_s16
+- flag: UGLY
+  launch_time: 2020-01-17 16:17:43
+  platform: P3
+  sonde_id: P3-0117_s17
+- flag: GOOD
+  launch_time: 2020-01-17 16:23:15
+  platform: P3
+  sonde_id: P3-0117_s18
+- flag: UGLY
+  launch_time: 2020-01-17 17:21:00
+  platform: P3
+  sonde_id: P3-0117_s19
+- flag: UGLY
+  launch_time: 2020-01-17 17:21:47
+  platform: P3
+  sonde_id: P3-0117_s20
+- flag: GOOD
+  launch_time: 2020-01-17 17:25:19
+  platform: P3
+  sonde_id: P3-0117_s21
+- flag: GOOD
+  launch_time: 2020-01-17 17:29:23
+  platform: P3
+  sonde_id: P3-0117_s22
+- flag: UGLY
+  launch_time: 2020-01-17 17:32:00
+  platform: P3
+  sonde_id: P3-0117_s23
+- flag: GOOD
+  launch_time: 2020-01-19 13:52:07
+  platform: P3
+  sonde_id: P3-0119_s01
+- flag: GOOD
+  launch_time: 2020-01-19 13:56:09
+  platform: P3
+  sonde_id: P3-0119_s02
+- flag: GOOD
+  launch_time: 2020-01-19 13:59:14
+  platform: P3
+  sonde_id: P3-0119_s03
+- flag: GOOD
+  launch_time: 2020-01-19 14:02:18
+  platform: P3
+  sonde_id: P3-0119_s04
+- flag: GOOD
+  launch_time: 2020-01-19 14:05:20
+  platform: P3
+  sonde_id: P3-0119_s05
+- flag: GOOD
+  launch_time: 2020-01-19 14:22:27
+  platform: P3
+  sonde_id: P3-0119_s06
+- flag: UGLY
+  launch_time: 2020-01-19 14:37:02
+  platform: P3
+  sonde_id: P3-0119_s07
+- flag: GOOD
+  launch_time: 2020-01-19 14:41:05
+  platform: P3
+  sonde_id: P3-0119_s08
+- flag: GOOD
+  launch_time: 2020-01-19 14:46:17
+  platform: P3
+  sonde_id: P3-0119_s09
+- flag: GOOD
+  launch_time: 2020-01-19 14:51:24
+  platform: P3
+  sonde_id: P3-0119_s10
+- flag: GOOD
+  launch_time: 2020-01-19 14:55:53
+  platform: P3
+  sonde_id: P3-0119_s11
+- flag: GOOD
+  launch_time: 2020-01-19 15:01:02
+  platform: P3
+  sonde_id: P3-0119_s12
+- flag: UGLY
+  launch_time: 2020-01-19 15:06:06
+  platform: P3
+  sonde_id: P3-0119_s13
+- flag: GOOD
+  launch_time: 2020-01-19 15:10:12
+  platform: P3
+  sonde_id: P3-0119_s14
+- flag: GOOD
+  launch_time: 2020-01-19 15:15:18
+  platform: P3
+  sonde_id: P3-0119_s15
+- flag: GOOD
+  launch_time: 2020-01-19 15:20:17
+  platform: P3
+  sonde_id: P3-0119_s16
+- flag: GOOD
+  launch_time: 2020-01-19 15:24:45
+  platform: P3
+  sonde_id: P3-0119_s17
+- flag: UGLY
+  launch_time: 2020-01-19 15:29:55
+  platform: P3
+  sonde_id: P3-0119_s18
+- flag: UGLY
+  launch_time: 2020-01-19 16:17:29
+  platform: P3
+  sonde_id: P3-0119_s19
+- flag: GOOD
+  launch_time: 2020-01-19 17:02:44
+  platform: P3
+  sonde_id: P3-0119_s20
+- flag: UGLY
+  launch_time: 2020-01-19 17:08:39
+  platform: P3
+  sonde_id: P3-0119_s21
+- flag: GOOD
+  launch_time: 2020-01-19 17:35:29
+  platform: P3
+  sonde_id: P3-0119_s22
+- flag: GOOD
+  launch_time: 2020-01-19 17:41:48
+  platform: P3
+  sonde_id: P3-0119_s23
+- flag: GOOD
+  launch_time: 2020-01-19 18:06:03
+  platform: P3
+  sonde_id: P3-0119_s24
+- flag: GOOD
+  launch_time: 2020-01-19 18:11:26
+  platform: P3
+  sonde_id: P3-0119_s25
+- flag: GOOD
+  launch_time: 2020-01-19 18:35:19
+  platform: P3
+  sonde_id: P3-0119_s26
+- flag: GOOD
+  launch_time: 2020-01-19 18:39:44
+  platform: P3
+  sonde_id: P3-0119_s27
+- flag: GOOD
+  launch_time: 2020-01-19 19:05:11
+  platform: P3
+  sonde_id: P3-0119_s28
+- flag: GOOD
+  launch_time: 2020-01-23 13:45:10
+  platform: P3
+  sonde_id: P3-0123_s01
+- flag: UGLY
+  launch_time: 2020-01-23 13:52:40
+  platform: P3
+  sonde_id: P3-0123_s02
+- flag: GOOD
+  launch_time: 2020-01-23 13:57:11
+  platform: P3
+  sonde_id: P3-0123_s03
+- flag: GOOD
+  launch_time: 2020-01-23 14:02:21
+  platform: P3
+  sonde_id: P3-0123_s04
+- flag: GOOD
+  launch_time: 2020-01-23 14:06:34
+  platform: P3
+  sonde_id: P3-0123_s05
+- flag: GOOD
+  launch_time: 2020-01-23 14:11:12
+  platform: P3
+  sonde_id: P3-0123_s06
+- flag: GOOD
+  launch_time: 2020-01-23 14:16:07
+  platform: P3
+  sonde_id: P3-0123_s07
+- flag: GOOD
+  launch_time: 2020-01-23 14:20:52
+  platform: P3
+  sonde_id: P3-0123_s08
+- flag: GOOD
+  launch_time: 2020-01-23 14:25:02
+  platform: P3
+  sonde_id: P3-0123_s09
+- flag: GOOD
+  launch_time: 2020-01-23 14:29:30
+  platform: P3
+  sonde_id: P3-0123_s10
+- flag: GOOD
+  launch_time: 2020-01-23 14:34:29
+  platform: P3
+  sonde_id: P3-0123_s11
+- flag: GOOD
+  launch_time: 2020-01-23 14:39:25
+  platform: P3
+  sonde_id: P3-0123_s12
+- flag: UGLY
+  launch_time: 2020-01-23 14:44:10
+  platform: P3
+  sonde_id: P3-0123_s13
+- flag: GOOD
+  launch_time: 2020-01-23 14:49:42
+  platform: P3
+  sonde_id: P3-0123_s14
+- flag: GOOD
+  launch_time: 2020-01-23 14:54:49
+  platform: P3
+  sonde_id: P3-0123_s15
+- flag: GOOD
+  launch_time: 2020-01-23 15:00:01
+  platform: P3
+  sonde_id: P3-0123_s16
+- flag: GOOD
+  launch_time: 2020-01-23 16:08:20
+  platform: P3
+  sonde_id: P3-0123_s17
+- flag: GOOD
+  launch_time: 2020-01-23 16:33:40
+  platform: P3
+  sonde_id: P3-0123_s18
+- flag: GOOD
+  launch_time: 2020-01-23 16:39:06
+  platform: P3
+  sonde_id: P3-0123_s19
+- flag: GOOD
+  launch_time: 2020-01-23 17:09:36
+  platform: P3
+  sonde_id: P3-0123_s20
+- flag: GOOD
+  launch_time: 2020-01-23 17:14:47
+  platform: P3
+  sonde_id: P3-0123_s21
+- flag: UGLY
+  launch_time: 2020-01-23 17:44:41
+  platform: P3
+  sonde_id: P3-0123_s22
+- flag: GOOD
+  launch_time: 2020-01-23 17:50:33
+  platform: P3
+  sonde_id: P3-0123_s23
+- flag: UGLY
+  launch_time: 2020-01-23 18:19:25
+  platform: P3
+  sonde_id: P3-0123_s24
+- flag: GOOD
+  launch_time: 2020-01-23 18:25:16
+  platform: P3
+  sonde_id: P3-0123_s25
+- flag: GOOD
+  launch_time: 2020-01-23 18:56:42
+  platform: P3
+  sonde_id: P3-0123_s26
+- flag: GOOD
+  launch_time: 2020-01-23 19:46:36
+  platform: P3
+  sonde_id: P3-0123_s27
+- flag: GOOD
+  launch_time: 2020-01-23 19:51:12
+  platform: P3
+  sonde_id: P3-0123_s28
+- flag: UGLY
+  launch_time: 2020-01-23 19:55:40
+  platform: P3
+  sonde_id: P3-0123_s29
+- flag: GOOD
+  launch_time: 2020-01-23 20:00:18
+  platform: P3
+  sonde_id: P3-0123_s30
+- flag: GOOD
+  launch_time: 2020-01-23 20:04:53
+  platform: P3
+  sonde_id: P3-0123_s31
+- flag: UGLY
+  launch_time: 2020-01-23 20:09:43
+  platform: P3
+  sonde_id: P3-0123_s32
+- flag: GOOD
+  launch_time: 2020-01-23 20:14:45
+  platform: P3
+  sonde_id: P3-0123_s33
+- flag: GOOD
+  launch_time: 2020-01-23 20:19:55
+  platform: P3
+  sonde_id: P3-0123_s34
+- flag: GOOD
+  launch_time: 2020-01-23 20:25:08
+  platform: P3
+  sonde_id: P3-0123_s35
+- flag: GOOD
+  launch_time: 2020-01-23 20:30:30
+  platform: P3
+  sonde_id: P3-0123_s36
+- flag: GOOD
+  launch_time: 2020-01-23 20:35:35
+  platform: P3
+  sonde_id: P3-0123_s37
+- flag: UGLY
+  launch_time: 2020-01-23 20:40:39
+  platform: P3
+  sonde_id: P3-0123_s38
+- flag: GOOD
+  launch_time: 2020-01-24 18:25:39
+  platform: P3
+  sonde_id: P3-0124_s01
+- flag: GOOD
+  launch_time: 2020-01-24 18:32:04
+  platform: P3
+  sonde_id: P3-0124_s02
+- flag: GOOD
+  launch_time: 2020-01-24 18:38:01
+  platform: P3
+  sonde_id: P3-0124_s03
+- flag: GOOD
+  launch_time: 2020-01-24 18:44:02
+  platform: P3
+  sonde_id: P3-0124_s04
+- flag: UGLY
+  launch_time: 2020-01-24 18:50:10
+  platform: P3
+  sonde_id: P3-0124_s05
+- flag: GOOD
+  launch_time: 2020-01-24 18:55:59
+  platform: P3
+  sonde_id: P3-0124_s06
+- flag: GOOD
+  launch_time: 2020-01-24 19:01:49
+  platform: P3
+  sonde_id: P3-0124_s07
+- flag: GOOD
+  launch_time: 2020-01-24 19:07:35
+  platform: P3
+  sonde_id: P3-0124_s08
+- flag: GOOD
+  launch_time: 2020-01-24 19:13:54
+  platform: P3
+  sonde_id: P3-0124_s09
+- flag: GOOD
+  launch_time: 2020-01-24 19:20:06
+  platform: P3
+  sonde_id: P3-0124_s10
+- flag: GOOD
+  launch_time: 2020-01-24 19:26:31
+  platform: P3
+  sonde_id: P3-0124_s11
+- flag: GOOD
+  launch_time: 2020-01-24 19:32:27
+  platform: P3
+  sonde_id: P3-0124_s12
+- flag: GOOD
+  launch_time: 2020-01-24 19:37:09
+  platform: P3
+  sonde_id: P3-0124_s13
+- flag: GOOD
+  launch_time: 2020-01-24 19:42:33
+  platform: P3
+  sonde_id: P3-0124_s14
+- flag: GOOD
+  launch_time: 2020-01-24 19:48:19
+  platform: P3
+  sonde_id: P3-0124_s15
+- flag: GOOD
+  launch_time: 2020-01-24 19:54:04
+  platform: P3
+  sonde_id: P3-0124_s16
+- flag: UGLY
+  launch_time: 2020-01-31 16:25:10
+  platform: P3
+  sonde_id: P3-0131_s01
+- flag: UGLY
+  launch_time: 2020-01-31 16:30:04
+  platform: P3
+  sonde_id: P3-0131_s02
+- flag: GOOD
+  launch_time: 2020-01-31 16:35:15
+  platform: P3
+  sonde_id: P3-0131_s03
+- flag: GOOD
+  launch_time: 2020-01-31 16:40:10
+  platform: P3
+  sonde_id: P3-0131_s04
+- flag: GOOD
+  launch_time: 2020-01-31 16:44:55
+  platform: P3
+  sonde_id: P3-0131_s05
+- flag: GOOD
+  launch_time: 2020-01-31 16:49:32
+  platform: P3
+  sonde_id: P3-0131_s06
+- flag: UGLY
+  launch_time: 2020-01-31 16:54:09
+  platform: P3
+  sonde_id: P3-0131_s07
+- flag: UGLY
+  launch_time: 2020-01-31 16:58:39
+  platform: P3
+  sonde_id: P3-0131_s08
+- flag: GOOD
+  launch_time: 2020-01-31 17:03:37
+  platform: P3
+  sonde_id: P3-0131_s09
+- flag: GOOD
+  launch_time: 2020-01-31 17:08:08
+  platform: P3
+  sonde_id: P3-0131_s10
+- flag: GOOD
+  launch_time: 2020-01-31 17:13:49
+  platform: P3
+  sonde_id: P3-0131_s11
+- flag: BAD
+  launch_time: 2020-01-31 17:18:54
+  platform: P3
+  sonde_id: P3-0131_s12
+- flag: GOOD
+  launch_time: 2020-01-31 18:04:45
+  platform: P3
+  sonde_id: P3-0131_s13
+- flag: BAD
+  launch_time: 2020-01-31 18:18:14
+  platform: P3
+  sonde_id: P3-0131_s14
+- flag: GOOD
+  launch_time: 2020-01-31 18:23:37
+  platform: P3
+  sonde_id: P3-0131_s15
+- flag: GOOD
+  launch_time: 2020-01-31 18:57:57
+  platform: P3
+  sonde_id: P3-0131_s16
+- flag: GOOD
+  launch_time: 2020-01-31 19:23:09
+  platform: P3
+  sonde_id: P3-0131_s17
+- flag: GOOD
+  launch_time: 2020-01-31 19:30:39
+  platform: P3
+  sonde_id: P3-0131_s18
+- flag: GOOD
+  launch_time: 2020-01-31 19:35:39
+  platform: P3
+  sonde_id: P3-0131_s19
+- flag: GOOD
+  launch_time: 2020-01-31 19:42:52
+  platform: P3
+  sonde_id: P3-0131_s20
+- flag: GOOD
+  launch_time: 2020-01-31 21:16:28
+  platform: P3
+  sonde_id: P3-0131_s21
+- flag: GOOD
+  launch_time: 2020-01-31 21:20:43
+  platform: P3
+  sonde_id: P3-0131_s22
+- flag: UGLY
+  launch_time: 2020-01-31 21:25:19
+  platform: P3
+  sonde_id: P3-0131_s23
+- flag: UGLY
+  launch_time: 2020-01-31 21:29:36
+  platform: P3
+  sonde_id: P3-0131_s24
+- flag: GOOD
+  launch_time: 2020-01-31 21:32:55
+  platform: P3
+  sonde_id: P3-0131_s25
+- flag: GOOD
+  launch_time: 2020-02-03 13:41:38
+  platform: P3
+  sonde_id: P3-0203_s01
+- flag: GOOD
+  launch_time: 2020-02-03 13:49:56
+  platform: P3
+  sonde_id: P3-0203_s02
+- flag: GOOD
+  launch_time: 2020-02-03 13:57:43
+  platform: P3
+  sonde_id: P3-0203_s03
+- flag: GOOD
+  launch_time: 2020-02-03 14:05:22
+  platform: P3
+  sonde_id: P3-0203_s04
+- flag: GOOD
+  launch_time: 2020-02-03 14:13:22
+  platform: P3
+  sonde_id: P3-0203_s05
+- flag: GOOD
+  launch_time: 2020-02-03 14:18:24
+  platform: P3
+  sonde_id: P3-0203_s06
+- flag: GOOD
+  launch_time: 2020-02-03 14:23:46
+  platform: P3
+  sonde_id: P3-0203_s07
+- flag: BAD
+  launch_time: 2020-02-03 14:28:26
+  platform: P3
+  sonde_id: P3-0203_s08
+- flag: GOOD
+  launch_time: 2020-02-03 14:29:33
+  platform: P3
+  sonde_id: P3-0203_s09
+- flag: GOOD
+  launch_time: 2020-02-03 14:33:46
+  platform: P3
+  sonde_id: P3-0203_s10
+- flag: GOOD
+  launch_time: 2020-02-03 14:38:05
+  platform: P3
+  sonde_id: P3-0203_s11
+- flag: BAD
+  launch_time: 2020-02-03 14:42:45
+  platform: P3
+  sonde_id: P3-0203_s12
+- flag: GOOD
+  launch_time: 2020-02-03 14:47:28
+  platform: P3
+  sonde_id: P3-0203_s13
+- flag: GOOD
+  launch_time: 2020-02-03 14:52:11
+  platform: P3
+  sonde_id: P3-0203_s14
+- flag: GOOD
+  launch_time: 2020-02-03 14:57:04
+  platform: P3
+  sonde_id: P3-0203_s15
+- flag: GOOD
+  launch_time: 2020-02-03 15:01:55
+  platform: P3
+  sonde_id: P3-0203_s16
+- flag: GOOD
+  launch_time: 2020-02-03 15:06:44
+  platform: P3
+  sonde_id: P3-0203_s17
+- flag: GOOD
+  launch_time: 2020-02-03 15:45:47
+  platform: P3
+  sonde_id: P3-0203_s18
+- flag: UGLY
+  launch_time: 2020-02-03 16:02:26
+  platform: P3
+  sonde_id: P3-0203_s19
+- flag: UGLY
+  launch_time: 2020-02-03 16:34:13
+  platform: P3
+  sonde_id: P3-0203_s20
+- flag: GOOD
+  launch_time: 2020-02-03 17:02:51
+  platform: P3
+  sonde_id: P3-0203_s21
+- flag: UGLY
+  launch_time: 2020-02-03 17:22:45
+  platform: P3
+  sonde_id: P3-0203_s22
+- flag: GOOD
+  launch_time: 2020-02-04 13:43:24
+  platform: P3
+  sonde_id: P3-0204_s01
+- flag: GOOD
+  launch_time: 2020-02-04 13:51:22
+  platform: P3
+  sonde_id: P3-0204_s02
+- flag: GOOD
+  launch_time: 2020-02-04 13:58:43
+  platform: P3
+  sonde_id: P3-0204_s03
+- flag: GOOD
+  launch_time: 2020-02-04 14:05:41
+  platform: P3
+  sonde_id: P3-0204_s04
+- flag: GOOD
+  launch_time: 2020-02-04 14:14:52
+  platform: P3
+  sonde_id: P3-0204_s05
+- flag: GOOD
+  launch_time: 2020-02-04 14:24:45
+  platform: P3
+  sonde_id: P3-0204_s06
+- flag: GOOD
+  launch_time: 2020-02-04 14:29:32
+  platform: P3
+  sonde_id: P3-0204_s07
+- flag: GOOD
+  launch_time: 2020-02-04 14:34:44
+  platform: P3
+  sonde_id: P3-0204_s08
+- flag: GOOD
+  launch_time: 2020-02-04 14:39:03
+  platform: P3
+  sonde_id: P3-0204_s09
+- flag: GOOD
+  launch_time: 2020-02-04 14:43:09
+  platform: P3
+  sonde_id: P3-0204_s10
+- flag: GOOD
+  launch_time: 2020-02-04 14:47:54
+  platform: P3
+  sonde_id: P3-0204_s11
+- flag: GOOD
+  launch_time: 2020-02-04 14:53:34
+  platform: P3
+  sonde_id: P3-0204_s12
+- flag: GOOD
+  launch_time: 2020-02-04 14:58:02
+  platform: P3
+  sonde_id: P3-0204_s13
+- flag: UGLY
+  launch_time: 2020-02-04 15:03:41
+  platform: P3
+  sonde_id: P3-0204_s14
+- flag: GOOD
+  launch_time: 2020-02-04 15:08:53
+  platform: P3
+  sonde_id: P3-0204_s15
+- flag: GOOD
+  launch_time: 2020-02-04 15:14:13
+  platform: P3
+  sonde_id: P3-0204_s16
+- flag: GOOD
+  launch_time: 2020-02-04 15:19:28
+  platform: P3
+  sonde_id: P3-0204_s17
+- flag: GOOD
+  launch_time: 2020-02-04 15:27:55
+  platform: P3
+  sonde_id: P3-0204_s18
+- flag: BAD
+  launch_time: 2020-02-04 16:02:05
+  platform: P3
+  sonde_id: P3-0204_s19
+- flag: GOOD
+  launch_time: 2020-02-04 16:05:19
+  platform: P3
+  sonde_id: P3-0204_s20
+- flag: GOOD
+  launch_time: 2020-02-04 16:08:33
+  platform: P3
+  sonde_id: P3-0204_s21
+- flag: GOOD
+  launch_time: 2020-02-04 16:11:07
+  platform: P3
+  sonde_id: P3-0204_s22
+- flag: GOOD
+  launch_time: 2020-02-04 16:13:07
+  platform: P3
+  sonde_id: P3-0204_s23
+- flag: UGLY
+  launch_time: 2020-02-04 18:56:29
+  platform: P3
+  sonde_id: P3-0204_s24
+- flag: GOOD
+  launch_time: 2020-02-04 19:00:11
+  platform: P3
+  sonde_id: P3-0204_s25
+- flag: GOOD
+  launch_time: 2020-02-04 19:03:25
+  platform: P3
+  sonde_id: P3-0204_s26
+- flag: GOOD
+  launch_time: 2020-02-04 19:06:34
+  platform: P3
+  sonde_id: P3-0204_s27
+- flag: GOOD
+  launch_time: 2020-02-04 20:35:26
+  platform: P3
+  sonde_id: P3-0204_s28
+- flag: GOOD
+  launch_time: 2020-02-04 20:42:20
+  platform: P3
+  sonde_id: P3-0204_s29
+- flag: GOOD
+  launch_time: 2020-02-04 20:46:56
+  platform: P3
+  sonde_id: P3-0204_s30
+- flag: GOOD
+  launch_time: 2020-02-04 20:51:42
+  platform: P3
+  sonde_id: P3-0204_s31
+- flag: GOOD
+  launch_time: 2020-02-05 14:01:29
+  platform: P3
+  sonde_id: P3-0205_s01
+- flag: GOOD
+  launch_time: 2020-02-05 14:09:44
+  platform: P3
+  sonde_id: P3-0205_s02
+- flag: GOOD
+  launch_time: 2020-02-05 14:17:43
+  platform: P3
+  sonde_id: P3-0205_s03
+- flag: GOOD
+  launch_time: 2020-02-05 14:25:19
+  platform: P3
+  sonde_id: P3-0205_s04
+- flag: UGLY
+  launch_time: 2020-02-05 14:41:29
+  platform: P3
+  sonde_id: P3-0205_s05
+- flag: GOOD
+  launch_time: 2020-02-05 14:45:38
+  platform: P3
+  sonde_id: P3-0205_s06
+- flag: UGLY
+  launch_time: 2020-02-05 14:49:51
+  platform: P3
+  sonde_id: P3-0205_s07
+- flag: GOOD
+  launch_time: 2020-02-05 14:55:24
+  platform: P3
+  sonde_id: P3-0205_s08
+- flag: GOOD
+  launch_time: 2020-02-05 14:59:56
+  platform: P3
+  sonde_id: P3-0205_s09
+- flag: GOOD
+  launch_time: 2020-02-05 15:04:12
+  platform: P3
+  sonde_id: P3-0205_s10
+- flag: GOOD
+  launch_time: 2020-02-05 15:10:53
+  platform: P3
+  sonde_id: P3-0205_s11
+- flag: GOOD
+  launch_time: 2020-02-05 15:15:56
+  platform: P3
+  sonde_id: P3-0205_s12
+- flag: GOOD
+  launch_time: 2020-02-05 15:20:50
+  platform: P3
+  sonde_id: P3-0205_s13
+- flag: GOOD
+  launch_time: 2020-02-05 15:26:59
+  platform: P3
+  sonde_id: P3-0205_s14
+- flag: GOOD
+  launch_time: 2020-02-05 15:31:47
+  platform: P3
+  sonde_id: P3-0205_s15
+- flag: GOOD
+  launch_time: 2020-02-05 15:36:38
+  platform: P3
+  sonde_id: P3-0205_s16
+- flag: GOOD
+  launch_time: 2020-02-05 16:22:01
+  platform: P3
+  sonde_id: P3-0205_s17
+- flag: GOOD
+  launch_time: 2020-02-05 16:27:13
+  platform: P3
+  sonde_id: P3-0205_s18
+- flag: UGLY
+  launch_time: 2020-02-05 16:32:27
+  platform: P3
+  sonde_id: P3-0205_s19
+- flag: GOOD
+  launch_time: 2020-02-05 16:36:55
+  platform: P3
+  sonde_id: P3-0205_s20
+- flag: UGLY
+  launch_time: 2020-02-05 18:54:12
+  platform: P3
+  sonde_id: P3-0205_s21
+- flag: GOOD
+  launch_time: 2020-02-05 18:57:43
+  platform: P3
+  sonde_id: P3-0205_s22
+- flag: UGLY
+  launch_time: 2020-02-05 19:01:13
+  platform: P3
+  sonde_id: P3-0205_s23
+- flag: GOOD
+  launch_time: 2020-02-05 19:03:28
+  platform: P3
+  sonde_id: P3-0205_s24
+- flag: UGLY
+  launch_time: 2020-02-05 19:15:02
+  platform: P3
+  sonde_id: P3-0205_s25
+- flag: GOOD
+  launch_time: 2020-02-05 19:30:37
+  platform: P3
+  sonde_id: P3-0205_s26
+- flag: GOOD
+  launch_time: 2020-02-05 19:35:11
+  platform: P3
+  sonde_id: P3-0205_s27
+- flag: GOOD
+  launch_time: 2020-02-05 19:40:05
+  platform: P3
+  sonde_id: P3-0205_s28
+- flag: GOOD
+  launch_time: 2020-02-05 19:46:20
+  platform: P3
+  sonde_id: P3-0205_s29
+- flag: GOOD
+  launch_time: 2020-02-09 03:33:25
+  platform: P3
+  sonde_id: P3-0209_s01
+- flag: GOOD
+  launch_time: 2020-02-09 03:38:58
+  platform: P3
+  sonde_id: P3-0209_s02
+- flag: GOOD
+  launch_time: 2020-02-09 03:43:08
+  platform: P3
+  sonde_id: P3-0209_s03
+- flag: GOOD
+  launch_time: 2020-02-09 03:46:26
+  platform: P3
+  sonde_id: P3-0209_s04
+- flag: GOOD
+  launch_time: 2020-02-09 04:18:28
+  platform: P3
+  sonde_id: P3-0209_s05
+- flag: GOOD
+  launch_time: 2020-02-09 04:25:30
+  platform: P3
+  sonde_id: P3-0209_s06
+- flag: UGLY
+  launch_time: 2020-02-09 04:32:25
+  platform: P3
+  sonde_id: P3-0209_s07
+- flag: GOOD
+  launch_time: 2020-02-09 04:39:47
+  platform: P3
+  sonde_id: P3-0209_s08
+- flag: GOOD
+  launch_time: 2020-02-09 04:47:44
+  platform: P3
+  sonde_id: P3-0209_s09
+- flag: GOOD
+  launch_time: 2020-02-09 04:55:21
+  platform: P3
+  sonde_id: P3-0209_s10
+- flag: GOOD
+  launch_time: 2020-02-09 05:02:07
+  platform: P3
+  sonde_id: P3-0209_s11
+- flag: GOOD
+  launch_time: 2020-02-09 05:08:33
+  platform: P3
+  sonde_id: P3-0209_s12
+- flag: GOOD
+  launch_time: 2020-02-09 05:14:43
+  platform: P3
+  sonde_id: P3-0209_s13
+- flag: GOOD
+  launch_time: 2020-02-09 05:20:18
+  platform: P3
+  sonde_id: P3-0209_s14
+- flag: GOOD
+  launch_time: 2020-02-09 05:26:01
+  platform: P3
+  sonde_id: P3-0209_s15
+- flag: UGLY
+  launch_time: 2020-02-09 05:32:14
+  platform: P3
+  sonde_id: P3-0209_s16
+- flag: GOOD
+  launch_time: 2020-02-09 05:57:49
+  platform: P3
+  sonde_id: P3-0209_s17
+- flag: GOOD
+  launch_time: 2020-02-09 06:03:06
+  platform: P3
+  sonde_id: P3-0209_s18
+- flag: GOOD
+  launch_time: 2020-02-09 06:08:13
+  platform: P3
+  sonde_id: P3-0209_s19
+- flag: GOOD
+  launch_time: 2020-02-09 06:13:05
+  platform: P3
+  sonde_id: P3-0209_s20
+- flag: GOOD
+  launch_time: 2020-02-09 06:17:58
+  platform: P3
+  sonde_id: P3-0209_s21
+- flag: GOOD
+  launch_time: 2020-02-09 06:22:36
+  platform: P3
+  sonde_id: P3-0209_s22
+- flag: GOOD
+  launch_time: 2020-02-09 06:27:16
+  platform: P3
+  sonde_id: P3-0209_s23
+- flag: GOOD
+  launch_time: 2020-02-09 06:32:13
+  platform: P3
+  sonde_id: P3-0209_s24
+- flag: UGLY
+  launch_time: 2020-02-09 06:37:30
+  platform: P3
+  sonde_id: P3-0209_s25
+- flag: UGLY
+  launch_time: 2020-02-09 06:43:38
+  platform: P3
+  sonde_id: P3-0209_s26
+- flag: GOOD
+  launch_time: 2020-02-09 06:48:23
+  platform: P3
+  sonde_id: P3-0209_s27
+- flag: GOOD
+  launch_time: 2020-02-09 06:53:50
+  platform: P3
+  sonde_id: P3-0209_s28
+- flag: UGLY
+  launch_time: 2020-02-09 07:39:55
+  platform: P3
+  sonde_id: P3-0209_s29
+- flag: BAD
+  launch_time: 2020-02-09 07:50:32
+  platform: P3
+  sonde_id: P3-0209_s30
+- flag: UGLY
+  launch_time: 2020-02-09 07:54:50
+  platform: P3
+  sonde_id: P3-0209_s31
+- flag: GOOD
+  launch_time: 2020-02-09 08:00:41
+  platform: P3
+  sonde_id: P3-0209_s32
+- flag: GOOD
+  launch_time: 2020-02-10 03:32:33
+  platform: P3
+  sonde_id: P3-0210_s01
+- flag: GOOD
+  launch_time: 2020-02-10 03:37:56
+  platform: P3
+  sonde_id: P3-0210_s02
+- flag: GOOD
+  launch_time: 2020-02-10 03:44:32
+  platform: P3
+  sonde_id: P3-0210_s03
+- flag: GOOD
+  launch_time: 2020-02-10 03:49:27
+  platform: P3
+  sonde_id: P3-0210_s04
+- flag: GOOD
+  launch_time: 2020-02-10 04:18:25
+  platform: P3
+  sonde_id: P3-0210_s05
+- flag: UGLY
+  launch_time: 2020-02-10 04:24:21
+  platform: P3
+  sonde_id: P3-0210_s06
+- flag: UGLY
+  launch_time: 2020-02-10 04:31:04
+  platform: P3
+  sonde_id: P3-0210_s07
+- flag: GOOD
+  launch_time: 2020-02-10 04:37:05
+  platform: P3
+  sonde_id: P3-0210_s08
+- flag: GOOD
+  launch_time: 2020-02-10 04:43:23
+  platform: P3
+  sonde_id: P3-0210_s09
+- flag: BAD
+  launch_time: 2020-02-10 04:49:31
+  platform: P3
+  sonde_id: P3-0210_s10
+- flag: GOOD
+  launch_time: 2020-02-10 04:55:38
+  platform: P3
+  sonde_id: P3-0210_s11
+- flag: BAD
+  launch_time: 2020-02-10 05:01:14
+  platform: P3
+  sonde_id: P3-0210_s12
+- flag: UGLY
+  launch_time: 2020-02-10 05:06:48
+  platform: P3
+  sonde_id: P3-0210_s13
+- flag: GOOD
+  launch_time: 2020-02-10 05:12:16
+  platform: P3
+  sonde_id: P3-0210_s14
+- flag: GOOD
+  launch_time: 2020-02-10 05:17:48
+  platform: P3
+  sonde_id: P3-0210_s15
+- flag: GOOD
+  launch_time: 2020-02-10 05:23:44
+  platform: P3
+  sonde_id: P3-0210_s16
+- flag: GOOD
+  launch_time: 2020-02-10 05:46:43
+  platform: P3
+  sonde_id: P3-0210_s17
+- flag: GOOD
+  launch_time: 2020-02-10 05:51:30
+  platform: P3
+  sonde_id: P3-0210_s18
+- flag: GOOD
+  launch_time: 2020-02-10 05:56:42
+  platform: P3
+  sonde_id: P3-0210_s19
+- flag: GOOD
+  launch_time: 2020-02-10 06:01:39
+  platform: P3
+  sonde_id: P3-0210_s20
+- flag: GOOD
+  launch_time: 2020-02-10 06:06:18
+  platform: P3
+  sonde_id: P3-0210_s21
+- flag: GOOD
+  launch_time: 2020-02-10 06:10:57
+  platform: P3
+  sonde_id: P3-0210_s22
+- flag: GOOD
+  launch_time: 2020-02-10 06:15:44
+  platform: P3
+  sonde_id: P3-0210_s23
+- flag: GOOD
+  launch_time: 2020-02-10 06:19:41
+  platform: P3
+  sonde_id: P3-0210_s24
+- flag: BAD
+  launch_time: 2020-02-10 06:24:11
+  platform: P3
+  sonde_id: P3-0210_s25
+- flag: GOOD
+  launch_time: 2020-02-10 06:28:54
+  platform: P3
+  sonde_id: P3-0210_s26
+- flag: GOOD
+  launch_time: 2020-02-10 06:34:33
+  platform: P3
+  sonde_id: P3-0210_s27
+- flag: GOOD
+  launch_time: 2020-02-10 06:39:48
+  platform: P3
+  sonde_id: P3-0210_s28
+- flag: GOOD
+  launch_time: 2020-02-10 08:37:23
+  platform: P3
+  sonde_id: P3-0210_s29
+- flag: GOOD
+  launch_time: 2020-02-10 08:42:40
+  platform: P3
+  sonde_id: P3-0210_s30
+- flag: GOOD
+  launch_time: 2020-02-10 08:47:59
+  platform: P3
+  sonde_id: P3-0210_s31
+- flag: GOOD
+  launch_time: 2020-02-10 08:57:47
+  platform: P3
+  sonde_id: P3-0210_s32
+- flag: GOOD
+  launch_time: 2020-02-11 04:50:05
+  platform: P3
+  sonde_id: P3-0211_s01
+- flag: GOOD
+  launch_time: 2020-02-11 04:53:25
+  platform: P3
+  sonde_id: P3-0211_s02
+- flag: GOOD
+  launch_time: 2020-02-11 04:56:31
+  platform: P3
+  sonde_id: P3-0211_s03
+- flag: GOOD
+  launch_time: 2020-02-11 04:59:54
+  platform: P3
+  sonde_id: P3-0211_s04
+- flag: GOOD
+  launch_time: 2020-02-11 05:32:26
+  platform: P3
+  sonde_id: P3-0211_s05
+- flag: GOOD
+  launch_time: 2020-02-11 05:38:45
+  platform: P3
+  sonde_id: P3-0211_s06
+- flag: GOOD
+  launch_time: 2020-02-11 05:45:23
+  platform: P3
+  sonde_id: P3-0211_s07
+- flag: GOOD
+  launch_time: 2020-02-11 05:51:53
+  platform: P3
+  sonde_id: P3-0211_s08
+- flag: GOOD
+  launch_time: 2020-02-11 05:58:03
+  platform: P3
+  sonde_id: P3-0211_s09
+- flag: GOOD
+  launch_time: 2020-02-11 06:04:28
+  platform: P3
+  sonde_id: P3-0211_s10
+- flag: GOOD
+  launch_time: 2020-02-11 06:10:29
+  platform: P3
+  sonde_id: P3-0211_s11
+- flag: GOOD
+  launch_time: 2020-02-11 06:15:53
+  platform: P3
+  sonde_id: P3-0211_s12
+- flag: GOOD
+  launch_time: 2020-02-11 06:21:05
+  platform: P3
+  sonde_id: P3-0211_s13
+- flag: GOOD
+  launch_time: 2020-02-11 06:26:30
+  platform: P3
+  sonde_id: P3-0211_s14
+- flag: GOOD
+  launch_time: 2020-02-11 06:32:13
+  platform: P3
+  sonde_id: P3-0211_s15
+- flag: GOOD
+  launch_time: 2020-02-11 06:38:08
+  platform: P3
+  sonde_id: P3-0211_s16
+- flag: GOOD
+  launch_time: 2020-02-11 06:49:53
+  platform: P3
+  sonde_id: P3-0211_s17
+- flag: GOOD
+  launch_time: 2020-02-11 06:54:40
+  platform: P3
+  sonde_id: P3-0211_s18
+- flag: GOOD
+  launch_time: 2020-02-11 06:59:33
+  platform: P3
+  sonde_id: P3-0211_s19
+- flag: UGLY
+  launch_time: 2020-02-11 07:04:27
+  platform: P3
+  sonde_id: P3-0211_s20
+- flag: GOOD
+  launch_time: 2020-02-11 07:08:48
+  platform: P3
+  sonde_id: P3-0211_s21
+- flag: GOOD
+  launch_time: 2020-02-11 07:15:19
+  platform: P3
+  sonde_id: P3-0211_s22
+- flag: GOOD
+  launch_time: 2020-02-11 07:18:17
+  platform: P3
+  sonde_id: P3-0211_s23
+- flag: BAD
+  launch_time: 2020-02-11 07:27:16
+  platform: P3
+  sonde_id: P3-0211_s24
+- flag: GOOD
+  launch_time: 2020-02-11 07:22:16
+  platform: P3
+  sonde_id: P3-0211_s25
+- flag: UGLY
+  launch_time: 2020-02-11 07:28:11
+  platform: P3
+  sonde_id: P3-0211_s26
+- flag: GOOD
+  launch_time: 2020-02-11 07:32:31
+  platform: P3
+  sonde_id: P3-0211_s27
+- flag: GOOD
+  launch_time: 2020-02-11 07:37:51
+  platform: P3
+  sonde_id: P3-0211_s28
+- flag: GOOD
+  launch_time: 2020-02-11 07:43:39
+  platform: P3
+  sonde_id: P3-0211_s29
+- flag: UGLY
+  launch_time: 2020-02-11 08:25:39
+  platform: P3
+  sonde_id: P3-0211_s30
+- flag: UGLY
+  launch_time: 2020-02-11 08:24:55
+  platform: P3
+  sonde_id: P3-0211_s31
+- flag: GOOD
+  launch_time: 2020-02-11 08:39:52
+  platform: P3
+  sonde_id: P3-0211_s32
+- flag: GOOD
+  launch_time: 2020-02-11 08:44:51
+  platform: P3
+  sonde_id: P3-0211_s33
+- flag: GOOD
+  launch_time: 2020-02-11 08:51:32
+  platform: P3
+  sonde_id: P3-0211_s34
+- flag: GOOD
+  launch_time: 2020-02-11 08:55:36
+  platform: P3
+  sonde_id: P3-0211_s35
+- flag: UGLY
+  launch_time: 2020-02-11 09:00:19
+  platform: P3
+  sonde_id: P3-0211_s36
+- flag: UGLY
+  launch_time: 2020-02-11 09:04:56
+  platform: P3
+  sonde_id: P3-0211_s37
+- flag: GOOD
+  launch_time: 2020-02-11 09:12:16
+  platform: P3
+  sonde_id: P3-0211_s38
+- flag: GOOD
+  launch_time: 2020-02-11 09:17:19
+  platform: P3
+  sonde_id: P3-0211_s39
+- flag: GOOD
+  launch_time: 2020-02-11 09:22:18
+  platform: P3
+  sonde_id: P3-0211_s40
+- flag: GOOD
+  launch_time: 2020-02-11 09:27:27
+  platform: P3
+  sonde_id: P3-0211_s41
+- flag: GOOD
+  launch_time: 2020-02-11 09:34:34
+  platform: P3
+  sonde_id: P3-0211_s42
+- flag: GOOD
+  launch_time: 2020-02-11 09:43:11
+  platform: P3
+  sonde_id: P3-0211_s43
+- flag: UGLY
+  launch_time: 2020-02-11 09:48:23
+  platform: P3
+  sonde_id: P3-0211_s44
