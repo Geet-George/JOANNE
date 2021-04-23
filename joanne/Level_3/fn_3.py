@@ -694,7 +694,7 @@ def get_N_and_m_values(interp_dataset, original_dataset, bin_length=10):
     Function to estimate number of observations in bin and the method for retrieving 
     data in the bin, i.e. either no data, interpolation or averaging    
     """
-    interp_dataset["N_ptu"] = xr.DataArray(
+    interp_dataset["N_p"] = xr.DataArray(
         original_dataset.p.groupby_bins(
             "alt",
             interpolation_bins,
@@ -706,7 +706,30 @@ def get_N_and_m_values(interp_dataset, original_dataset, bin_length=10):
         dims=["alt"],
         coords={"alt": interp_dataset.alt.values},
     )
-
+    interp_dataset["N_ta"] = xr.DataArray(
+        original_dataset.ta.groupby_bins(
+            "alt",
+            interpolation_bins,
+            labels=interpolation_grid,
+            restore_coord_dims=True,
+        )
+        .count()
+        .values,
+        dims=["alt"],
+        coords={"alt": interp_dataset.alt.values},
+    )
+    interp_dataset["N_rh"] = xr.DataArray(
+        original_dataset.rh.groupby_bins(
+            "alt",
+            interpolation_bins,
+            labels=interpolation_grid,
+            restore_coord_dims=True,
+        )
+        .count()
+        .values,
+        dims=["alt"],
+        coords={"alt": interp_dataset.alt.values},
+    )
     interp_dataset["N_gps"] = xr.DataArray(
         original_dataset.u.groupby_bins(
             "alt",
@@ -720,19 +743,37 @@ def get_N_and_m_values(interp_dataset, original_dataset, bin_length=10):
         coords={"alt": interp_dataset.alt.values},
     )
 
-    m_ptu = interp_dataset["N_ptu"].values.astype(int)
+    m_p = interp_dataset["N_p"].values.astype(int)
+    m_ta = interp_dataset["N_ta"].values.astype(int)
+    m_rh = interp_dataset["N_rh"].values.astype(int)
     m_gps = interp_dataset["N_gps"].values.astype(int)
 
-    m_ptu[(m_ptu == np.isnan)] = np.int8(0)
-    m_ptu[(m_ptu == 1)] = np.int8(1)
-    m_ptu[(m_ptu > 1)] = np.int8(2)
+    m_p[(m_p == np.isnan)] = np.int8(0)
+    m_p[(m_p == 1)] = np.int8(1)
+    m_p[(m_p > 1)] = np.int8(2)
+
+    m_ta[(m_ta == np.isnan)] = np.int8(0)
+    m_ta[(m_ta == 1)] = np.int8(1)
+    m_ta[(m_ta > 1)] = np.int8(2)
+
+    m_rh[(m_rh == np.isnan)] = np.int8(0)
+    m_rh[(m_rh == 1)] = np.int8(1)
+    m_rh[(m_rh > 1)] = np.int8(2)
 
     m_gps[(m_gps == np.isnan)] = np.int8(0)
     m_gps[(m_gps == 1)] = np.int8(1)
     m_gps[(m_gps > 1)] = np.int8(2)
 
-    interp_dataset["m_ptu"] = xr.DataArray(
-        m_ptu, dims=["alt"], coords={"alt": interp_dataset.alt.values},
+    interp_dataset["m_p"] = xr.DataArray(
+        m_p, dims=["alt"], coords={"alt": interp_dataset.alt.values},
+    ).astype("int8")
+
+    interp_dataset["m_ta"] = xr.DataArray(
+        m_ta, dims=["alt"], coords={"alt": interp_dataset.alt.values},
+    ).astype("int8")
+
+    interp_dataset["m_rh"] = xr.DataArray(
+        m_rh, dims=["alt"], coords={"alt": interp_dataset.alt.values},
     ).astype("int8")
 
     interp_dataset["m_gps"] = xr.DataArray(
