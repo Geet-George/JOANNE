@@ -146,7 +146,7 @@ def get_global_attrs(Platform, file_time, sonde_ds):
     nc_global_attrs = {
         "title": "EUREC4A JOANNE Level-2",
         "history": "created with JOANNE (https://github.com/Geet-George/JOANNE/)",
-        "conventions": "CF-1.8",
+        "Conventions": "CF-1.8",
         "campaign_id": "EUREC4A",
         "project_id": "JOANNE",
         "platform_id": Platform,

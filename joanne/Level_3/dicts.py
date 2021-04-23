@@ -74,7 +74,7 @@ nc_attrs = {
     },
     "alt": {
         "standard_name": "geopotential_height",
-        "long_name": "geopotential Height",
+        "long_name": "geopotential height",
         "description": "height obtained by integrating upwards the atmospheric thickness estimated from the hypsometric equation",
         "units": "m",
         "axis": "Z",
@@ -143,7 +143,7 @@ nc_attrs = {
     "wdir": {
         "standard_name": "wind_from_direction",
         "long_name": "wind direction",
-        "units": "degrees",
+        "units": "degree",
         "coordinates": "launch_time lon lat alt",
     },
     # "PW": {
@@ -225,6 +225,7 @@ nc_attrs = {
         "units": "",
     },
     "interpolated_time": {
+        "standard_name": "time",
         "long_name": "interpolated time",
         "description": "value of time (originally independent dimension) linearly interpolated to altitude grid",
         "coordinates": "launch_time lon lat alt",
@@ -266,7 +267,7 @@ nc_dims = {
 nc_global_attrs = {
     "title": "EUREC4A JOANNE Level-3",
     "history": "created with JOANNE (https://github.com/Geet-George/JOANNE/)",
-    "conventions": "CF-1.8",
+    "Conventions": "CF-1.8",
     "campaign_id": "EUREC4A",
     "project_id": "JOANNE",
     "instrument_id": "Vaisala RD-41",
