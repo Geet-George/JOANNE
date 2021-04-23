@@ -3,6 +3,7 @@ import yaml
 import glob
 import xarray as xr
 import numpy as np
+from packaging import version
 
 from datetime import date
 import datetime
@@ -16,12 +17,16 @@ import circle_fit as cf
 yaml_directory = "/Users/geet/Documents/JOANNE/joanne/flight_segments/"
 lv3_directory = "/Users/geet/Documents/JOANNE/Data/Level_3/"
 
-lv3_filename = sorted(
-    glob.glob(
-        lv3_directory
-        + f"EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v{joanne.__version__[:3]}*.nc"
-    )
-)[-1]
+lv3_files = sorted(
+    glob.glob(lv3_directory + f"EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v*.nc")
+)
+
+vers = [None] * len(lv3_files)
+
+for n, i in enumerate(lv3_files):
+    vers[n] = version.parse(i)
+
+lv3_filename = str(max(vers))
 
 
 def get_level3_dataset(lv3_directory=lv3_directory, lv3_filename=lv3_filename):
@@ -85,7 +90,7 @@ def dim_ready_ds(ds_lv3=get_level3_dataset()):
     dims_to_drop = ["sounding"]
 
     all_sondes = (
-        ds_lv3.swap_dims({"sounding": "launch_time"})
+        ds_lv3.swap_dims({"sounding": "sonde_id"})
         # .swap_dims({"obs": "alt"})
         .drop(dims_to_drop)
     )
@@ -117,7 +122,7 @@ def get_circles(
             if len(sonde_ids[i]) != 0:
                 circles.append(ds_fn.sel(sonde_id=sonde_ids[i][j]))
                 # .swap_dims(
-                # {"sonde_id": "launch_time"}
+                # {"sonde_id": "sonde_id"}
                 # )
                 # )
 
@@ -188,8 +193,8 @@ def get_xy_coords_for_circles(circles):
         delta_x = x_coor - xc  # *111*1000 # difference of sonde long from mean long
         delta_y = y_coor - yc  # *111*1000 # difference of sonde lat from mean lat
 
-        circles[i]["platform"] = circles[i].platform.values[0]
-        circles[i]["flight_height"] = circles[i].flight_height.mean().values
+        circles[i]["platform_id"] = circles[i].platform_id.values[0]
+        circles[i]["flight_altitude"] = circles[i].flight_altitude.mean().values
         circles[i]["circle_time"] = (
             circles[i].launch_time.mean().values.astype("datetime64")
         )

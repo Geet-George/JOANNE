@@ -94,7 +94,7 @@ encoding = {}
 encoding = {
     var: comp
     for var in to_save_ds.data_vars
-    if var not in ["platform", "segment_id", "sonde_id"]
+    if var not in ["platform_id", "segment_id", "sonde_id"]
 }
 
 encoding["circle_time"] = {"units": "seconds since 2020-01-01"}

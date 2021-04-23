@@ -200,31 +200,34 @@ def get_div_and_vor(circle):
     return print("Finished estimating divergence and vorticity for all circles....")
 
 
-def get_vertical_velocity(circle):
-    # def get_density_vertical_velocity_and_omega(circle):
+# def get_vertical_velocity(circle):
+def get_density_vertical_velocity_and_omega(circle):
 
-    # den_m = [None] * len(circle.launch_time)
+    den_m = [None] * len(circle.sounding)
 
-    # for sounding in range(len(circle.launch_time)):
-    #     mr = mpcalc.mixing_ratio_from_specific_humidity(
-    #         circle.isel(launch_time=sounding).q_sounding.values
-    #     )
-    #     den_m[sounding] = mpcalc.density(
-    #         circle.isel(launch_time=sounding).p_sounding.values * units.Pa,
-    #         circle.isel(launch_time=sounding).ta_sounding.values * units.kelvin,
-    #         mr,
-    #     ).magnitude
+    for n in range(len(circle.sounding)):
+        if len(circle.isel(sounding=n).sonde_id.values) > 1:
+            mr = mpcalc.mixing_ratio_from_specific_humidity(
+                circle.isel(sounding=n).q_sounding.values
+            )
+            den_m[n] = mpcalc.density(
+                circle.isel(sounding=n).p_sounding.values * units.Pa,
+                circle.isel(sounding=n).ta_sounding.values * units.kelvin,
+                mr,
+            ).magnitude
+        else:
+            den_m[n] = np.nan
 
-    # circle["density"] = (["launch_time", "circle", "alt"], den_m)
-    # circle["mean_density"] = (["circle", "alt"], np.nanmean(den_m, axis=0))
+    circle["density"] = (["sounding", "circle", "alt"], den_m)
+    circle["mean_density"] = (["circle", "alt"], np.nanmean(den_m, axis=0))
 
     D = circle.D.values
-    # mean_den = circle.mean_density
+    mean_den = circle.mean_density
 
     nan_ids = np.where(np.isnan(D) == True)  # [0]
 
     w_vel = np.full([len(circle["circle"]), len(circle.alt)], np.nan)
-    # p_vel = np.full([len(circle["circle"]), len(circle.alt)], np.nan)
+    p_vel = np.full([len(circle["circle"]), len(circle.alt)], np.nan)
 
     w_vel[:, 0] = 0
     # last = 0
@@ -253,22 +256,22 @@ def get_vertical_velocity(circle):
                 ).values * 10 * (m - last)
                 last = m
 
-        # for n in range(1, len(circle.alt)):
+        for n in range(1, len(circle.alt)):
 
-        #     p_vel[cir, n] = (
-        #         -circle.mean_density.isel(circle=cir).isel(alt=n)
-        #         * 9.81
-        #         * w_vel[cir, n]
-        #         * 60
-        #         * 60
-        #         / 100
-        #     )
+            p_vel[cir, n] = (
+                -circle.mean_density.isel(circle=cir).isel(alt=n)
+                * 9.81
+                * w_vel[cir, n]
+                # * 60
+                # * 60
+                # / 100
+            )
 
     circle["W"] = (["circle", "alt"], w_vel)
-    # circle["omega"] = (["circle", "alt"], p_vel)
+    circle["omega"] = (["circle", "alt"], p_vel)
 
-    # return print("Finished estimating density, W and omega ...")
-    return print("Finished estimating W ...")
+    return print("Finished estimating density, W and omega ...")
+    # return print("Finished estimating W ...")
 
 
 def add_std_err_terms(all_cir):
@@ -338,7 +341,7 @@ def get_circle_products(circles):
 
     get_div_and_vor(circles)
 
-    get_vertical_velocity(circles)
+    get_density_vertical_velocity_and_omega(circles)
 
     circle_with_std_err = add_std_err_terms(circles)
 
