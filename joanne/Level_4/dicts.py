@@ -80,20 +80,20 @@ nc_attrs = {
         "standard_name": "sounding",
         "long_name": "sonde number",
         "units": "",
-        "axis": "T",
+        # "axis": "T",
     },
     "circle": {
         "standard_name": "time",
         "long_name": "circle number",
         "units": "",
-        "axis": "T",
+        # "axis": "T",
     },
     "launch_time": {
         "standard_name": "time",
         "long_name": "time of dropsonde launch",
         "units": "seconds since 2020-01-01",
         "calendar": "gregorian",
-        "axis": "T",
+        # "axis": "T",
     },
     "sonde_id": {
         "description": "unique sonde ID",
@@ -212,6 +212,7 @@ nc_attrs = {
         "long_name": "mean altitude of the aircraft during the circle",
         "units": "m",
         "coordinates": "circle",
+        "positive": "up",
     },
     "segment_id": {
         "description": "unique segment ID",
@@ -566,6 +567,7 @@ nc_dims = {
 
 nc_global_attrs = {
     "title": "EUREC4A JOANNE Level-4",
+    "history": "created with JOANNE (https://github.com/Geet-George/JOANNE/)",
     "Conventions": "CF-1.8",
     "campaign_id": "EUREC4A",
     "project_id": "JOANNE",
