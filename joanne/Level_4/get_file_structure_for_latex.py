@@ -13,14 +13,18 @@ directory = "/Users/geet/Documents/JOANNE/joanne/Level_4/"
 
 var_name = dicts.list_of_vars
 
-Dimensions = ["circle", "alt", "sounding"]
+Dimensions = [
+    "circle",
+]
 Coordinates = [
     "launch_time",
-    "flight_height",
-    "circle_x",
-    "circle_y",
-    "circle_radius",
-    "circle_time",
+    "alt",
+    # "flight_height",
+    "circle_lat",
+    "circle_lon",
+    # "circle_radius",
+    "segment_id",
+    "sounding",
 ]
 Variables = [
     var

@@ -13,8 +13,8 @@ directory = "/Users/geet/Documents/JOANNE/joanne/Level_3/"
 
 var_name = dicts.list_of_vars
 
-Dimensions = ["height", "sounding"]
-Coordinates = ["launch_time", "lat", "lon"]
+Dimensions = []
+Coordinates = ["alt", "lat", "lon", "sonde_id"]
 Variables = [
     var for var in var_name if (var not in Dimensions) & (var not in Coordinates)
 ]
@@ -23,7 +23,10 @@ Variables = [
 def string_table_row(var):
 
     desc = dicts.nc_attrs[var]["long_name"]
-    units = dicts.nc_attrs[var]["units"]
+    if var not in ["launch_time", "interpolated_time"]:
+        units = dicts.nc_attrs[var]["units"]
+    else:
+        units = "seconds since 2020-01-01"
     dims_list = dicts.nc_dims[var]
     dims = ", ".join(dims_list)
     str_trow = f" & {var} & {desc} & {units} & {dims} \\\ \\hline \n"
@@ -49,6 +52,10 @@ file = open(f"{directory}latex_table_Level_3_v{joanne.__version__}.txt", "w",)
 file.write("\\begin{table}[H]\n")
 file.write("\\centering\n")
 file.write(
+    "\caption{Table shows the structure for the Level-3 product, outlining the coordinates, variables and their corresponding descriptions, units and dimensions.}\n"
+)
+file.write("\label{l3}\n")
+file.write(
     "\\begin{tabular}{p{0.08\\linewidth} p{0.12\\linewidth} p{0.3\\linewidth} p{0.2\\linewidth} p{0.12\\linewidth}}\n"
 )
 file.write("\\hline\n")
@@ -58,12 +65,10 @@ for Object in ["Dimensions", "Coordinates", "Variables"]:
     rows_for_objects(Object)
 
 file.write("\\end{tabular}\n")
-file.write(
-    "\caption{Table shows the structure for the Level-3 product, outlining the dimensions, coordinates, variables and their corresponding descriptions, units and dimensions.}\n"
-)
-file.write("\label{l3}\n")
+
 
 file.write("\\end{table}")
 
 file.close()
 # %%
+
