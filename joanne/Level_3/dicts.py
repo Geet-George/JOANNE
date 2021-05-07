@@ -74,8 +74,6 @@ nc_attrs = {
     "launch_time": {
         "standard_name": "time",
         "long_name": "time of dropsonde launch",
-        # "units": "seconds since 2020-01-01 00:00:00 UTC",
-        # "calendar": "gregorian",
         "axis": "T",
     },
     "alt": {
@@ -102,69 +100,56 @@ nc_attrs = {
         "standard_name": "air_pressure",
         "long_name": "atmospheric pressure",
         "units": "Pa",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
     },
     "ta": {
         "standard_name": "air_temperature",
         "long_name": "dry bulb temperature",
         "units": "K",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
     },
     "theta": {
         "standard_name": "air_potential_temperature",
         "long_name": "air potential temperature",
         "units": "K",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
     },
     "rh": {
         "standard_name": "relative_humidity",
         "long_name": "relative humidity",
         "units": "",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
     },
     "q": {
         "standard_name": "specific_humidity",
         "long_name": "specific humidity",
         "units": "kg kg-1",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
     },
     "wspd": {
         "standard_name": "wind_speed",
         "long_name": "wind speed",
         "units": "m s-1",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
     },
     "u": {
         "standard_name": "eastward_wind",
         "long_name": "u-component of the wind",
         "units": "m s-1",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
     },
     "v": {
         "standard_name": "northward_wind",
         "long_name": "v-component of the wind",
         "units": "m s-1",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
     },
     "wdir": {
         "standard_name": "wind_from_direction",
         "long_name": "wind direction",
         "units": "degree",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
     },
-    # "PW": {
-    #     "standard_name": "precipitable_water",
-    #     "long_name": "integrated water vapour in the measured column",
-    #     "units": "kg m-2",
-    #     "coordinates": "launch_time",
-    # },
-    # "static_stability": {
-    #     "standard_name": "static_stability",
-    #     "long_name": "static stability",
-    #     "description": "gradient of potential temperature along the pressure grid",
-    #     "units": "K hPa-1",
-    #     "coordinates": "launch_time lon lat alt",
-    # },
     "low_height_flag": {
         "long_name": "flag if flight height < 4 km when dropsonde was launched",
         "flag_values": np.array([0, 1], dtype="int8"),
@@ -172,13 +157,6 @@ nc_attrs = {
         "units": "",
         "valid_range": "0, 1",
     },
-    # "cloud_flag": {
-    #     "long_name": "flag to indicate presence of cloud",
-    #     "flag_values": "1, 0",
-    #     "flag_meanings": "cloud no_cloud",
-    #     "units": "",
-    #     "valid_range": "0, 1",
-    # },
     "platform_id": {
         "standard_name": "platform_id",
         "long_name": "platform from which dropsonde was launched",
@@ -207,25 +185,25 @@ nc_attrs = {
     "N_p": {
         "long_name": "number of observations used to derive level 3 pressure data",
         "units": "",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
         "standard_name": "number_of_observations",
     },
     "N_ta": {
         "long_name": "number of observations used to derive level 3 temperature data",
         "units": "",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
         "standard_name": "number_of_observations",
     },
     "N_rh": {
         "long_name": "number of observations used to derive level 3 relative humidity data",
         "units": "",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
         "standard_name": "number_of_observations",
     },
     "N_gps": {
         "long_name": "number of observations used to derive level 3 GPS-data",
         "units": "",
-        "coordinates": "launch_time lon lat alt",
+        "coordinates": "launch_time lon lat alt interpolated_time",
         "standard_name": "number_of_observations",
     },
     "m_p": {
@@ -259,9 +237,8 @@ nc_attrs = {
     "interpolated_time": {
         "standard_name": "time",
         "long_name": "interpolated time",
-        "description": "value of time (originally independent dimension) linearly interpolated to altitude grid",
-        "coordinates": "launch_time lon lat alt",
-        # "units": "seconds since 2020-01-01 00:00:00 UTC",
+        "description": "value of time (original independent dimension) linearly interpolated to altitude grid",
+        "axis": "T",
     },
 }
 
