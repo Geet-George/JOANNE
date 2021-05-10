@@ -70,11 +70,13 @@ for Platform in ["HALO", "P3"]:
     for i in tqdm(range(len(sonde_ds))):
 
         if (
-            status_ds.sel(
+            status_ds.swap_dims({"sonde_id": "launch_time"})
+            .sel(
                 launch_time=sonde_ds[i].launch_time.values,
                 # method="nearest",
                 # tolerance="1s",
-            ).FLAG
+            )
+            .qc_flag
             == "GOOD"
         ):
 
@@ -130,9 +132,11 @@ for Platform in ["HALO", "P3"]:
                 f2.create_variable(to_save_ds, var, variables[var])
 
             ### ---------- adding the sonde_id var to the dataset --------- #####
-            sonde_id = status_ds.sel(
-                launch_time=sonde_ds[i].launch_time.values
-            ).sonde_id.values
+            sonde_id = (
+                status_ds.swap_dims({"sonde_id": "launch_time"})
+                .sel(launch_time=sonde_ds[i].launch_time.values)
+                .sonde_id.values
+            )
             attrs = {
                 "descripion": "unique sonde ID",
                 "long_name": "sonde identifier",
