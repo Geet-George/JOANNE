@@ -41,7 +41,7 @@ max_gap_fill = (
 ### Defining functions
 
 
-def retrieve_all_files(directory, file_ext="*.nc"):
+def retrieve_all_files(directory, file_ext=f"*{joanne.__version__}.nc"):
     """
     Input : 
 
