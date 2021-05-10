@@ -34,4 +34,9 @@ joanne.egg*/
 !joanne/Level_2/sondes.yaml
 
 # Manuscript files
-Manuscript/
+Manuscript
+
+# LaTeX files or files used to generate them
+**/*.tex
+**/latex_table_*
+
