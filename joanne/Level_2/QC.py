@@ -49,13 +49,13 @@ for Platform in ["P3", "HALO"]:
 
     status_dict = {}
 
-    for x in ["ind", "srf", "FLAG"]:
+    for x in ["sat", "low", "qc_flag"]:
 
         for y in ["GOOD", "UGLY", "BAD"]:
 
-            if x != "FLAG":
+            if x != "qc_flag":
                 status_dict[f"{y}_{x}"] = len(
-                    status_ds.where(status_ds[f"{x}_FLAG"] == y, drop=True).launch_time
+                    status_ds.where(status_ds[f"{x}_test"] == y, drop=True).launch_time
                 )
             else:
                 status_dict[f"{y}_{x}"] = len(
@@ -64,23 +64,23 @@ for Platform in ["P3", "HALO"]:
 
     file.write("----------------------------------------------\n")
     file.write(
-        f"As per the ind_FLAG tests,\n{status_dict['GOOD_ind']} are good sondes,\n"
+        f"As per the sat_test tests,\n{status_dict['GOOD_sat']} are good sondes,\n"
     )
     file.write(
-        f"{status_dict['BAD_ind']} are bad sondes\nand {status_dict['UGLY_ind']} are ugly sondes.\n"
+        f"{status_dict['BAD_sat']} are bad sondes\nand {status_dict['UGLY_sat']} are ugly sondes.\n"
     )
     file.write("----------------------------------------------\n")
     file.write(
-        f"As per the srf_FLAG tests,\n{status_dict['GOOD_srf']} are good sondes,\n"
+        f"As per the low_test tests,\n{status_dict['GOOD_low']} are good sondes,\n"
     )
     file.write(
-        f"{status_dict['BAD_srf']} are bad sondes\nand {status_dict['UGLY_srf']} are ugly sondes.\n"
+        f"{status_dict['BAD_low']} are bad sondes\nand {status_dict['UGLY_low']} are ugly sondes.\n"
     )
     file.write("----------------------------------------------\n")
     file.write(f"There are a total of {len(status_ds.launch_time)} sondes\n")
-    file.write(f"out of which {status_dict['GOOD_FLAG']} are good sondes,\n")
+    file.write(f"out of which {status_dict['GOOD_qc_flag']} are good sondes,\n")
     file.write(
-        f"{status_dict['BAD_FLAG']} are bad sondes\nand {status_dict['UGLY_FLAG']} are ugly sondes that can be salvaged with some effort.\n"
+        f"{status_dict['BAD_qc_flag']} are bad sondes\nand {status_dict['UGLY_qc_flag']} are ugly sondes that can be salvaged with some effort.\n"
     )
 
     file.close()

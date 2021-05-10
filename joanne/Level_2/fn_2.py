@@ -739,6 +739,26 @@ def add_sonde_id_to_status_ds(Platform, sonde_ds, to_save_ds):
     return to_save_ds
 
 
+def rename_vars(ds):
+
+    rename_dict = {}
+
+    for i in ["t", "rh", "p", "z", "u", "v", "alt"]:
+        rename_dict[i + "_flag"] = i + "_test"
+        if i in ["t", "rh", "p", "z"]:
+            rename_dict["srf_" + i + "_flag"] = "low_" + i + "_test"
+
+    rename_dict["rms_palt_gpsalt"] = "palt_gpsalt_rms_test"
+
+    rename_dict["ld_FLAG"] = "ld_test"
+    rename_dict["ind_FLAG"] = "sat_test"
+    rename_dict["srf_FLAG"] = "low_test"
+
+    rename_dict["FLAG"] = "qc_flag"
+
+    return ds.rename(rename_dict)
+
+
 def get_status_ds_for_platform(Platform):
 
     (
@@ -796,12 +816,11 @@ def get_status_ds_for_platform(Platform):
     status_ds = add_sonde_id_to_status_ds(Platform, sonde_ds, status_ds)
 
     to_save_ds = (
-        status_ds.swap_dims({"time": "launch_time"}).reset_coords("time", drop=True)
+        status_ds.swap_dims({"time": "sonde_id"}).reset_coords("time", drop=True)
         # .sortby("launch_time")
     )
-    # VERY IMPORTANT THAT THE launch_time SORTING PRECEDES CALLING THE FUNCTION add_sonde_id_to_status_ds
 
-    # to_save_ds = add_sonde_id_to_status_ds(Platform, sonde_ds, to_save_ds)
+    to_save_ds = rename_vars(to_save_ds)
 
     to_save_ds.to_netcdf(
         f"{logs_directory}Status_of_sondes_{Platform}_v{joanne.__version__}.nc"
