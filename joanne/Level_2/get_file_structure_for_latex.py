@@ -1,35 +1,105 @@
 # %%
-from joanne.Level_2 import dicts
+# from joanne.Level_2 import dicts
 import joanne
+import glob
+from packaging import version
 
-from importlib import reload
+# from importlib import reload
+import xarray as xr
 
-reload(dicts)
+# reload(dicts)
+
+# # %%
+# dicts.list_of_vars
+
+# directory = "/Users/geet/Documents/JOANNE/joanne/Level_2/"
+
+# var_name = dicts.list_of_vars
+
+# Dimensions = ["height", "sounding"]
+# Coordinates = ["launch_time", "lat", "lon", "time", "alt", "p"]
+# Variables = [
+#     var for var in var_name if (var not in Dimensions) & (var not in Coordinates)
+# ]
 
 # %%
-dicts.list_of_vars
+directory = "/Users/geet/Documents/JOANNE/Data/Level_2/"
 
-directory = "/Users/geet/Documents/JOANNE/joanne/Level_2/"
+lv2_filename = glob.glob(f"{directory}EUREC4A_JOANNE*.nc")
 
-var_name = dicts.list_of_vars
+vers = [None] * len(lv2_filename)
 
-Dimensions = ["height", "sounding"]
-Coordinates = ["launch_time", "lat", "lon", "time", "alt", "p"]
-Variables = [
-    var for var in var_name if (var not in Dimensions) & (var not in Coordinates)
-]
+for n, i in enumerate(lv2_filename):
+    vers[n] = version.parse(i)
+
+lv2 = xr.open_dataset(str(max(vers)))
+
+# Dimensions = []
+Coordinates = list(lv2.coords)
+Variables = list(lv2.data_vars)
+
+var_name = Coordinates + Variables
+
+# # %%
+# def string_table_row(var):
+
+#     desc = dicts.nc_meta[var]["long_name"]
+#     if var != "time":
+#         units = dicts.nc_meta[var]["units"]
+#     else:
+#         units = "seconds since 2020-01-01"
+#     # dims_list = dicts.nc_dims[var]
+#     dims = "time"
+#     str_trow = f" & {var} & {desc} & {units} & {dims} \\\ \\hline \n"
+
+#     return str_trow
 
 
-def string_table_row(var):
+# def rows_for_objects(Object):
 
-    desc = dicts.nc_meta[var]["long_name"]
-    if var != "time":
-        units = dicts.nc_meta[var]["units"]
+#     id_ = 0
+#     for i in var_name:
+#         if i in eval(Object):
+#             if id_ == 0:
+#                 file.write(f"{Object}" + string_table_row(i))
+#                 id_ += 1
+#             else:
+#                 file.write(string_table_row(i))
+#                 id_ += 1
+
+# %%
+
+
+def replace_underscore_for_latex(string):
+    underscore = "_"
+    latex_underscore = "\_"
+    return string.replace(underscore, latex_underscore)
+
+
+def replace_minus_one_with_superscript(string):
+    minus_one = "-1"
+    return string.replace(minus_one, "$^{-1}$")
+
+
+def string_table_row(var, lv2=lv2):
+
+    if "description" in lv2[var].attrs:
+        desc = lv2[var].attrs["description"]
     else:
+        desc = lv2[var].attrs["long_name"]
+
+    # desc = dicts.nc_attrs[var]["description"]
+    if var not in ["time", "sonde_id"]:
+        units = lv2[var].attrs["units"]
+    elif var == "time":
         units = "seconds since 2020-01-01"
-    # dims_list = dicts.nc_dims[var]
-    dims = "time"
-    str_trow = f" & {var} & {desc} & {units} & {dims} \\\ \\hline \n"
+    else:
+        units = ""
+
+    dims_list = list(lv2[var].dims)
+    dims = ", ".join(dims_list)
+
+    str_trow = f" & {replace_underscore_for_latex(var)} & {replace_underscore_for_latex(desc)} & {replace_minus_one_with_superscript(replace_underscore_for_latex(units))} & {replace_underscore_for_latex(dims)} \\\ \n"
 
     return str_trow
 
@@ -47,27 +117,78 @@ def rows_for_objects(Object):
                 id_ += 1
 
 
-file = open(f"{directory}latex_table_Level_2_v{joanne.__version__}.txt", "w",)
+# %%
+save_directory = "/Users/geet/Documents/JOANNE/joanne/Level_2/"
+
+file = open(f"{save_directory}latex_table_Level_2_v{joanne.__version__}.txt", "w",)
 
 file.write("\\begin{table}[H]\n")
 file.write("\\centering\n")
 file.write(
     "\caption{Table shows the structure for the Level-2 product, outlining the coordinates, variables and their corresponding descriptions, units and dimensions.}\n"
 )
-file.write("\label{l2}\n")
+file.write("\label{tab:l2}\n")
 file.write(
-    "\\begin{tabular}{p{0.08\\linewidth} p{0.12\\linewidth} p{0.3\\linewidth} p{0.2\\linewidth} p{0.12\\linewidth}}\n"
+    "\\begin{tabular}{p{0.08\\linewidth} p{0.12\\linewidth} p{0.3\\linewidth} p{0.21\\linewidth} p{0.12\\linewidth}}\n"
 )
-file.write("\\hline\n")
-file.write("OBJECT & NAME & DESCRIPTION & UNITS & DIMENSION \\\ \\hline \\hline\n")
-
-for Object in ["Dimensions", "Coordinates", "Variables"]:
+file.write("\\toprule \n")
+file.write("OBJECT & NAME & DESCRIPTION & UNITS & DIMENSION \\\ \n")
+file.write("\\midrule \n")
+for Object in ["Coordinates", "Variables"]:
     rows_for_objects(Object)
+    if Object != "Variables":
+        file.write("\\midrule \n")
 
-file.write("& sonde_id & unique sonde identifier & & \\ \\hline\n")
+file.write("\\bottomrule \n")
+
 file.write("\\end{tabular}\n")
 
 file.write("\\end{table}")
 
 file.close()
+# # %%
+# # %%
+
+# save_directory = "/Users/geet/Documents/JOANNE/joanne/Level_2/"
+
+# file = open(f"{save_directory}latex_table_Level_2_v{joanne.__version__}.txt", "w",)
+
+# file.write(
+#     "\\begin{longtable}{p{0.08\\linewidth} p{0.12\\linewidth} p{0.3\\linewidth} p{0.21\\linewidth} p{0.12\\linewidth}}\n"
+# )
+# # file.write("\\centering\n")
+# file.write(
+#     "\caption{Table shows the structure for the Level-2 product, outlining the coordinates, variables and their corresponding descriptions, units and dimensions.}\n"
+# )
+# file.write("\label{tab:l3}\n")
+# file.write("\\\ \n")
+# file.write("\\toprule \n")
+# # file.write(
+# #     "\\begin{tabular}{p{0.08\\linewidth} p{0.12\\linewidth} p{0.3\\linewidth} p{0.21\\linewidth} p{0.12\\linewidth}}\n"
+# # )
+# # file.write("\\hline\n")
+# file.write("OBJECT & NAME & DESCRIPTION & UNITS & DIMENSION \\\ \n")
+# file.write("\\midrule \n")
+# file.write("\\endhead \n")
+
+# file.write("\\midrule \n")
+# file.write("\\multicolumn{5}{r}{{Continued on next page}} \\\ \n")
+# file.write("\\midrule \n")
+# file.write("\\endfoot \n")
+
+# file.write("\\bottomrule \n")
+# file.write("\\endlastfoot \n")
+
+
+# for Object in ["Coordinates", "Variables"]:
+#     rows_for_objects(Object)
+#     if Object != "Variables":
+#         file.write("\\midrule \n")
+
+# # file.write("\\end{tabular}\n")
+# # file.write("\\bottomrule \n")
+
+# file.write("\\end{longtable}")
+
+# file.close()
 # %%
