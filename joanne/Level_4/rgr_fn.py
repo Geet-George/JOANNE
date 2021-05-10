@@ -100,15 +100,13 @@ def run_regression(circle, parameter):
 
     for k in range(len(circle.alt)):
         Ns[k] = id_[:, k].sum()
-        if Ns[k] >= 6:
-            X_dx = circle["dx"].isel(alt=k).isel(launch_time=id_[:, k]).values
-            X_dy = circle["dy"].isel(alt=k).isel(launch_time=id_[:, k]).values
+        if Ns[k] > 6:
+            X_dx = circle["dx"].isel(alt=k).isel(sounding=id_[:, k]).values
+            X_dy = circle["dy"].isel(alt=k).isel(sounding=id_[:, k]).values
 
             X = list(zip(X_dx, X_dy))
 
-            Y_parameter = (
-                circle[parameter].isel(alt=k).isel(launch_time=id_[:, k]).values
-            )
+            Y_parameter = circle[parameter].isel(alt=k).isel(sounding=id_[:, k]).values
 
             regr = linear_model.LinearRegression()
             regr.fit(X, Y_parameter)
