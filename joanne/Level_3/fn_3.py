@@ -787,7 +787,7 @@ def interpolate_for_level_3(
     file_path_OR_dataset,
     height_limit=10000,
     vertical_spacing=10,
-    pressure_log_interp=False,
+    pressure_log_interp=True,
 ):
 
     """
@@ -877,7 +877,7 @@ def lv3_structure_from_lv2(
     directory_OR_list_of_files,
     height_limit=10000,
     vertical_spacing=10,
-    pressure_log_interp=False,
+    pressure_log_interp=True,
 ):
     """
     Input :
