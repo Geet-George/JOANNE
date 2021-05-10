@@ -165,6 +165,7 @@ def get_global_attrs(Platform, file_time, sonde_ds):
         "author": "Geet George",
         "author_email": "geet.george@mpimet.mpg.de",
         "featureType": "trajectory",
+        "reference": joanne.reference_study,
         "creation_time": str(datetime.datetime.utcnow()) + " UTC",
     }
 

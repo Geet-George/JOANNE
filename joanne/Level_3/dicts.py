@@ -292,5 +292,6 @@ nc_global_attrs = {
     "author": "Geet George",
     "author_email": "geet.george@mpimet.mpg.de",
     "featureType": "trajectory",
+    "reference": joanne.reference_study,
     "creation_time": str(datetime.datetime.utcnow()) + " UTC",
 }

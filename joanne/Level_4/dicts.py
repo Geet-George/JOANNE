@@ -570,7 +570,7 @@ nc_dims = {
 
 nc_global_attrs = {
     "title": "EUREC4A JOANNE Level-4",
-    "doi" : f'{joanne.data_doi}',
+    "doi": f"{joanne.data_doi}",
     "created with": f"doi:{joanne.software_doi}",
     "Conventions": "CF-1.8",
     "campaign_id": "EUREC4A",
@@ -583,6 +583,6 @@ nc_global_attrs = {
     "author": "Geet George",
     "author_email": "geet.george@mpimet.mpg.de",
     "featureType": "trajectory",
+    "reference": joanne.reference_study,
     "creation_time": str(datetime.datetime.utcnow()) + " UTC",
-    "reference_study": "https://doi.org/10.1175/JAS-D-18-0141.1",
 }
