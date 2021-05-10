@@ -3,7 +3,7 @@ import datetime
 import glob
 import sys
 import warnings
-
+import os
 from importlib import reload
 
 # import matplotlib.pyplot as plt
@@ -34,7 +34,7 @@ def get_all_sondes_list(Platform):
     a_dir = "/Users/geet/Documents/JOANNE/Data/Level_0/" + Platform + "/All_A_files/"
     # directory where all the A files are present
 
-    logs_directory = "/Users/geet/Documents/JOANNE/Data/Level_2/logs_and_stats/"
+    logs_directory = "/Users/geet/Documents/JOANNE/Data/QC/"
     # directory to store logs and stats
 
     sonde_paths = sorted(glob.glob(directory + "*QC.nc"))
@@ -84,7 +84,7 @@ def get_var_count_sums(list_nc):
     return list_of_variables, s_time, s_t, s_rh, s_p, s_z, s_u, s_v, s_alt
 
 
-def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=True):
+def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=False):
 
     a_filepaths = []
     # list to store individual file paths for all A files
@@ -95,11 +95,12 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=True
     ld_FLAG = np.full(len(a_files), np.nan)
     # array to store ld_FLAG values
 
-    # create and start writing a log file which will store sonde info about sondes with failed launch detection
-    file = open(
-        f"{logs_directory}no_launch_detect_logs_{Platform}_v{joanne.__version__}.txt",
-        "w",
-    )
+    if logs:
+        # create and start writing a log file which will store sonde info about sondes with failed launch detection
+        file = open(
+            f"{logs_directory}no_launch_detect_logs_{Platform}_v{joanne.__version__}.txt",
+            "w",
+        )
 
     g = 0
     # counter of failed sondes
@@ -144,21 +145,25 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=True
                 if a == 0:  # if value is 0, then the launch detection failed
                     ld_FLAG[id_] = False
                     g += 1
-                    for line in lines:
-                        if "Sonde ID/Type/Rev" in line:
-                            # storing the sonde ID information and relevant details to the log file we created
-                            file.write(line)
-                        if "START Time:" in line:
-                            # storing the sonde start time to the log file we created
-                            file.write(line)
-                            # line breaker in our log file as a break between two file records
-                            file.write("------------------------------------------\n")
-                            break
+                    if logs:
+                        for line in lines:
+                            if "Sonde ID/Type/Rev" in line:
+                                # storing the sonde ID information and relevant details to the log file we created
+                                file.write(line)
+                            if "START Time:" in line:
+                                # storing the sonde start time to the log file we created
+                                file.write(line)
+                                # line breaker in our log file as a break between two file records
+                                file.write(
+                                    "------------------------------------------\n"
+                                )
+                                break
                 else:
                     ld_FLAG[id_] = True
 
-    file.write(f"In total, there were {g} sondes that didn't detect a launch.\n")
-    # writing summary of failed sondes to the log file
+    if logs:
+        file.write(f"In total, there were {g} sondes that didn't detect a launch.\n")
+        # writing summary of failed sondes to the log file
 
     return ld_FLAG
 
@@ -759,7 +764,7 @@ def rename_vars(ds):
     return ds.rename(rename_dict)
 
 
-def get_status_ds_for_platform(Platform):
+def get_status_ds_for_platform(Platform, save_dir):
 
     (
         sonde_ds,
@@ -771,60 +776,79 @@ def get_status_ds_for_platform(Platform):
         sonde_paths,
     ) = get_all_sondes_list(Platform)
 
-    # Retrieving all non NaN index sums in to a list for all sondes
-    list_nc = list(map(get_total_non_nan_indices, sonde_ds))
+    if os.path.exists(save_dir):
+        pass
+    else:
+        os.makedirs(save_dir)
 
-    launch_time = [None] * len(sonde_ds)
-
-    for i in range(len(sonde_ds)):
-        launch_time[i] = sonde_ds[i].launch_time.values
-
-    (
-        list_of_variables,
-        s_time,
-        s_t,
-        s_rh,
-        s_p,
-        s_z,
-        s_u,
-        s_v,
-        s_alt,
-    ) = get_var_count_sums(list_nc)
-
-    ld_FLAG = get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform)
-
-    status_ds = init_status_ds(
-        list_of_variables,
-        s_time,
-        s_t,
-        s_rh,
-        s_p,
-        s_z,
-        s_u,
-        s_v,
-        s_alt,
-        ld_FLAG,
-        file_time,
+    to_save_ds_filename = (
+        f"{save_dir}Status_of_sondes_{Platform}_v{joanne.__version__}.nc"
     )
 
-    status_ds, ind_flag_vars = add_ind_flags_to_statusds(status_ds, list_of_variables)
-    status_ds, srf_flag_vars = add_srf_flags_to_statusds(status_ds, sonde_paths)
-    status_ds, ind_FLAG = get_the_ind_FLAG_to_statusds(status_ds, ind_flag_vars)
-    status_ds, srf_FLAG = get_the_srf_FLAG_to_statusds(status_ds, srf_flag_vars)
-    status_ds = get_the_FLAG(status_ds, ind_FLAG, srf_FLAG)
-    status_ds["launch_time"] = (["time"], pd.DatetimeIndex(launch_time))
-    status_ds = add_sonde_id_to_status_ds(Platform, sonde_ds, status_ds)
+    if os.path.exists(to_save_ds_filename):
 
-    to_save_ds = (
-        status_ds.swap_dims({"time": "sonde_id"}).reset_coords("time", drop=True)
-        # .sortby("launch_time")
-    )
+        print(f"Status file for {Platform} of the current version exists.")
 
-    to_save_ds = rename_vars(to_save_ds)
+        to_save_ds = xr.open_dataset(to_save_ds_filename)
 
-    to_save_ds.to_netcdf(
-        f"{logs_directory}Status_of_sondes_{Platform}_v{joanne.__version__}.nc"
-    )
+    else:
+
+        # Retrieving all non NaN index sums in to a list for all sondes
+        list_nc = list(map(get_total_non_nan_indices, sonde_ds))
+
+        launch_time = [None] * len(sonde_ds)
+
+        for i in range(len(sonde_ds)):
+            launch_time[i] = sonde_ds[i].launch_time.values
+
+        (
+            list_of_variables,
+            s_time,
+            s_t,
+            s_rh,
+            s_p,
+            s_z,
+            s_u,
+            s_v,
+            s_alt,
+        ) = get_var_count_sums(list_nc)
+
+        ld_FLAG = get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform)
+
+        status_ds = init_status_ds(
+            list_of_variables,
+            s_time,
+            s_t,
+            s_rh,
+            s_p,
+            s_z,
+            s_u,
+            s_v,
+            s_alt,
+            ld_FLAG,
+            file_time,
+        )
+
+        status_ds, ind_flag_vars = add_ind_flags_to_statusds(
+            status_ds, list_of_variables
+        )
+        status_ds, srf_flag_vars = add_srf_flags_to_statusds(status_ds, sonde_paths)
+        status_ds, ind_FLAG = get_the_ind_FLAG_to_statusds(status_ds, ind_flag_vars)
+        status_ds, srf_FLAG = get_the_srf_FLAG_to_statusds(status_ds, srf_flag_vars)
+        status_ds = get_the_FLAG(status_ds, ind_FLAG, srf_FLAG)
+        status_ds["launch_time"] = (["time"], pd.DatetimeIndex(launch_time))
+        status_ds = add_sonde_id_to_status_ds(Platform, sonde_ds, status_ds)
+
+        to_save_ds = (
+            status_ds.swap_dims({"time": "sonde_id"}).reset_coords("time", drop=True)
+            # .sortby("launch_time")
+        )
+
+        to_save_ds = rename_vars(to_save_ds)
+
+        to_save_ds.to_netcdf(
+            f"{save_dir}Status_of_sondes_{Platform}_v{joanne.__version__}.nc"
+        )
 
     return to_save_ds
 
