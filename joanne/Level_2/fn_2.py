@@ -92,7 +92,7 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=Fals
     for i in a_files:
         a_filepaths.append(sorted(glob.glob(a_dir + i + "*")))
 
-    ld_FLAG = np.full(len(a_files), "", dtype=str)
+    ld_FLAG = [None] * len(a_files)
     # array to store ld_FLAG values
 
     if logs:
