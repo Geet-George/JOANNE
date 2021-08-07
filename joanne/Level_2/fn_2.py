@@ -92,7 +92,7 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=Fals
     for i in a_files:
         a_filepaths.append(sorted(glob.glob(a_dir + i + "*")))
 
-    ld_FLAG = np.full(len(a_files), np.nan)
+    ld_FLAG = np.full(len(a_files), "", dtype=str)
     # array to store ld_FLAG values
 
     if logs:
@@ -117,6 +117,7 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=Fals
 
         except Exception:
             print(f"{a_files[id_]} : File not found")
+            ld_FLAG[id_] = "ugly"
             continue
 
         else:
@@ -143,7 +144,7 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=Fals
 
             else:
                 if a == 0:  # if value is 0, then the launch detection failed
-                    ld_FLAG[id_] = False
+                    ld_FLAG[id_] = "bad"
                     g += 1
                     if logs:
                         for line in lines:
@@ -159,7 +160,7 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=Fals
                                 )
                                 break
                 else:
-                    ld_FLAG[id_] = True
+                    ld_FLAG[id_] = "good"
 
     if logs:
         file.write(f"In total, there were {g} sondes that didn't detect a launch.\n")
@@ -445,7 +446,7 @@ def get_the_FLAG(status_ds, ind_FLAG, srf_FLAG):
 
     FLAG = [None] * len(status_ds.time)
 
-    no_launch = np.where(status_ds.ld_FLAG != 1)[0]
+    no_launch = np.where(status_ds.ld_FLAG == "bad")[0]
 
     for i in range(len(FLAG)):
 
