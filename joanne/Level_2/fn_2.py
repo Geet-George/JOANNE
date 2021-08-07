@@ -117,7 +117,7 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=Fals
 
         except Exception:
             print(f"{a_files[id_]} : File not found")
-            ld_FLAG[id_] = "ugly"
+            ld_FLAG[id_] = "UGLY"
             continue
 
         else:
@@ -144,7 +144,7 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=Fals
 
             else:
                 if a == 0:  # if value is 0, then the launch detection failed
-                    ld_FLAG[id_] = "bad"
+                    ld_FLAG[id_] = "BAD"
                     g += 1
                     if logs:
                         for line in lines:
@@ -160,7 +160,7 @@ def get_ld_flag_from_a_files(a_dir, a_files, logs_directory, Platform, logs=Fals
                                 )
                                 break
                 else:
-                    ld_FLAG[id_] = "good"
+                    ld_FLAG[id_] = "GOOD"
 
     if logs:
         file.write(f"In total, there were {g} sondes that didn't detect a launch.\n")
@@ -446,7 +446,7 @@ def get_the_FLAG(status_ds, ind_FLAG, srf_FLAG):
 
     FLAG = [None] * len(status_ds.time)
 
-    no_launch = np.where(status_ds.ld_FLAG == "bad")[0]
+    no_launch = np.where(status_ds.ld_FLAG == "BAD")[0]
 
     for i in range(len(FLAG)):
 
