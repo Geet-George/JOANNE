@@ -447,13 +447,15 @@ def get_the_FLAG(status_ds, ind_FLAG, srf_FLAG):
     FLAG = [None] * len(status_ds.time)
 
     no_launch = np.where(status_ds.ld_FLAG == "BAD")[0]
+    no_a_file = np.where(status_ds.ld_FLAG == "UGLY")[0]
 
     for i in range(len(FLAG)):
 
         if i in no_launch:
             FLAG[i] = "BAD"
+        elif i in no_a_file:
+            FLAG[i] = "UGLY"
         else:
-
             if srf_FLAG[i] == "BAD" and ind_FLAG[i] == "BAD":
                 FLAG[i] = "BAD"
             elif srf_FLAG[i] == "GOOD" and ind_FLAG[i] == "GOOD":
