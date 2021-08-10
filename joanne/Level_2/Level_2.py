@@ -111,7 +111,12 @@ for Platform in ["HALO", "P3"]:
 
             ###--------- Unit Conversions --------###
 
-            variables["rh"] = np.float32(sonde_ds[i]["rh"][ht_indices].values / 100)
+            if Platform == "HALO":
+                variables["rh"] = np.float32(
+                    sonde_ds[i]["rh"][ht_indices].values * 1.06 / 100
+                )
+            elif Platform == "P3":
+                variables["rh"] = np.float32(sonde_ds[i]["rh"][ht_indices].values / 100)
             variables["lat"] = np.float32(sonde_ds[i]["lat"][ht_indices].values)
             variables["lon"] = np.float32(sonde_ds[i]["lon"][ht_indices].values)
             variables["p"] = np.float32(sonde_ds[i]["pres"][ht_indices].values * 100)
