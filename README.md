@@ -1,4 +1,4 @@
-# JOANNE - The EUREC<sup>4</sup>A Dropsonde Dataset
+# [JOANNE - The EUREC<sup>4</sup>A Dropsonde Dataset](https://doi.org/10.25326/246)
 
 <br>
 
@@ -9,7 +9,7 @@
 
   ![version](https://img.shields.io/github/v/tag/Geet-George/JOANNE?color=teal&label=LATEST%20VERSION&style=for-the-badge)
 
-JOANNE is the dataset for all dropsondes launched as part of the EUREC<sup>4</sup>A-ATOMIC campaign held in January-February, 2020. These include the dropsondes from DLR's [HALO](https://www.halo.dlr.de/) aircraft and NOAA's [WP-3D (N43-RF)](https://www.omao.noaa.gov/learn/aircraft-operations/aircraft/lockheed-wp-3d-orion) aircraft.
+JOANNE is the dataset for all dropsondes launched as part of the EUREC<sup>4</sup>A-ATOMIC campaign held in January-February, 2020. These include the dropsondes from DLR's [HALO](https://www.halo.dlr.de/) aircraft and NOAA's [WP-3D (N43-RF)](https://www.omao.noaa.gov/learn/aircraft-operations/aircraft/lockheed-wp-3d-orion) aircraft. Find the dataset [here on AERIS](https://doi.org/10.25326/246). The DOI of the dataset (v2.0.0) is 10.25326/246.
 
 The acronym JOANNE stands for **J**oint dropsonde-**O**bservations of the **A**tmosphere in tropical **N**orth atla**N**tic large-scale **E**nvironments. The name is an ode to Joanne Malkus Simpson, whose contributions to tropical meteorology are fundamental to the field.
 
@@ -29,9 +29,9 @@ The different products of JOANNE are listed in the table below. Click on a produ
 
 | Platform  | Sondes   | Circles        |
 | --------- | -------- | -------------- |
-| HALO      | 896      | 71 (+1 clover) |
-| P3        | 322      | 14             |
-| **Total** | **1218** | **85**         |
+| HALO      | 895      | 71 (+1 clover) |
+| P3        | 320      | 14             |
+| **Total** | **1215** | **85**         |
 
 <br>
 
