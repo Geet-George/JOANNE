@@ -40,3 +40,6 @@ Manuscript
 **/*.tex
 **/latex_table_*
 
+# Jupyter notebooks
+**/.ipynb_checkpoints
+**/Sandbox.ipynb
