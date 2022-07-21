@@ -18,3 +18,7 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+.. autofunction:: joanne.Level_2.fn_2.pres_bounds
+.. autofunction:: joanne.Level_2.fn_2.temp_bounds
+.. autofunction:: joanne.Level_2.fn_2.gps_bounds
