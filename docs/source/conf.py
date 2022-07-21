@@ -13,7 +13,6 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
-import joanne
 
 # -- Project information -----------------------------------------------------
 
@@ -22,7 +21,7 @@ copyright = "2022, Geet George"
 author = "Geet George"
 
 # The full version, including alpha/beta/rc tags
-release = joanne.__version__
+release = "v2.1.0"  # joanne.__version__
 
 
 # -- General configuration ---------------------------------------------------
