@@ -6,7 +6,7 @@ Data/
 flight_segments/
 
 # build and dist
-/build/
+build/
 dist/
 
 # Virtual environment directory
