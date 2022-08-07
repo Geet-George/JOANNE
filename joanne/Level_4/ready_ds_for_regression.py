@@ -76,7 +76,7 @@ def get_circle_times_from_yaml(yaml_directory=yaml_directory):
     return sonde_ids, circle_times, flight_date, platform_name, segment_id
 
 
-def dim_ready_ds(ds_lv3=get_level3_dataset()):
+def dim_ready_ds(ds_lv3):
 
     dims_to_drop = ["sounding"]
 
