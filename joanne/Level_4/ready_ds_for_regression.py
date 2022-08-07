@@ -17,20 +17,11 @@ import circle_fit as cf
 yaml_directory = "/Users/geet/Documents/JOANNE/joanne/flight_segments/"
 lv3_directory = "/Users/geet/Documents/JOANNE/Data/Level_3/"
 
-lv3_files = sorted(
-    glob.glob(lv3_directory + f"EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v*.nc")
-)
-
-vers = [None] * len(lv3_files)
-
-for n, i in enumerate(lv3_files):
-    vers[n] = version.parse(i)
-
-lv3_filename = str(max(vers))
+lv3_filename = "EUREC4A_JOANNE_Dropsonde-RD41_Level_3_v*.nc"
 
 
 def get_level3_dataset(lv3_directory=lv3_directory, lv3_filename=lv3_filename):
-    return xr.open_dataset(lv3_filename)
+    return xr.open_dataset(lv3_directory + lv3_filename)
 
 
 def get_circle_times_from_yaml(yaml_directory=yaml_directory):
