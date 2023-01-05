@@ -70,7 +70,7 @@ Level-3 is a dataset where all Level-2 soundings are gridded to a uniform vertic
 |                 | `lat`             | North Latitude                                                 | degrees_north                         | sounding, height |
 |                 | `lon`             | East Longitude                                                 | degrees_east                          | sounding, height |
 | **Variables**   | `p`               | Atmospheric Pressure                                           | hPa                                   | sounding, height |
-|                 | `T`               | Dry Bulb Temperature                                           | degree_Celsius                        | sounding, height |
+|                 | `ta`              | Dry Bulb Temperature                                           | Kelvin                                | sounding, height |
 |                 | `rh`              | Relative Humidity                                              | %                                     | sounding, height |
 |                 | `wspd`            | Wind Speed                                                     | m s-1                                 | sounding, height |
 |                 | `wdir`            | Wind Direction                                                 | degrees                               | sounding, height |
