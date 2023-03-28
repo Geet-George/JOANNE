@@ -192,16 +192,16 @@ def get_div_and_vor(circle):
     D = circle.dudx + circle.dvdy
     vor = circle.dvdx - circle.dudy
 
-    circle["D"] = (["circle", "alt"], D)
-    circle["vor"] = (["circle", "alt"], vor)
+    circle["D"] = (["circle", "alt"], D.data)
+    circle["vor"] = (["circle", "alt"], vor.data)
 
     return print("Finished estimating divergence and vorticity for all circles....")
 
 
-# def get_vertical_velocity(circle):
 def get_density_vertical_velocity_and_omega(circle):
 
     den_m = [None] * len(circle.sounding)
+    p_m = [None] * len(circle.sounding)
 
     for n in range(len(circle.sounding)):
         if len(circle.isel(sounding=n).sonde_id.values) > 1:
@@ -220,14 +220,19 @@ def get_density_vertical_velocity_and_omega(circle):
     circle["mean_density"] = (["circle", "alt"], np.nanmean(den_m, axis=0))
 
     D = circle.D.values
+    p_grad = np.gradient(circle.p.values,axis=1)
+    p_grad[:,2]=p_grad[:,3]
+    p_grad[:,1]=p_grad[:,2]
+    p_grad[:,0]=p_grad[:,1]
     mean_den = circle.mean_density
-
-    nan_ids = np.where(np.isnan(D) == True)  # [0]
+    #nan_ids = np.where(np.isnan(D) == True)  # [0]
+    nan_ids = np.where(np.logical_or(np.isnan(D),np.isnan(p_grad)))
 
     w_vel = np.full([len(circle["circle"]), len(circle.alt)], np.nan)
     p_vel = np.full([len(circle["circle"]), len(circle.alt)], np.nan)
 
     w_vel[:, 0] = 0
+    p_vel[:, 0] = 0
     # last = 0
 
     for cir in range(len(circle["circle"])):
@@ -246,23 +251,19 @@ def get_density_vertical_velocity_and_omega(circle):
                 ids_for_nan_ids = np.intersect1d(
                     np.where(nan_ids[1] == m)[0], np.where(nan_ids[0] == cir)[0]
                 )
-                w_vel[nan_ids[0][ids_for_nan_ids], nan_ids[1][ids_for_nan_ids]] = np.nan
+                p_vel[nan_ids[0][ids_for_nan_ids], nan_ids[1][ids_for_nan_ids]] = np.nan
 
             else:
-                w_vel[cir, m] = w_vel[cir, last] - circle.D.isel(circle=cir).isel(
+                p_vel[cir, m] = p_vel[cir, last] - circle.D.isel(circle=cir).isel(
                     alt=m
-                ).values * 10 * (m - last)
+                ).values *p_grad[cir,last]
                 last = m
 
         for n in range(1, len(circle.alt)):
 
-            p_vel[cir, n] = (
-                -circle.mean_density.isel(circle=cir).isel(alt=n)
-                * 9.81
-                * w_vel[cir, n]
-                # * 60
-                # * 60
-                # / 100
+            w_vel[cir, n] = (
+                - p_vel[cir, n]/circle.mean_density.isel(circle=cir).isel(alt=n)
+                / 9.81
             )
 
     circle["W"] = (["circle", "alt"], w_vel)
@@ -270,7 +271,6 @@ def get_density_vertical_velocity_and_omega(circle):
 
     return print("Finished estimating density, W and omega ...")
     # return print("Finished estimating W ...")
-
 
 def add_std_err_terms(all_cir):
 
@@ -299,24 +299,30 @@ def add_std_err_terms(all_cir):
         var_name_dx = "se_d" + par + "dx"
         var_name_dy = "se_d" + par + "dy"
 
-        all_cir[var_name_dx] = (["circle", "alt"], se_dpardx)
-        all_cir[var_name_dy] = (["circle", "alt"], se_dpardy)
+        all_cir[var_name_dx] = (["circle", "alt"], se_dpardx.data)
+        all_cir[var_name_dy] = (["circle", "alt"], se_dpardy.data)
 
     se_div = np.sqrt((all_cir.se_dudx) ** 2 + (all_cir.se_dvdy) ** 2)
     se_vor = np.sqrt((all_cir.se_dudy) ** 2 + (all_cir.se_dvdx) ** 2)
 
     all_cir["se_D"] = se_div
     all_cir["se_vor"] = se_vor
-
-    se_W = np.nancumsum(
-        np.sqrt((np.sqrt(all_cir.se_D ** 2 / all_cir.D ** 2) * all_cir.D) ** 2), axis=1,
-    )
-    all_cir["se_W"] = (["circle", "alt"], se_W)
+    
+    #se_W = np.nancumsum(
+    #    np.sqrt((np.sqrt(all_cir.se_D ** 2 / all_cir.D ** 2) * all_cir.D) ** 2), axis=1,
+    #)
+    correlation_scale = 500. #m
+    print(all_cir.alt.values)
+    nb_indep_measurements = np.maximum(np.ones((len(all_cir.alt))),all_cir.alt.values/correlation_scale)
+    se_omega = -np.nancumsum(all_cir.se_D*np.gradient(all_cir["p"].data,axis=1),axis=1)/np.sqrt(nb_indep_measurements)
+    se_W = se_omega/(all_cir["mean_density"]*9.81)
+                           
+    all_cir["se_W"] = (["circle", "alt"], se_W.data)
+    all_cir["se_omega"] = (["circle", "alt"], se_omega.data)
 
     all_cir_with_std_err = all_cir
 
     return all_cir_with_std_err
-
 
 def get_advection(circles, list_of_parameters=["u", "v", "q", "ta", "p"]):
 
@@ -346,4 +352,3 @@ def get_circle_products(circles):
     print(f"All circle products retrieved!")
 
     return circle_with_std_err
-
