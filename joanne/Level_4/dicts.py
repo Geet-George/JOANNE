@@ -68,6 +68,7 @@ list_of_vars = [
     "se_vor",
     "se_W",
     "omega",
+    "se_omega",
     # "h_adv_q",
     # "h_adv_ta",
     # "h_adv_p",
@@ -492,6 +493,7 @@ nc_attrs = {
         "units": "s-1",
     },
     "se_W": {"standard_name": "upward_air_velocity standard_error", "units": "m s-1",},
+    "se_omega": {"standard_name": "pressure_vertical_air_velocity standard_error", "units": "Pa s-1",},
 }
 
 nc_dims = {
@@ -566,6 +568,7 @@ nc_dims = {
     "se_D": ["circle", "alt"],
     "se_vor": ["circle", "alt"],
     "se_W": ["circle", "alt"],
+    "se_omega": ["circle","alt"]
 }
 
 nc_global_attrs = {
